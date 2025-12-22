@@ -11,7 +11,7 @@ public struct FoodData
     public string Name;
     [TextArea]
     public string Description;
-    public Supply[] Ingredients; // Àç·á ¸ñ·Ï
+    public Supply[] Ingredients; // ì¬ë£Œ ëª©ë¡
     public int Price;
     public int Count;
 }

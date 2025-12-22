@@ -89,9 +89,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2d4db0f186247ecb7f544d8eccd2c3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <RectTransform>k__BackingField: {fileID: 0}
+  <RectTransform>k__BackingField: {fileID: 522400346527420548}
   <HoverDelay>k__BackingField: 0.5
-  tooltipText: {fileID: 0}
+  tooltipText: {fileID: 3212874525889621370}
 --- !u!1 &2622014307971903222
 GameObject:
   m_ObjectHideFlags: 0
