@@ -1,6 +1,7 @@
 ﻿using System;
 using Lib.Dependencies;
 using Lib.Utiles;
+using TMPro;
 using UnityEngine;
 using Work.Code.Events;
 using Work.Code.Supply;
@@ -11,8 +12,11 @@ namespace Work.Code.Manager
     {
         [SerializeField] private EventChannelSO gameChannel;
         [SerializeField] private EventChannelSO supplyChannel;
+
         [field: SerializeField] private int requestGold { get; set; }
         
+        [SerializeField] private TextMeshProUGUI turnText;
+        [SerializeField] private int maxTurnCount;
         [field: SerializeField] private int leftTurnCount { get; set; }
         
         [Inject] private UserSupplies _supplies;
@@ -34,6 +38,7 @@ namespace Work.Code.Manager
         private void HandleTurnAmount(TurnAmountEvent evt)
         {
             leftTurnCount += evt.Value;
+            turnText.SetText($"{leftTurnCount}/{maxTurnCount}");
             if(leftTurnCount <= 0)
                 gameChannel.InvokeEvent(GameEvents.GameEndEvent.Initializer(false));
         }
