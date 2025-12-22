@@ -35,9 +35,15 @@ namespace Work.Code.UI
             _userSupplies.OnSupplyChanged += HandleSupplyChange;
         }
 
+        private void OnDestroy()
+        {
+            _userSupplies.OnSupplyChanged -= HandleSupplyChange;
+        }
+
         private void HandleSupplyChange(SupplyType supplyType, int value)
         {
-            _supplyTexts[supplyType].SetText(value.ToString());
+            if (_supplyTexts.ContainsKey(supplyType))
+                _supplyTexts[supplyType].SetText(value.ToString());
         }
     }
 }
