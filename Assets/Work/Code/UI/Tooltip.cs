@@ -6,7 +6,7 @@ namespace Work.Code.UI
     public class Tooltip : MonoBehaviour
     {
         [field: SerializeField] public RectTransform RectTransform { get; private set; }
-        [field: SerializeField, Range(0, 1f)] public float HoverDelay { get; private set; } = 0.5f;
+        [field: SerializeField, Range(0, 1f)] public float HoverDelay { get; private set; } = 0.4f;
         [SerializeField] private TextMeshProUGUI tooltipText;
 
 

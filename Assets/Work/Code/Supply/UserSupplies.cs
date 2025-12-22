@@ -26,7 +26,7 @@ namespace Work.Code.Supply
         public delegate void SupplyChanged(SupplyType supplyType, int amount);
         public event SupplyChanged OnSupplyChanged;
 
-        private Dictionary<SupplyType, int> _suppliesAmount;
+        private Dictionary<SupplyType, int> _suppliesAmount; // 실제 재료 양
         
         private void Awake()
         {

@@ -24,9 +24,7 @@ namespace Work.Code.UI
         
         private static readonly string FOOD_FORMAT = "<color=#00FFAC>{0}</color> {1}.";
         private static readonly string FOOD_FORMAT_COMMA = "<color=#00FFAC>{0}</color> {1}, ";
-        private static readonly string DEPENDENCY_FORMAT_NO_COMMA = "<color=#AC0000>{0}</color>.";
-        private static readonly string DEPENDENCY_FORMAT_COMMA = "<color=#AC0000>{0}</color>,";
-
+        
         private void Awake()
         {
             _userSupplies.OnSupplyChanged += HandlesSupplyChange;
@@ -62,7 +60,7 @@ namespace Work.Code.UI
 
         public void EnableFor()
         {
-            bool isEnoughSupplies = _userSupplies.HasEnoughSupplies(foodData.cost);
+            bool isEnoughSupplies = _userSupplies.HasEnoughSupplies(foodData.cost); // 만들 수 있는가?
             button.interactable = isEnoughSupplies;
             icon.color = isEnoughSupplies ? Color.white : disabledColor;
         }
