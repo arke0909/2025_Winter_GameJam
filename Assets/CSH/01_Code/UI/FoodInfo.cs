@@ -4,13 +4,16 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Work.Code.Events;
 using Work.Code.Food;
+using Work.Code.Supply;
 
 namespace CSH._01_Code.UI
 {
     public class FoodInfo : MonoBehaviour
     {
         [SerializeField] private EventChannelSO foodChannel;
+        [SerializeField] private EventChannelSO supplyChannel;
         [SerializeField] private Image icon;
         [SerializeField] private TextMeshProUGUI nameAndCountText;
         [SerializeField] private TextMeshProUGUI descriptionText;
@@ -20,6 +23,7 @@ namespace CSH._01_Code.UI
         private FoodType _foodType;
         private int _count;
         private string _foodName;
+        private int _price;
 
         public void Initialize(FoodDataSO data)
         {
@@ -27,6 +31,7 @@ namespace CSH._01_Code.UI
             _count = 0;
             name = data.Type.ToString();
             _foodName = data.Name;
+            _price = data.Price;
             nameAndCountText.text = $"{_foodName} : {_count}°³";
             descriptionText.text = data.Description;
             icon.sprite = data.Icon;
@@ -35,18 +40,19 @@ namespace CSH._01_Code.UI
             Sell.onClick.AddListener(OnClickSell);
             Use.onClick.AddListener(OnClickUse);
 
-            //gameObject.SetActive(false);
+            gameObject.SetActive(false);
         }
 
         private void OnClickUse()
         {
+            foodChannel.InvokeEvent(FoodEvents.FoodDecreaseEvent.Initializer(_foodType));
 
         }
 
         private void OnClickSell()
         {
             foodChannel.InvokeEvent(FoodEvents.FoodDecreaseEvent.Initializer(_foodType));
-
+            supplyChannel.InvokeEvent(SupplyEvents.SupplyEvent.Initializer(SupplyType.Gold, _price));
         }
 
         public void AddFoodCount()
