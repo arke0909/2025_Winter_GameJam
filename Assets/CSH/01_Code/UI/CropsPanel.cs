@@ -1,10 +1,14 @@
 using DG.Tweening;
+using Lib.Utiles;
 using UnityEngine;
+using UnityEngine.Rendering;
+using Work.Code.Supply;
 
 namespace CSH._01_Code.UI
 {
     public class CropsPanel : MonoBehaviour
     {
+        [SerializeField] private EventChannelSO supplyChannel;
         private RectTransform rectTrm;
         private Vector2 originalPos;
         private bool isShow;
@@ -31,6 +35,6 @@ namespace CSH._01_Code.UI
             isShow = !isShow;
         }
 
-
+       
     }
 }

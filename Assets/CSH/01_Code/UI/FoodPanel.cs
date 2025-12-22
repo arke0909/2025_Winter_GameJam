@@ -1,4 +1,6 @@
 using DG.Tweening;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum FoodType
@@ -17,21 +19,23 @@ public enum FoodType
     GrandHarvestFeast = 11
 }
 
-
 namespace CSH._01_Code.UI
 {
     public class FoodPanel : MonoBehaviour
     {
+        [SerializeField] private Transform content;
         private RectTransform rectTrm;
         private Vector2 originalPos;
         private bool isShow;
+        private FoodInfo[] foodInfos;
         private void Awake()
         {
             rectTrm = GetComponent<RectTransform>();
             originalPos = rectTrm.anchoredPosition;
             isShow = false;
+            foodInfos = content.GetComponentsInChildren<FoodInfo>();
+            
         }
-
 
         public void TogglePanel()
         {
@@ -49,9 +53,11 @@ namespace CSH._01_Code.UI
         }
 
 
-        public void SetFoodCount(FoodType type, int v)
+        public void SetFoodInfo(FoodType type, int v)
         {
-            
+            foodInfos[(int)type].SetFoodIInfo(v);
         }
+
+
     }
 }
