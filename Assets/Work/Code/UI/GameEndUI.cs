@@ -1,4 +1,5 @@
 ﻿using System;
+using DG.Tweening;
 using Lib.Utiles;
 using UnityEngine;
 using Work.Code.Events;
@@ -11,14 +12,12 @@ namespace Work.Code.UI
         
         private RectTransform _rectTrm;
         private Vector2 _originalPos;
-        private bool _isShow;
         
         private void Awake()
         {
             _rectTrm = GetComponent<RectTransform>();
             _originalPos = Vector2.zero;
             _rectTrm.anchoredPosition = new Vector2(_originalPos.x, _originalPos.y - 800);
-            _isShow = false;
             
             gameChannel.AddListener<GameEndEvent>(HandleGameEnd);
         }
@@ -30,6 +29,8 @@ namespace Work.Code.UI
 
         private void HandleGameEnd(GameEndEvent evt)
         {
+            DOTween.To(() => _rectTrm.anchoredPosition, x => _rectTrm.anchoredPosition = x,
+                new Vector2(_originalPos.x, _originalPos.y), 0.5f).SetEase(Ease.OutCirc);
             
         }
     }

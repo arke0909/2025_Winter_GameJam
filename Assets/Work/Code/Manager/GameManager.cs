@@ -15,8 +15,6 @@ namespace Work.Code.Manager
         
         [field: SerializeField] private int leftTurnCount { get; set; }
         
-        public event Action OnTurnZeroEvent;
-        
         [Inject] private UserSupplies _supplies;
 
         private void Start()
