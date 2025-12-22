@@ -216,7 +216,7 @@ namespace Work.Code.MatchSystem
         {
             foreach (var kv in _removeNodesDict)
             {
-                if (kv.Value.Count == 0) continue;
+                if (kv.Value.Count == 0 || (int)kv.Key > 5) continue;
 
                 gameEventChannel.InvokeEvent(
                     SupplyEvents.SupplyEvent.Initializer
