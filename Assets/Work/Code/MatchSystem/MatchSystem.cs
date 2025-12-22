@@ -18,7 +18,7 @@ namespace Work.Code.MatchSystem
     {
         [SerializeField] private EventChannelSO gameEventChannel;
         [SerializeField] private Node[] nodePrefabs;
-        [SerializeField] private Node icedNodePrefab, lockedNodePrefab;
+        [SerializeField] private Node lockedNodePrefab;
         [SerializeField] private RectTransform nodeBoard;
         [SerializeField] private List<Vector2Int> lockedNode;
         [Range(0, 1f),SerializeField] private float icedNodeRate;
@@ -41,6 +41,7 @@ namespace Work.Code.MatchSystem
 
             for (int i = 0; i < (int)NodeType.Ingredient; i++)
                 _removeNodesDict[(NodeType)i] = new HashSet<NodeData>();
+            _removeNodesDict.Add(NodeType.Locked, new HashSet<NodeData>());
 
             CalcBoardSize();
             SetNodes();
@@ -85,10 +86,23 @@ namespace Work.Code.MatchSystem
             for (int y = 0; y < MapHeight; y++)
             for (int x = 0; x < MapWidth; x++)
             {
-                Node node = CreateNode();
-                bool isIced = Random.value <= icedNodeRate;
-                NodeMap[y, x] = node;
-                node.Init(x, y, this, isIced);
+                Vector2Int pos = new Vector2Int(x, y);
+                Node node;
+                
+                if (lockedNode.Contains(pos))
+                {
+                    node = Instantiate(lockedNodePrefab, nodeBoard);
+                    NodeMap[y, x] = node;
+                    node.Init(x, y, this, false);
+                }
+                else
+                {
+                    node = CreateNode();
+                    bool isIced = Random.value <= icedNodeRate;
+                    NodeMap[y, x] = node;
+                    node.Init(x, y, this, isIced);
+                }
+                
                 node.SetPos(CalcNodePosX(x), CalcSpawnPosY(x), false);
                 node.SetPos(CalcNodePosX(x), CalcNodePosY(y));
                 DataMap[y, x] = new NodeData(node.NodeType);
@@ -271,6 +285,13 @@ namespace Work.Code.MatchSystem
             if (node != null && node.IsIced)
             {
                 node.Unfreeze();
+            }
+            else if (node != null && node.TryGetComponent<LockedNode>(out LockedNode lockedNode))
+            {
+                if (lockedNode.DiscountCnt())
+                {
+                    AddRemoveNode(node.X, node.Y);
+                }
             }
         }
         
