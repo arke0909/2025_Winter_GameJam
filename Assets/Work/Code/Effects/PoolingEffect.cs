@@ -30,6 +30,11 @@ namespace Work.Code.Effects
             _playableVFX.PlayVFX(position, rotation);
         }
 
+        public void PushSelf()
+        {
+            _myPool.Push(this);
+        }
+        
         private void OnValidate()
         {
             if (effectObject == null) return;

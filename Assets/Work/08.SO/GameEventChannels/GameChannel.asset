@@ -9,8 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e7e8146b5b5fc948bbe2c52149307f4, type: 3}
-  m_Name: PoolManagerSO
+  m_Script: {fileID: 11500000, guid: 1aec56ae825a6194dafaed154e55771d, type: 3}
+  m_Name: GameChannel
   m_EditorClassIdentifier: 
-  itemList:
-  - {fileID: 11400000, guid: f406c9043e4ee1346ba496fd9e06f974, type: 2}
