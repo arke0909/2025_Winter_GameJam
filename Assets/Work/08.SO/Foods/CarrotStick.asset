@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: CarrotStick
   m_EditorClassIdentifier: 
   Type: 2
+  Icon: {fileID: 7516397188711347237, guid: 034cecc484e19e74b9b33c24a2bfc7ef, type: 3}
   Name: "\uB2F9\uADFC \uC2A4\uD2F1"
   Description: "\uBC2D\uC744 \uB4A4\uC11E\uC2B5\uB2C8\uB2E4."
   Price: 0
