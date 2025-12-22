@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: S12 R6 P6
   m_EditorClassIdentifier: 
   <CostSupplies>k__BackingField:
-  - type: 6
-    amount: 12
   - type: 5
-    amount: 6
+    amount: 12
   - type: 4
+    amount: 6
+  - type: 3
     amount: 6

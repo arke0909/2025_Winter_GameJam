@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: All6
   m_EditorClassIdentifier: 
   <CostSupplies>k__BackingField:
+  - type: 0
+    amount: 6
   - type: 1
     amount: 6
   - type: 2
@@ -22,6 +24,4 @@ MonoBehaviour:
   - type: 4
     amount: 6
   - type: 5
-    amount: 6
-  - type: 6
     amount: 6

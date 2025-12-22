@@ -15,7 +15,7 @@ MonoBehaviour:
   <CostSupplies>k__BackingField:
   - type: 2
     amount: 4
-  - type: 3
+  - type: 1
     amount: 4
-  - type: 5
+  - type: 4
     amount: 4
