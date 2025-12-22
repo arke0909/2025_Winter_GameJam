@@ -10,12 +10,12 @@ namespace Work.Code.Supply
     public enum SupplyType
     {
         Gold,
-        Tomato,
-        Carrot,
-        Corn,
-        Paprika,
-        Radish,
-        SweetPotato
+        Tomato = 0,
+        Carrot = 1,
+        Corn = 2,
+        Paprika = 3,
+        Radish = 4,
+        SweetPotato = 5
     }
     
     [Provide]
