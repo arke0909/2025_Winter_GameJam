@@ -13,7 +13,6 @@ namespace CSH._01_Code.UI
         [SerializeField] private EventChannelSO foodChannel;
         [SerializeField] private Image icon;
         [SerializeField] private TextMeshProUGUI nameAndCountText;
-        [SerializeField] private TextMeshProUGUI countText;
         [SerializeField] private TextMeshProUGUI descriptionText;
         [SerializeField] private TextMeshProUGUI priceText;
         [SerializeField] private Button Sell;
@@ -25,14 +24,18 @@ namespace CSH._01_Code.UI
         public void Initialize(FoodDataSO data)
         {
             _foodType = data.Type;
+            _count = 0;
             name = data.Type.ToString();
             _foodName = data.Name;
+            nameAndCountText.text = $"{_foodName} : {_count}개";
             descriptionText.text = data.Description;
             icon.sprite = data.Icon;
             priceText.text = $"{data.Price}G";
 
             Sell.onClick.AddListener(OnClickSell);
             Use.onClick.AddListener(OnClickUse);
+
+            //gameObject.SetActive(false);
         }
 
         private void OnClickUse()
@@ -49,7 +52,7 @@ namespace CSH._01_Code.UI
         public void AddFoodCount()
         {
             nameAndCountText.text = $"{_foodName} : {++_count}개";
-            if (_count > 0)
+            if (_count > 0 && !isActiveAndEnabled)
             {
                 gameObject.SetActive(true);
             }
@@ -58,8 +61,8 @@ namespace CSH._01_Code.UI
         public void MinusFoodCount()
         {
             if (_count <= 0) return;
-            countText.text = $"{--_count}개";
-            if (_count <= 0)
+            nameAndCountText.text = $"{_foodName} : {--_count}개";
+            if (_count <= 0 && isActiveAndEnabled)
             {
                 gameObject.SetActive(false);
             }
