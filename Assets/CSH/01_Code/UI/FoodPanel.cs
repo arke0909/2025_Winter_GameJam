@@ -24,7 +24,7 @@ namespace CSH._01_Code.UI
 {
     public class FoodPanel : MonoBehaviour
     {
-        public UnityEvent<FoodType> OnFoodMade;
+
         [SerializeField] private Transform content;
         //[SerializeField] private food
         private RectTransform rectTrm;
@@ -39,12 +39,10 @@ namespace CSH._01_Code.UI
             originalPos = rectTrm.anchoredPosition;
             isShow = false;
             foodInfos = content.GetComponentsInChildren<FoodInfo>();
-            OnFoodMade.AddListener(HandleFoodMade);
         }
 
         private void OnDestroy()
         {
-            OnFoodMade.RemoveListener(HandleFoodMade);
         }
 
         public void TogglePanel()
@@ -62,9 +60,5 @@ namespace CSH._01_Code.UI
             isShow = !isShow;
         }
 
-        private void HandleFoodMade(FoodType type)
-        {
-            foodInfos[(int)type].AddFoodCount();
-        }
     }
 }
