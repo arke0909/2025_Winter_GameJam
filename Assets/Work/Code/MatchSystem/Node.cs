@@ -89,7 +89,7 @@ namespace Work.Code.MatchSystem
             icedImage.enabled = false;
         }
 
-        public void OnDrag(PointerEventData eventData)
+        public virtual void OnDrag(PointerEventData eventData)
         {
             if (_dragged)
                 return; 
