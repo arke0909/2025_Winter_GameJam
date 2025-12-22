@@ -21,6 +21,8 @@ namespace Work.Code.Test
         {
             if (Keyboard.current.qKey.wasPressedThisFrame)
                 supplyChannel.InvokeEvent(SupplyEvents.SupplyEvent.Initializer(SupplyType.Gold, 10));
+            if (Keyboard.current.wKey.wasPressedThisFrame)
+                supplyChannel.InvokeEvent(SupplyEvents.SupplyEvent.Initializer(SupplyType.Carrot, 1));
         }
 
         [ContextMenu("SetGold")]

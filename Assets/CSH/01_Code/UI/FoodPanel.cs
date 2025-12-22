@@ -1,7 +1,11 @@
+using CSH._01_Code.Events;
 using DG.Tweening;
+using Lib.Utiles;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using Work.Code.Food;
 
 public enum FoodType
 {
@@ -23,18 +27,33 @@ namespace CSH._01_Code.UI
 {
     public class FoodPanel : MonoBehaviour
     {
+        [SerializeField] private FoodDataSO[] foodDatas;
+        [SerializeField] private EventChannelSO foodChannel;
         [SerializeField] private Transform content;
         private RectTransform rectTrm;
         private Vector2 originalPos;
         private bool isShow;
         private FoodInfo[] foodInfos;
+
+
         private void Awake()
         {
             rectTrm = GetComponent<RectTransform>();
             originalPos = rectTrm.anchoredPosition;
             isShow = false;
-            foodInfos = content.GetComponentsInChildren<FoodInfo>();
-            
+            foodInfos = content.GetComponentsInChildren<FoodInfo>(true);
+            for(int i = 0; i < foodInfos.Length; i++)
+            {
+                foodInfos[i].Initialize(foodDatas[i]);
+            }
+            foodChannel.AddListener<FoodIncreasEvent>(HandleFoodIncrease);
+            foodChannel.AddListener<FoodDecreasEvent>(HandleFoodDecrease);
+        }
+
+        private void OnDestroy()
+        {
+            foodChannel.RemoveListener<FoodIncreasEvent>(HandleFoodIncrease);
+            foodChannel.RemoveListener<FoodDecreasEvent>(HandleFoodDecrease);
         }
 
         public void TogglePanel()
@@ -52,10 +71,13 @@ namespace CSH._01_Code.UI
             isShow = !isShow;
         }
 
-
-        public void SetFoodInfo(FoodType type, int v)
+        public void HandleFoodIncrease(FoodIncreasEvent evt)
         {
-            foodInfos[(int)type].SetFoodIInfo(v);
+            foodInfos[(int)evt.FoodType].AddFoodCount();
+        }
+        public void HandleFoodDecrease(FoodDecreasEvent evt)
+        {
+            foodInfos[(int)evt.FoodType].MinusFoodCount();
         }
 
 
