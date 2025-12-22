@@ -192,6 +192,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   foodChannel: {fileID: 11400000, guid: d4bd3427c23b02242841b959e26b94d1, type: 2}
+  supplyChannel: {fileID: 11400000, guid: 36d7019071cc93a4ca58aa053b9da2bf, type: 2}
   icon: {fileID: 7951188575724460505}
   nameAndCountText: {fileID: 8641382391188105975}
   descriptionText: {fileID: 9195496937137410697}
