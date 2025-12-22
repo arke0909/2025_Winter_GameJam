@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Radish9
   m_EditorClassIdentifier: 
   <CostSupplies>k__BackingField:
-  - type: 5
+  - type: 4
     amount: 9

@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: T4 Co4 Ca4 P4 S4
   m_EditorClassIdentifier: 
   <CostSupplies>k__BackingField:
-  - type: 1
+  - type: 0
     amount: 4
   - type: 2
     amount: 4
+  - type: 1
+    amount: 4
   - type: 3
     amount: 4
-  - type: 4
-    amount: 4
-  - type: 6
+  - type: 5
     amount: 4

@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Carrot6
   m_EditorClassIdentifier: 
   <CostSupplies>k__BackingField:
-  - type: 2
+  - type: 1
     amount: 6

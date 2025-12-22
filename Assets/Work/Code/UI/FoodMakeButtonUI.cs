@@ -22,8 +22,8 @@ namespace Work.Code.UI
         
         [Inject] private UserSupplies _userSupplies; 
         
-        private static readonly string FOOD_FORMAT = "<color=#00ACFF>{0}</color> {1}.";
-        private static readonly string FOOD_FORMAT_COMMA = "<color=#00ACFF>{0}</color> {1}, ";
+        private static readonly string FOOD_FORMAT = "<color=#00FFAC>{0}</color> {1}.";
+        private static readonly string FOOD_FORMAT_COMMA = "<color=#00FFAC>{0}</color> {1}, ";
         private static readonly string DEPENDENCY_FORMAT_NO_COMMA = "<color=#AC0000>{0}</color>.";
         private static readonly string DEPENDENCY_FORMAT_COMMA = "<color=#AC0000>{0}</color>,";
 
@@ -37,7 +37,7 @@ namespace Work.Code.UI
             _userSupplies.OnSupplyChanged -= HandlesSupplyChange;
         }
 
-        private void HandlesSupplyChange(SupplyType supplytype, int amount)
+        private void HandlesSupplyChange(SupplyType supplyType, int amount)
         {
             EnableFor();
         }

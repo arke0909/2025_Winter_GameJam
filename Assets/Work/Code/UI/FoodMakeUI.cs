@@ -10,7 +10,6 @@ namespace Work.Code.UI
 {
     public class FoodMakeUI : MonoBehaviour
     {
-        
         private RectTransform _rectTrm;
         private Vector2 _originalPos;
         private bool _isShow;
@@ -20,6 +19,7 @@ namespace Work.Code.UI
         {
             _rectTrm = GetComponent<RectTransform>();
             _originalPos = Vector2.zero;
+            _rectTrm.anchoredPosition = new Vector2(_originalPos.x, _originalPos.y - 600);
             _isShow = false;
             _foodMakeButtons = GetComponentsInChildren<FoodMakeButtonUI>().ToList();
             
