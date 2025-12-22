@@ -13525,6 +13525,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 696358cf0bf13cf4a9d92dd2956c289d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  foodDatas: []
+  foodChannel: {fileID: 11400000, guid: d4bd3427c23b02242841b959e26b94d1, type: 2}
   content: {fileID: 804177385}
 --- !u!114 &1935106834
 MonoBehaviour:
@@ -14571,11 +14573,13 @@ MonoBehaviour:
   - {fileID: 3987659002603952870, guid: 60c4f157bee69da4f9610fbd177b4866, type: 3}
   - {fileID: 3987659002603952870, guid: 86c0c334612a82b4f9bf3ddba9af46e0, type: 3}
   - {fileID: 3987659002603952870, guid: 48959033a5e30a447b659dd83b74eb04, type: 3}
-  icedNodePrefab: {fileID: 0}
-  lockedNodePrefab: {fileID: 0}
+  lockedNodePrefab: {fileID: 8520629933709389421, guid: f1cfc8a117a4ae24cbbcd3f7aece5aa1, type: 3}
   nodeBoard: {fileID: 2007830517}
-  lockedNode: []
-  icedNodeRate: 0.42
+  lockedNode:
+  - {x: 1, y: 1}
+  - {x: 7, y: 7}
+  - {x: 5, y: 2}
+  icedNodeRate: 0.15
   <MapWidth>k__BackingField: 8
   <MapHeight>k__BackingField: 8
 --- !u!1 &2008827886
