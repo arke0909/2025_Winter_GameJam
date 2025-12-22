@@ -1,7 +1,9 @@
 using System;
+using System.Collections;
+using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace Work.Code.MatchSystem
 {
@@ -9,7 +11,8 @@ namespace Work.Code.MatchSystem
     {
         [SerializeField] private NodeType nodeType;
         [SerializeField] private float deltaThreshold = 50f;
-        
+        [SerializeField] private float nodeMoveDuration = 0.25f;
+
         public NodeType NodeType => nodeType;
         public RectTransform Rect => transform as RectTransform;
         public int X { get; private set; }
@@ -29,11 +32,39 @@ namespace Work.Code.MatchSystem
             SetXY(x, y);
         }
 
-        public void SetPos(float x, float y)
+        private void OnDestroy()
         {
-            XPos = x;
-            YPos = y;
-            Rect.anchoredPosition = new Vector2(x, y);
+            Rect.DOKill();
+        }
+
+        public async UniTask SetPos(float x, float y, bool isTween = true)
+        {
+            if(!isTween)
+                Rect.anchoredPosition = new Vector2(x, y);
+            try
+            {
+                await MoveTween(x, y).WithCancellation(destroyCancellationToken);
+            }
+            catch (Exception e)
+            {
+                Debug.Log("디버그 중 게임 종료");
+            }
+        }
+
+        private IEnumerator MoveTween(float x, float y)
+        {
+            bool isEnd = false;
+            
+            Rect.DOAnchorPos(new Vector2(x, y), nodeMoveDuration)
+                .OnComplete(() =>
+                {
+                    XPos = x;
+                    YPos = y;
+                    Rect.anchoredPosition = new Vector2(x, y);
+                    isEnd = true;
+                });
+            
+            yield return new WaitUntil(() => isEnd);
         }
 
         public void SetXY(int x, int y)
@@ -52,8 +83,6 @@ namespace Work.Code.MatchSystem
 
                 if (delta.magnitude > deltaThreshold)
                 {
-                    int x = 0, y = 0;
-                    
                     Vector2Int dir = GetDragDir(delta);
                     if (dir == Vector2Int.zero)
                         return;
