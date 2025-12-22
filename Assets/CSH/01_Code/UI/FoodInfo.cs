@@ -1,3 +1,4 @@
+using CSH._01_Code.Events;
 using Lib.Utiles;
 using TMPro;
 using UnityEngine;
@@ -7,11 +8,11 @@ namespace CSH._01_Code.UI
 {
     public class FoodInfo : MonoBehaviour
     {
-        [SerializeField] private EventChannelSO supplyChannel;
+        [SerializeField] private EventChannelSO foodChannel;
         [SerializeField] private TextMeshProUGUI countText;
         [SerializeField] private Button Sell;
         [SerializeField] private Button Use;
-        private FoodType foodType;
+        private FoodType _foodType;
         private int _count;
 
         private void Awake()
@@ -30,5 +31,7 @@ namespace CSH._01_Code.UI
             if (_count <= 0) return;
             countText.text = $"{--_count}°³";
         }
+
+
     }
 }

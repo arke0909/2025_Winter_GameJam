@@ -16,11 +16,9 @@ namespace CSH._01_Code.Events
     public class FoodIncreasEvent : GameEvent
     {
         public FoodType FoodType;
-        int Amount;
         public FoodIncreasEvent Initializer(FoodType type)
         {
             FoodType = type;
-            Amount = 1;
             return this;
         }
     }
@@ -28,11 +26,9 @@ namespace CSH._01_Code.Events
     public class FoodDecreasEvent : GameEvent
     {
         public FoodType FoodType;
-        int Amount;
         public FoodDecreasEvent Initializer(FoodType type)
         {
             FoodType = type;
-            Amount = -1;
             return this;
         }
     }
