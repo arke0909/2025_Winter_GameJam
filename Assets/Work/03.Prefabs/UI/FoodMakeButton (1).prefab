@@ -126,8 +126,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -50, y: -50}
+  m_AnchoredPosition: {x: 0, y: -15}
+  m_SizeDelta: {x: -70, y: -70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8920738609287170705
 CanvasRenderer:
@@ -237,7 +237,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -9148079100729670451, guid: 126da94a7a2b1644991336efb4347de3, type: 3}
+  m_Sprite: {fileID: -3989668330587312247, guid: fb973c08b51ff17469167a278720b4d2, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -246,7 +246,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 0.3
+  m_PixelsPerUnitMultiplier: 0.5
 --- !u!114 &8953249288308762395
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -290,7 +290,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2827780808899046532}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 932262276132631160}
+        m_TargetAssemblyTypeName: Work.Code.UI.FoodMakeButtonUI, Assembly-CSharp
+        m_MethodName: MakeFood
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &4764761491200785823
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -323,10 +335,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8030c354c5ae4beda84c404252d6b25b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  supplyChannel: {fileID: 11400000, guid: 36d7019071cc93a4ca58aa053b9da2bf, type: 2}
   icon: {fileID: 705036438490148249}
   button: {fileID: 8953249288308762395}
   tooltip: {fileID: 8980316291756326313}
-  disabledColor: {r: 0, g: 0, b: 0, a: 0}
+  disabledColor: {r: 0.2971698, g: 0.2971698, b: 0.2971698, a: 1}
   foodData: {fileID: 0}
 --- !u!1 &8184926097611095241
 GameObject:
