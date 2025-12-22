@@ -9,6 +9,7 @@ namespace CSH._01_Code.UI
     public class FoodData : ScriptableObject
     {
         public FoodType Type;
+        public Sprite Icon;
         public string Name;
         [TextArea]
         public string Description;
