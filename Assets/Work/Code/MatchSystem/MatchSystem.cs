@@ -119,7 +119,7 @@ namespace Work.Code.MatchSystem
             if (IsOutBound(nx, ny)) return;
 
             Node target = NodeMap[ny, nx];
-            if (target == null) return;
+            if (target == null || target.TryGetComponent<LockedNode>(out LockedNode lockedNode)) return;
 
             _isSwapping = true;
 
@@ -286,7 +286,7 @@ namespace Work.Code.MatchSystem
             {
                 node.Unfreeze();
             }
-            else if (node != null && node.TryGetComponent<LockedNode>(out LockedNode lockedNode))
+            else if (node != null && node.TryGetComponent(out LockedNode lockedNode))
             {
                 if (lockedNode.DiscountCnt())
                 {
@@ -307,6 +307,13 @@ namespace Work.Code.MatchSystem
                 {
                     Node node = NodeMap[y, x];
                     if (node == null) continue;
+                    
+                    if (node.TryGetComponent<LockedNode>(out _))
+                    {
+                        NodeMap[y, x] = node;
+                        writeY = y - 1;
+                        continue;
+                    }
 
                     if (y != writeY)
                     {
