@@ -14574,8 +14574,8 @@ MonoBehaviour:
   icedNodePrefab: {fileID: 0}
   lockedNodePrefab: {fileID: 0}
   nodeBoard: {fileID: 2007830517}
-  icedNode: []
   lockedNode: []
+  icedNodeRate: 0.42
   <MapWidth>k__BackingField: 8
   <MapHeight>k__BackingField: 8
 --- !u!1 &2008827886
