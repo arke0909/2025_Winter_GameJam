@@ -9,18 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57f141f4f15999e4aacee9c53d91ea13, type: 3}
+  m_Script: {fileID: 11500000, guid: e13ce9b5373a4e9db61a66eccf6abaca, type: 3}
   m_Name: CreamyVegetableStew
   m_EditorClassIdentifier: 
   Type: 7
   Name: "\uCC44\uC18C \uD06C\uB9BC \uC2A4\uD29C"
-  Description: "\uBAA8\uB4E0 \uB178\uB4DC \uC7A0\uAE08 \uCE74\uC6B4\uD2B8\uB97C \uC989\uC2DC
-    -1 \uAC10\uC18C\uC2DC\uD0B4"
-  Ingredients:
-  - type: 3
-    amount: 4
-  - type: 2
-    amount: 4
-  - type: 5
-    amount: 4
-  Price: 700
+  Description: 
+  Price: 0
+  cost: {fileID: 0}

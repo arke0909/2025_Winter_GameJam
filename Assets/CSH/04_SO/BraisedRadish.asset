@@ -9,13 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57f141f4f15999e4aacee9c53d91ea13, type: 3}
+  m_Script: {fileID: 11500000, guid: e13ce9b5373a4e9db61a66eccf6abaca, type: 3}
   m_Name: BraisedRadish
   m_EditorClassIdentifier: 
   Type: 3
   Name: "\uBB34 \uC870\uB9BC"
-  Description: "\uB0A8\uC740 \uD589\uB3D9 \uD69F\uC218(\uD134) +2\uD68C \uCD94\uAC00"
-  Ingredients:
-  - type: 5
-    amount: 9
-  Price: 200
+  Description: 
+  Price: 0
+  cost: {fileID: 0}

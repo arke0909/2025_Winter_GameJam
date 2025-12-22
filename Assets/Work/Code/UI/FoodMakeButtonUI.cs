@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Work.Code.Food;
 using Work.Code.Supply;
 
 namespace Work.Code.UI
@@ -12,15 +13,17 @@ namespace Work.Code.UI
         [SerializeField] private Button button;
         [SerializeField] private Tooltip tooltip;
         [SerializeField] private Color disabledColor;
+        [SerializeField] private FoodDataSO foodData;
         
-        private static readonly string MINERAL_FORMAT = "<color=#00ACFF>{0}</color> Minerals.";
-        private static readonly string GAS_FORMAT = "<color=#3BEA60>{0}</color> Gas.";
+        private static readonly string FOOD_FORMAT = "<color=#00ACFF>{0}</color> {1}.";
+        private static readonly string FOOD_FORMAT_COMMA = "<color=#00ACFF>{0}</color> {1}, ";
         private static readonly string DEPENDENCY_FORMAT_NO_COMMA = "<color=#AC0000>{0}</color>.";
         private static readonly string DEPENDENCY_FORMAT_COMMA = "<color=#AC0000>{0}</color>,";
         
-        public void EnableFor()
+        public void Start()
         {
-            
+            string tooltipTxt = GetTooltipText();
+            tooltip.SetText(tooltipTxt);
         }
 
         public void OnPointerEnter(PointerEventData eventData)
@@ -40,52 +43,30 @@ namespace Work.Code.UI
             tooltip.Show();
         }
         
-        // private string GetTooltipText(FoodData command)
-        // {
-        //     StringBuilder tooltipBuilder = new StringBuilder();
-        //     tooltipBuilder.Append($"{command.Name}\n");
-        //
-        //     SupplyCostSO cost = null;
-        //     if (command is BuildUnitCommandSO buildUnitCommand)
-        //     {
-        //         cost = buildUnitCommand.Unit.Cost;
-        //     }else if (command is ConstructBuildingCommandSO constructBuildingCommand)
-        //     {
-        //         cost = constructBuildingCommand.BuildingData.Cost;
-        //     }
-        //
-        //     if (cost != null)
-        //     {
-        //         if (cost.Minerals > 0)
-        //             tooltipBuilder.Append(string.Format(MINERAL_FORMAT, cost.Minerals));
-        //         if(cost.Gas > 0)
-        //             tooltipBuilder.Append(string.Format(GAS_FORMAT, cost.Gas));
-        //     }
-        //
-        //     if (command is IUnlockableCommand unlockableCommand
-        //         && command.IsLocked(new CommandContext(uiOwner, null, new RaycastHit())))
-        //     {
-        //         UnlockableSO[] dependencies = unlockableCommand.GetUnMetDependencies(uiOwner);
-        //
-        //         if (dependencies.Length > 0)
-        //         {
-        //             tooltipBuilder.AppendLine();
-        //             tooltipBuilder.AppendLine("Requires: ");
-        //         }
-        //
-        //         for (int i = 0; i < dependencies.Length; i++)
-        //         {
-        //             tooltipBuilder.Append(i == dependencies.Length - 1
-        //                 ? string.Format(DEPENDENCY_FORMAT_NO_COMMA, dependencies[i].Name)
-        //                 : string.Format(DEPENDENCY_FORMAT_COMMA, dependencies[i].Name));
-        //         }
-        //
-        //         // var line = dependencies.Select(dependency =>
-        //         //     string.Format(DEPENDENCY_FORMAT_NO_COMMA, dependency.Name));
-        //         // tooltipBuilder.Append(string.Join(",", line));
-        //     }
-        //
-        //     return tooltipBuilder.ToString();
-        // }
+        private string GetTooltipText()
+        {
+            StringBuilder tooltipBuilder = new StringBuilder();
+            tooltipBuilder.Append($"{foodData.Name}\n");
+        
+            SupplyCostSO cost = foodData.cost;
+            
+        
+            if (cost != null)
+            {
+                for (int i = 0; i < cost.CostSupplies.Count - 1; i++)
+                {
+                    tooltipBuilder.Append(string.Format(FOOD_FORMAT_COMMA, cost.CostSupplies[i].amount, cost.CostSupplies[i].type.ToString()));
+                    if((i + 1) % 2 == 0) tooltipBuilder.AppendLine();
+                }
+
+                tooltipBuilder.Append(string.Format(FOOD_FORMAT,
+                    cost.CostSupplies[^1].amount, cost.CostSupplies[^1].type.ToString()));
+            }
+            
+            tooltipBuilder.AppendLine();
+            tooltipBuilder.Append(foodData.Description);
+            
+            return tooltipBuilder.ToString();
+        }
     }
 }

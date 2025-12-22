@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e13ce9b5373a4e9db61a66eccf6abaca, type: 3}
-  m_Name: GrandHarvestFeast
+  m_Name: BraisedRadish
   m_EditorClassIdentifier: 
-  Type: 11
-  Name: "\uB300\uD48D\uB144 \uC794\uCE58"
-  Description: 
+  Type: 3
+  Name: "\uBB34 \uC870\uB9BC"
+  Description: "\uD589\uB3D9 2\uD68C\uB97C \uC5BB\uC2B5\uB2C8\uB2E4."
   Price: 0
-  cost: {fileID: 0}
+  cost: {fileID: 11400000, guid: 26a62ddad5d9f4d4ea391b80107ea198, type: 2}

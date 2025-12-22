@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e13ce9b5373a4e9db61a66eccf6abaca, type: 3}
-  m_Name: GrandHarvestFeast
+  m_Name: Popcorn
   m_EditorClassIdentifier: 
-  Type: 11
-  Name: "\uB300\uD48D\uB144 \uC794\uCE58"
-  Description: 
+  Type: 1
+  Name: "\uD31D\uCF58"
+  Description: "\uC138\uB85C \uD55C \uC904\uC744 \uC218\uD655\uD569\uB2C8\uB2E4."
   Price: 0
-  cost: {fileID: 0}
+  cost: {fileID: 11400000, guid: 9b8d320706e09f84eac14db6cc435abd, type: 2}

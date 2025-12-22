@@ -9,11 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e13ce9b5373a4e9db61a66eccf6abaca, type: 3}
-  m_Name: GrandHarvestFeast
+  m_Script: {fileID: 11500000, guid: 69592e09dd884288b53f07c9410304fc, type: 3}
+  m_Name: S12 R6 P6
   m_EditorClassIdentifier: 
-  Type: 11
-  Name: "\uB300\uD48D\uB144 \uC794\uCE58"
-  Description: 
-  Price: 0
-  cost: {fileID: 0}
+  <CostSupplies>k__BackingField:
+  - type: 6
+    amount: 12
+  - type: 5
+    amount: 6
+  - type: 4
+    amount: 6

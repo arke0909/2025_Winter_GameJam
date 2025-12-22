@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e13ce9b5373a4e9db61a66eccf6abaca, type: 3}
-  m_Name: GrandHarvestFeast
+  m_Name: CarrotStick
   m_EditorClassIdentifier: 
-  Type: 11
-  Name: "\uB300\uD48D\uB144 \uC794\uCE58"
-  Description: 
+  Type: 2
+  Name: "\uB2F9\uADFC \uC2A4\uD2F1"
+  Description: "\uBC2D\uC744 \uB4A4\uC11E\uC2B5\uB2C8\uB2E4."
   Price: 0
-  cost: {fileID: 0}
+  cost: {fileID: 11400000, guid: 6be52e34f1096144480b5feb37aa8a72, type: 2}
