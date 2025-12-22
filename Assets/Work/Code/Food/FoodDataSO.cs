@@ -7,6 +7,7 @@ namespace Work.Code.Food
     public class FoodDataSO : ScriptableObject
     {
         public FoodType Type;
+        public Sprite Icon;
         public string Name;
         [TextArea]
         public string Description;

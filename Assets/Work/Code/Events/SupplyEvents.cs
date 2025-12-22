@@ -25,7 +25,7 @@ namespace Work.Code.Events
             return this;
         }
     }
-    
+
     /// <summary>
     /// 목표 골드를 설정하는 이벤트
     /// </summary>
