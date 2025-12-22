@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57f141f4f15999e4aacee9c53d91ea13, type: 3}
+  m_Name: VegetableSkewers
+  m_EditorClassIdentifier: 
+  Type: 8
+  Name: "\uCC44\uC18C \uBAA8\uB4EC \uAF2C\uCE58"
+  Description: "\uAC00\uB85C 1\uC904 + \uC138\uB85C 1\uC904\uC744 \uB3D9\uC2DC\uC5D0
+    \uC218\uD655 (\uC2ED\uC790 \uBC29\uD5A5)"
+  Ingredients:
+  - type: 3
+    amount: 4
+  - type: 2
+    amount: 4
+  - type: 1
+    amount: 4
+  - type: 4
+    amount: 4
+  - type: 6
+    amount: 4
+  Price: 1200
