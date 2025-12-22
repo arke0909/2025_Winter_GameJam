@@ -9,17 +9,22 @@ namespace CSH._01_Code.UI
         [SerializeField] private TextMeshProUGUI countText;
         [SerializeField] private Button Sell;
         [SerializeField] private Button Use;
-        
+        private int _count;
 
-        public void SetFoodIInfo(int count)
+        private void Awake()
         {
-            countText.text = $"{count}";
+            _count = 0;
         }
 
-        public void AddFoodCount(int v)
+        public void AddFoodCount()
         {
-            countText.text = $"{int.Parse(countText.text)}";
+            countText.text = $"{++_count}°³";
         }
 
+        public void MinusFoodCount()
+        {
+            if (_count <= 0) return;
+            countText.text = $"{--_count}°³";
+        }
     }
 }

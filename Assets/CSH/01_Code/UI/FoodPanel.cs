@@ -2,6 +2,7 @@ using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public enum FoodType
 {
@@ -23,18 +24,27 @@ namespace CSH._01_Code.UI
 {
     public class FoodPanel : MonoBehaviour
     {
+        public UnityEvent<FoodType> OnFoodMade;
         [SerializeField] private Transform content;
+        //[SerializeField] private food
         private RectTransform rectTrm;
         private Vector2 originalPos;
         private bool isShow;
         private FoodInfo[] foodInfos;
+
+
         private void Awake()
         {
             rectTrm = GetComponent<RectTransform>();
             originalPos = rectTrm.anchoredPosition;
             isShow = false;
             foodInfos = content.GetComponentsInChildren<FoodInfo>();
-            
+            OnFoodMade.AddListener(HandleFoodMade);
+        }
+
+        private void OnDestroy()
+        {
+            OnFoodMade.RemoveListener(HandleFoodMade);
         }
 
         public void TogglePanel()
@@ -52,12 +62,9 @@ namespace CSH._01_Code.UI
             isShow = !isShow;
         }
 
-
-        public void SetFoodInfo(FoodType type, int v)
+        private void HandleFoodMade(FoodType type)
         {
-            foodInfos[(int)type].SetFoodIInfo(v);
+            foodInfos[(int)type].AddFoodCount();
         }
-
-
     }
 }
