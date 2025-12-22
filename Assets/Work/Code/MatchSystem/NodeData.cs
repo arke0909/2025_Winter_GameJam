@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Work.Code.MatchSystem
 {
     public enum NodeType
@@ -18,11 +20,14 @@ namespace Work.Code.MatchSystem
     public class NodeData
     {
         public NodeType NodeType { get; private set; }
+        public Vector2Int Pos { get; private set; }
 
         public NodeData(NodeType nodeType)
         {
             NodeType = nodeType;
         }
+
+        public void SetPos(Vector2Int pos) => Pos = pos;
         
         public void SetNodeType(NodeType nodeType) => NodeType = nodeType;
     }

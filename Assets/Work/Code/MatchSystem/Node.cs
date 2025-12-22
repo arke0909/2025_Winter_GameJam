@@ -4,17 +4,20 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace Work.Code.MatchSystem
 {
     public class Node : MonoBehaviour, IDragHandler,  IEndDragHandler
     {
         [SerializeField] private NodeType nodeType;
+        [SerializeField] private Image icedImage;
         [SerializeField] private float deltaThreshold = 50f;
-        [SerializeField] private float nodeMoveDuration = 0.25f;
+        [SerializeField] private float nodeMoveSpeed = 800;
 
         public NodeType NodeType => nodeType;
         public RectTransform Rect => transform as RectTransform;
+        public bool IsIced => _isIced;
         public int X { get; private set; }
         public int Y { get; private set; }
         
@@ -25,10 +28,13 @@ namespace Work.Code.MatchSystem
         
         private Vector2 _onPressPos;
         private bool _dragged;
+        private bool _isIced;
         
-        public void Init(int x, int y, MatchSystem matchSystem)
+        public void Init(int x, int y, MatchSystem matchSystem, bool isIced)
         {
             _matchSystem = matchSystem;
+            _isIced = isIced;
+            icedImage.enabled = isIced;
             SetXY(x, y);
         }
 
@@ -39,38 +45,48 @@ namespace Work.Code.MatchSystem
 
         public async UniTask SetPos(float x, float y, bool isTween = true)
         {
-            if(!isTween)
-                Rect.anchoredPosition = new Vector2(x, y);
+            Rect.DOKill(true);
+
+            Vector2 target = new Vector2(x, y);
+            Vector2 start = Rect.anchoredPosition;
+
+            XPos = x;
+            YPos = y;
+
+            if (!isTween)
+            {
+                Rect.anchoredPosition = target;
+                return;
+            }
+
+            float distance = Vector2.Distance(start, target);
+            float duration = distance / nodeMoveSpeed;
+
             try
             {
-                await MoveTween(x, y).WithCancellation(destroyCancellationToken);
+                await Rect
+                    .DOAnchorPos(target, duration)
+                    .SetEase(Ease.OutQuad)
+                    .AsyncWaitForCompletion();
             }
-            catch (Exception e)
+            catch
             {
-                Debug.Log("디버그 중 게임 종료");
+                // 파괴 중 취소
             }
-        }
-
-        private IEnumerator MoveTween(float x, float y)
-        {
-            bool isEnd = false;
-            
-            Rect.DOAnchorPos(new Vector2(x, y), nodeMoveDuration)
-                .OnComplete(() =>
-                {
-                    XPos = x;
-                    YPos = y;
-                    Rect.anchoredPosition = new Vector2(x, y);
-                    isEnd = true;
-                });
-            
-            yield return new WaitUntil(() => isEnd);
         }
 
         public void SetXY(int x, int y)
         {
             X = x;
             Y = y;
+        }
+        
+        public void Unfreeze()
+        {
+            if (!_isIced) return;
+
+            _isIced = false;
+            icedImage.enabled = false;
         }
 
         public void OnDrag(PointerEventData eventData)
