@@ -7,7 +7,6 @@ namespace Work.Code.Events
     {
         public static readonly SupplyEvent SupplyEvent = new SupplyEvent();
         public static readonly SetRequestGoldEvent SetRequestGoldEvent = new SetRequestGoldEvent();
-        public static readonly GoldSuccessEvent GoldSuccessEvent = new GoldSuccessEvent();
     }
     
     /// <summary>
@@ -39,13 +38,5 @@ namespace Work.Code.Events
             RequestGold = requestGold;
             return this;
         }
-    }
-    
-    /// <summary>
-    /// 목표 골드에 도달한 이벤트
-    /// </summary>
-    public class GoldSuccessEvent : GameEvent
-    {
-        
     }
 }

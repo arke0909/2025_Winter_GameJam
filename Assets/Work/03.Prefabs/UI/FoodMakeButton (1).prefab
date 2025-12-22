@@ -336,6 +336,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supplyChannel: {fileID: 11400000, guid: 36d7019071cc93a4ca58aa053b9da2bf, type: 2}
+  foodChannel: {fileID: 11400000, guid: d4bd3427c23b02242841b959e26b94d1, type: 2}
   icon: {fileID: 705036438490148249}
   button: {fileID: 8953249288308762395}
   tooltip: {fileID: 8980316291756326313}
