@@ -9,14 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57f141f4f15999e4aacee9c53d91ea13, type: 3}
+  m_Script: {fileID: 11500000, guid: e13ce9b5373a4e9db61a66eccf6abaca, type: 3}
   m_Name: CarrotStick
   m_EditorClassIdentifier: 
   Type: 2
   Name: "\uB2F9\uADFC \uC2A4\uD2F1"
-  Description: "\uD604\uC7AC \uD310\uC758 \uBAA8\uB4E0 \uC7AC\uB8CC\uB97C \uC7AC\uBC30\uCE58(\uC154\uD50C)
-    (\uAE38\uC774 \uC548 \uBCF4\uC77C \uB54C \uC720\uC6A9)"
-  Ingredients:
-  - type: 2
-    amount: 6
-  Price: 150
+  Description: 
+  Price: 0
+  cost: {fileID: 0}

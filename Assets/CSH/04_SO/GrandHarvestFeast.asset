@@ -9,24 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57f141f4f15999e4aacee9c53d91ea13, type: 3}
+  m_Script: {fileID: 11500000, guid: e13ce9b5373a4e9db61a66eccf6abaca, type: 3}
   m_Name: GrandHarvestFeast
   m_EditorClassIdentifier: 
   Type: 11
   Name: "\uB300\uD48D\uB144 \uC794\uCE58"
-  Description: "\uD310 \uC704\uC758 \uBAA8\uB4E0 \uAE30\uBBF9(\uB0C9\uB3D9, \uB178\uB4DC
-    \uC7A0\uAE08)\uC744 \uC989\uC2DC \uD30C\uAD34\uD558\uACE0 \uC804\uCCB4 \uC218\uD655"
-  Ingredients:
-  - type: 6
-    amount: 12
-  - type: 5
-    amount: 12
-  - type: 4
-    amount: 12
-  - type: 2
-    amount: 12
-  - type: 3
-    amount: 12
-  - type: 1
-    amount: 2
-  Price: 8000
+  Description: 
+  Price: 0
+  cost: {fileID: 0}

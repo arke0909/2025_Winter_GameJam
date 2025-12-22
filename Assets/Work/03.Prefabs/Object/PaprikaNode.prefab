@@ -90,3 +90,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeType: 3
   deltaThreshold: 50
+  nodeMoveSpeed: 350

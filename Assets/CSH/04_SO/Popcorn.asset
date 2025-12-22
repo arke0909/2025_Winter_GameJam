@@ -9,14 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57f141f4f15999e4aacee9c53d91ea13, type: 3}
+  m_Script: {fileID: 11500000, guid: e13ce9b5373a4e9db61a66eccf6abaca, type: 3}
   m_Name: Popcorn
   m_EditorClassIdentifier: 
   Type: 1
   Name: "\uD31D\uCF58"
-  Description: "\uC120\uD0DD\uD55C \uC138\uB85C 1\uC904 \uC989\uC2DC \uC218\uD655
-    (\uB0C9\uB3D9 1\uB2E8\uACC4 \uD574\uC81C \uAC00\uB2A5)"
-  Ingredients:
-  - type: 3
-    amount: 6
-  Price: 150
+  Description: 
+  Price: 0
+  cost: {fileID: 0}
