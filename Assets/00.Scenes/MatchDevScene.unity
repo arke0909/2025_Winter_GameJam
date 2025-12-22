@@ -14563,7 +14563,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11166b9cb229c09408ca7fb280561a65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameEventChannel: {fileID: 11400000, guid: 87eb673071b794643b5572589549f73f, type: 2}
+  gameEventChannel: {fileID: 11400000, guid: 36d7019071cc93a4ca58aa053b9da2bf, type: 2}
   nodePrefabs:
   - {fileID: 3987659002603952870, guid: bc0d77e211bb3824394b24bd13bab3d8, type: 3}
   - {fileID: 3987659002603952870, guid: 0564f18b2781e934bb11b576f2c3dc08, type: 3}

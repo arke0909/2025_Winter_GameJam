@@ -3,13 +3,14 @@ using Cysharp.Threading.Tasks;
 using Lib.Utiles;
 using UnityEngine;
 using Work.Code.Events;
+using Work.Code.Supply;
 using Random = UnityEngine.Random;
 
 namespace Work.Code.MatchSystem
 {
     public struct GetIngredientData
     {
-        public NodeType nodeType;
+        public SupplyType SupplyType;
         public int count;
     }
 
@@ -163,10 +164,8 @@ namespace Work.Code.MatchSystem
                 if (kv.Value.Count == 0) continue;
 
                 gameEventChannel.InvokeEvent(
-                    GameEvents.GetIngredientEvent.Init(
-                        new GetIngredientData { nodeType = kv.Key, count = kv.Value.Count }
-                    )
-                );
+                    SupplyEvents.SupplyEvent.Initializer
+                    ((SupplyType)kv.Key, kv.Value.Count ));
 
                 foreach (var data in kv.Value)
                     data.SetNodeType(NodeType.Empty);
