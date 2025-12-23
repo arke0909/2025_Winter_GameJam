@@ -346,7 +346,7 @@ namespace Work.Code.MatchSystem
                     }
 
                     particleEventChannel.InvokeEvent(
-                        ParticleEvents.PlayUIParticleEvent.Initializer(particlePoolItem, NodeMap[y, x].CenterPos));
+                        ParticleEvents.PlayUIParticleEvent.Initializer(particlePoolItem, NodeMap[y, x].CenterPos, Quaternion.identity));
                     Destroy(NodeMap[y, x].gameObject);
                     NodeMap[y, x] = null;
                 }
@@ -685,7 +685,7 @@ namespace Work.Code.MatchSystem
                 if (node != null && node.IsIced)
                 {
                     particleEventChannel.InvokeEvent(
-                        ParticleEvents.PlayUIParticleEvent.Initializer(icedEffectItem, node.CenterPos));
+                        ParticleEvents.PlayUIParticleEvent.Initializer(icedEffectItem, node.CenterPos, Quaternion.identity));
                     node.Unfreeze();
                 }
                 else if (node != null && !node.IsIced && node.TryGetComponent(out LockedNode lockedNode))
@@ -704,7 +704,7 @@ namespace Work.Code.MatchSystem
                 if (node != null && node.IsIced)
                 {
                     particleEventChannel.InvokeEvent(
-                        ParticleEvents.PlayUIParticleEvent.Initializer(icedEffectItem, node.CenterPos));
+                        ParticleEvents.PlayUIParticleEvent.Initializer(icedEffectItem, node.CenterPos, Quaternion.identity));
                     node.Unfreeze();
                 }
             }

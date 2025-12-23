@@ -16,11 +16,13 @@ namespace Work.Code.Events
     {
         public PoolItemSO ParticleItem;
         public Vector3 Pos;
+        public Quaternion Rot;
         
-        public PlayUIParticleEvent Initializer(PoolItemSO particleItem, Vector3 pos)
+        public PlayUIParticleEvent Initializer(PoolItemSO particleItem, Vector3 pos, Quaternion rot)
         {
             ParticleItem = particleItem;
             Pos = pos;
+            Rot = rot;
             return this;
         }
     }
