@@ -4,6 +4,7 @@ using Lib.ObjectPool.RunTime;
 using Lib.Utiles;
 using UnityEngine;
 using Work.Code.Events;
+using Work.Code.Manager;
 using Work.Code.Supply;
 using Random = UnityEngine.Random;
 
@@ -17,6 +18,7 @@ namespace Work.Code.MatchSystem
 
     public class MatchSystem : MonoBehaviour
     {
+        [SerializeField] private EventChannelSO supplyEventChannel;
         [SerializeField] private EventChannelSO gameEventChannel;
         [SerializeField] private EventChannelSO particleEventChannel;
         [SerializeField] private PoolItemSO particleItem;
@@ -25,6 +27,7 @@ namespace Work.Code.MatchSystem
         [SerializeField] private RectTransform nodeBoard;
         [SerializeField] private List<Vector2Int> lockedNode;
         [Range(0, 1f), SerializeField] private float icedNodeRate;
+        [SerializeField] private int turnAddAmount = 2;
 
         private Vector2Int[] _eightDirection = {new (0,1), new (1,1),new (1,0),new (1,-1),new (0,-1),new (-1,-1),new (-1,0),new (-1,1)};
         
@@ -250,7 +253,7 @@ namespace Work.Code.MatchSystem
 
                 if ((int)kv.Key <= 5)
                 {
-                    gameEventChannel.InvokeEvent(
+                    supplyEventChannel.InvokeEvent(
                         SupplyEvents.SupplyEvent.Initializer
                             ((SupplyType)kv.Key, count));
                 }
@@ -399,6 +402,55 @@ namespace Work.Code.MatchSystem
 
         #region Item Function
 
+        public async UniTask ShuffleBoard()
+        {
+            if (_isSwapping) return;
+            _isSwapping = true;
+
+            List<Node> movableNodes = new List<Node>();
+            List<Vector2Int> targetPositions = new List<Vector2Int>();
+
+            for (int y = 0; y < MapHeight; y++)
+            {
+                for (int x = 0; x < MapWidth; x++)
+                {
+                    Node node = NodeMap[y, x];
+                    if (node != null && !node.IsIced && !node.TryGetComponent<LockedNode>(out _))
+                    {
+                        movableNodes.Add(node);
+                        targetPositions.Add(new Vector2Int(x, y));
+                    }
+                }
+            }
+
+            for (int i = 0; i < targetPositions.Count; i++)
+            {
+                int rnd = Random.Range(i, targetPositions.Count);
+                (targetPositions[i], targetPositions[rnd]) = (targetPositions[rnd], targetPositions[i]);
+            }
+
+            List<UniTask> moveTasks = new List<UniTask>();
+
+            for (int i = 0; i < movableNodes.Count; i++)
+            {
+                Node node = movableNodes[i];
+                Vector2Int newPos = targetPositions[i];
+
+                NodeMap[newPos.y, newPos.x] = node;
+                DataMap[newPos.y, newPos.x].SetNodeType(node.NodeType);
+
+                node.SetXY(newPos.x, newPos.y);
+
+                moveTasks.Add(node.SetPos(CalcNodePosX(newPos.x), CalcNodePosY(newPos.y)));
+            }
+
+            await UniTask.WhenAll(moveTasks);
+
+            await ResolveBoard();
+
+            _isSwapping = false;
+        }
+        
         public void SetGetDouble(bool value)
         {
             _isGetDouble = value;
@@ -443,7 +495,7 @@ namespace Work.Code.MatchSystem
             }
         }
 
-        public void RemoveNotLockedNode()
+        public void RemoveUnLockedNode()
         {
             for (int y = 0; y < MapHeight; y++)
             for (int x = 0; x < MapWidth; x++)
@@ -455,7 +507,7 @@ namespace Work.Code.MatchSystem
             }
         }
 
-        public void RemoveEveryNode()
+        public void RemoveAllNode()
         {
             for (int y = 0; y < MapHeight; y++)
             for (int x = 0; x < MapWidth; x++)
@@ -559,5 +611,15 @@ namespace Work.Code.MatchSystem
 
         private bool IsOutBound(int x, int y)
             => x < 0 || x >= MapWidth || y < 0 || y >= MapHeight;
+
+        public void AddTurn()
+        {
+            gameEventChannel.InvokeEvent(GameEvents.TurnAmountEvent.Initializer(turnAddAmount));
+        }
+
+        private void DiscountTurn()
+        {
+            gameEventChannel.InvokeEvent(GameEvents.TurnAmountEvent.Initializer(-1));
+        }
     }
 }

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e13ce9b5373a4e9db61a66eccf6abaca, type: 3}
   m_Name: TomatoJuice
   m_EditorClassIdentifier: 
+  itemTree: {fileID: 11400000, guid: 776b686d1591e534ea3c24aa3f5ce17d, type: 2}
   Type: 0
   Icon: {fileID: 2246080126237996923, guid: e5955af3b1ad00745bfd3247f7ab847a, type: 3}
   Name: "\uD1A0\uB9C8\uD1A0 \uC8FC\uC2A4"

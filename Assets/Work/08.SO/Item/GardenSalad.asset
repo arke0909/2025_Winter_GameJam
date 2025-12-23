@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af5d570b912a4b44b6f2fc8a94decfbf, type: 3}
+  m_Name: GardenSalad
+  m_EditorClassIdentifier: 
+  effectNodes:
+  - {fileID: 11400000, guid: 36456c3776070614f9204c69d3471ca2, type: 2}

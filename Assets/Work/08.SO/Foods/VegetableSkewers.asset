@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e13ce9b5373a4e9db61a66eccf6abaca, type: 3}
   m_Name: VegetableSkewers
   m_EditorClassIdentifier: 
+  itemTree: {fileID: 11400000, guid: f222a74c7f5b47b4d806eac68398fd3d, type: 2}
   Type: 8
   Icon: {fileID: -8884360948989745743, guid: b000745293bf5f848adc7df1520f70fa, type: 3}
   Name: "\uCC44\uC18C \uBAA8\uB4EC \uAF2C\uCE58"

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e13ce9b5373a4e9db61a66eccf6abaca, type: 3}
   m_Name: SweetPotatoGnocchi
   m_EditorClassIdentifier: 
+  itemTree: {fileID: 11400000, guid: 17fd7004384cb774883c5eaadb8dbb84, type: 2}
   Type: 9
   Icon: {fileID: -8297994531900018823, guid: b4535d0d844e9d14cb53987a81cacad8, type: 3}
   Name: "\uACE0\uAD6C\uB9C8 \uB1E8\uB07C"

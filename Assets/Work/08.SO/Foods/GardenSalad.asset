@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e13ce9b5373a4e9db61a66eccf6abaca, type: 3}
   m_Name: GardenSalad
   m_EditorClassIdentifier: 
+  itemTree: {fileID: 11400000, guid: ccdbe1ca65886f84bb1af6326e18efae, type: 2}
   Type: 4
   Icon: {fileID: 2052068270394185111, guid: 534c2338fc135b24fbfc5e35f436b884, type: 3}
   Name: "\uAC00\uB4E0 \uC140\uB7EC\uB4DC"
