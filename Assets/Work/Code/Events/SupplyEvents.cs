@@ -1,4 +1,6 @@
 ﻿using Lib.Utiles;
+using System.Collections.Generic;
+using Work.Code.MatchSystem;
 using Work.Code.Supply;
 
 namespace Work.Code.Events
@@ -7,6 +9,7 @@ namespace Work.Code.Events
     {
         public static readonly SupplyEvent SupplyEvent = new SupplyEvent();
         public static readonly SetRequestGoldEvent SetRequestGoldEvent = new SetRequestGoldEvent();
+        public static readonly MatchSupplyEvent MatchSupplyEvent = new MatchSupplyEvent();
     }
     
     /// <summary>
@@ -22,6 +25,20 @@ namespace Work.Code.Events
         {
             SupplyType = supplyType;
             Amount = amount;
+            return this;
+        }
+    }
+
+    /// <summary>
+    /// 메치된 노드들에 대한 이벤트
+    /// </summary>
+    public class MatchSupplyEvent : GameEvent
+    {
+        public HashSet<NodeData> MatchedNodes;
+
+        public MatchSupplyEvent Initializer(HashSet<NodeData> matchedNodes)
+        {
+            MatchedNodes = matchedNodes;
             return this;
         }
     }
