@@ -3,6 +3,7 @@ using DG.Tweening;
 using Lib.Utiles;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Work.Code.Events;
 
 namespace Work.Code.UI
@@ -11,6 +12,7 @@ namespace Work.Code.UI
     {
         [SerializeField] private EventChannelSO gameChannel;
         [SerializeField] private TextMeshProUGUI titleText;
+        [SerializeField] private Image backgroundImage;
         
         private RectTransform _rectTrm;
         private Vector2 _originalPos;
@@ -21,6 +23,7 @@ namespace Work.Code.UI
             _originalPos = Vector2.zero;
             _rectTrm.anchoredPosition = new Vector2(_originalPos.x, _originalPos.y - 2000);
             _supplyData = GetComponentsInChildren<SupplyDataUI>();
+            backgroundImage.raycastTarget = false;
             
             gameChannel.AddListener<GameEndEvent>(HandleGameEnd);
         }
@@ -32,6 +35,7 @@ namespace Work.Code.UI
 
         private void HandleGameEnd(GameEndEvent evt)
         {
+            backgroundImage.raycastTarget = true;
             titleText.SetText(evt.IsSuccess ? "성공" : "실패");
             foreach (var data in _supplyData)
             {

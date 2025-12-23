@@ -65,6 +65,11 @@ namespace Work.Code.Supply
             return true;
         }
 
+        public bool IsEnoughGold(int amount)
+        {
+            return _suppliesAmount[SupplyType.Gold] >= amount;
+        }
+        
         public bool CanMakeAnyFood()
         {
             foreach (var cost in allCosts)

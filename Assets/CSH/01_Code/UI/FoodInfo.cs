@@ -63,6 +63,7 @@ namespace CSH._01_Code.UI
         {
             foodChannel.InvokeEvent(FoodEvents.FoodDecreaseEvent.Initializer(_foodType));
             supplyChannel.InvokeEvent(SupplyEvents.SupplyEvent.Initializer(SupplyType.Gold, _price));
+            GameManager.Instance.CheckGameOver();
         }
 
         public void AddFoodCount()

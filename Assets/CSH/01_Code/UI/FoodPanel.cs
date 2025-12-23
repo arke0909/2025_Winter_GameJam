@@ -79,7 +79,6 @@ namespace CSH._01_Code.UI
         public void HandleFoodDecrease(FoodDecreasEvent evt)
         {
             foodInfos[(int)evt.FoodType].MinusFoodCount();
-            GameManager.Instance.CheckGameOver();
         }
 
         public bool IsHaveAnyFood()

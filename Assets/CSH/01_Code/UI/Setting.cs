@@ -1,6 +1,8 @@
+using System;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.InputSystem;
 using static UnityEngine.Rendering.DebugUI;
 
 namespace CSH._01_Code.UI
@@ -23,6 +25,18 @@ namespace CSH._01_Code.UI
             isShow = !isShow;
         }
 
+        private void Update()
+        {
+            if (Keyboard.current.escapeKey.wasPressedThisFrame)
+                TogglePanel();
+
+        }
+
+        public void Exit()
+        {
+            Application.Quit();
+        }
+        
         public void SetMasterVolume(float v)
         {
             float dB = v <= 0.0001f ? -80f : Mathf.Log10(v) * 20f;
