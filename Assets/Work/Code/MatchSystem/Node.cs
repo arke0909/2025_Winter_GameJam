@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace Work.Code.MatchSystem
 {
-    public class Node : MonoBehaviour, IDragHandler,  IEndDragHandler
+    public class Node : MonoBehaviour, IDragHandler,  IEndDragHandler, IPointerClickHandler
     {
         [SerializeField] private NodeType nodeType;
         [SerializeField] private Image icedImage;
@@ -119,6 +119,8 @@ namespace Work.Code.MatchSystem
             }
         }
         
+        
+        
         private Vector2Int GetDragDir(Vector2 delta)
         {
             return Mathf.Abs(delta.x) > Mathf.Abs(delta.y) ? new Vector2Int(Math.Sign(delta.x), 0) : new Vector2Int(0, Math.Sign(-delta.y));
@@ -127,6 +129,11 @@ namespace Work.Code.MatchSystem
         public void OnEndDrag(PointerEventData eventData)
         {
             _dragged = false;
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            _matchSystem.OnNodeClicked(this);
         }
     }
 }

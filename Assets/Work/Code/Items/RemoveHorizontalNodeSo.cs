@@ -8,7 +8,7 @@ namespace Work.Code.Items
     {
         public override void Execute(MatchSystem.MatchSystem ms, NodeData data)
         {
-            ms.RemoveHorizontal(data.Pos.x);
+            ms.RemoveHorizontal(data.Pos.y);
         }
     }
 }
