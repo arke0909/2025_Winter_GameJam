@@ -21,7 +21,7 @@ namespace Work.Code.MatchSystem
         [SerializeField] private Node lockedNodePrefab;
         [SerializeField] private RectTransform nodeBoard;
         [SerializeField] private List<Vector2Int> lockedNode;
-        [Range(0, 1f),SerializeField] private float icedNodeRate;
+        [Range(0, 1f), SerializeField] private float icedNodeRate;
 
         public NodeData[,] DataMap { get; private set; }
         public Node[,] NodeMap { get; private set; }
@@ -88,7 +88,7 @@ namespace Work.Code.MatchSystem
             {
                 Vector2Int pos = new Vector2Int(x, y);
                 Node node;
-                
+
                 if (lockedNode.Contains(pos))
                 {
                     node = Instantiate(lockedNodePrefab, nodeBoard);
@@ -102,7 +102,7 @@ namespace Work.Code.MatchSystem
                     NodeMap[y, x] = node;
                     node.Init(x, y, this, isIced);
                 }
-                
+
                 node.SetPos(CalcNodePosX(x), CalcSpawnPosY(x), false);
                 node.SetPos(CalcNodePosX(x), CalcNodePosY(y));
                 DataMap[y, x] = new NodeData(node.NodeType);
@@ -240,6 +240,7 @@ namespace Work.Code.MatchSystem
             }
         }
 
+        // 가로 한줄
         public void RemoveHorizontal(int y)
         {
             for (int x = 0; x < MapWidth; ++x)
@@ -248,6 +249,7 @@ namespace Work.Code.MatchSystem
             }
         }
 
+        // 세로 한줄
         public void RemoveVertical(int x)
         {
             for (int y = 0; y < MapHeight; ++y)
@@ -256,10 +258,45 @@ namespace Work.Code.MatchSystem
             }
         }
 
+        // 십자
         public void RemoveCross(int x, int y)
         {
             RemoveVertical(x);
             RemoveHorizontal(y);
+        }
+
+        // 맵의 모든 한 타입을 제거
+        public void RemoveNodeByType(NodeType type)
+        {
+            for (int y = 0; y < MapHeight; y++)
+            for (int x = 0; x < MapWidth; x++)
+            {
+                if (NodeMap[y, x] != null && DataMap[y, x].NodeType == type)
+                {
+                    AddRemoveNode(x, y);
+                }
+            }
+        }
+
+        public void RemoveNotLockedNode()
+        {
+            for (int y = 0; y < MapHeight; y++)
+            for (int x = 0; x < MapWidth; x++)
+            {
+                if (NodeMap[y, x] != null && !NodeMap[y, x].IsIced && DataMap[y, x].NodeType != NodeType.Locked)
+                {
+                    AddRemoveNode(x, y);
+                }
+            }
+        }
+
+        public void RemoveEveryNode()
+        {
+            for (int y = 0; y < MapHeight; y++)
+            for (int x = 0; x < MapWidth; x++)
+            {
+                AddRemoveNode(x, y);
+            }
         }
 
         private void BreakAdjacentIce()
@@ -294,7 +331,7 @@ namespace Work.Code.MatchSystem
                 }
             }
         }
-        
+
         private async UniTask SortingNodeMap()
         {
             List<UniTask> moves = new();
@@ -307,7 +344,7 @@ namespace Work.Code.MatchSystem
                 {
                     Node node = NodeMap[y, x];
                     if (node == null) continue;
-                    
+
                     if (node.TryGetComponent<LockedNode>(out _))
                     {
                         NodeMap[y, x] = node;
@@ -381,11 +418,11 @@ namespace Work.Code.MatchSystem
             Node node = NodeMap[y, x];
             if (node == null) return false;
             if (node.IsIced) return false;
-        
+
             NodeType type = DataMap[y, x].NodeType;
-        
+
             int count = 1;
-        
+
             for (int i = x - 1; i >= 0; i--)
             {
                 Node n = NodeMap[y, i];
@@ -393,7 +430,7 @@ namespace Work.Code.MatchSystem
                 if (DataMap[y, i].NodeType != type) break;
                 count++;
             }
-        
+
             for (int i = x + 1; i < MapWidth; i++)
             {
                 Node n = NodeMap[y, i];
@@ -401,12 +438,12 @@ namespace Work.Code.MatchSystem
                 if (DataMap[y, i].NodeType != type) break;
                 count++;
             }
-        
+
             if (count >= 3)
                 return true;
-        
+
             count = 1;
-        
+
             for (int i = y - 1; i >= 0; i--)
             {
                 Node n = NodeMap[i, x];
@@ -414,7 +451,7 @@ namespace Work.Code.MatchSystem
                 if (DataMap[i, x].NodeType != type) break;
                 count++;
             }
-        
+
             for (int i = y + 1; i < MapHeight; i++)
             {
                 Node n = NodeMap[i, x];
@@ -422,7 +459,7 @@ namespace Work.Code.MatchSystem
                 if (DataMap[i, x].NodeType != type) break;
                 count++;
             }
-        
+
             return count >= 3;
         }
 
