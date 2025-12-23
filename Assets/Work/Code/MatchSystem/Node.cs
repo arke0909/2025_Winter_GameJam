@@ -5,6 +5,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Work.Code.Manager;
 
 namespace Work.Code.MatchSystem
 {
@@ -101,7 +102,7 @@ namespace Work.Code.MatchSystem
 
         public virtual void OnDrag(PointerEventData eventData)
         {
-            if (_dragged)
+            if (_dragged || GameManager.Instance.LeftTurnCount <= 0)
                 return; 
             {
                 _onPressPos = eventData.pressPosition;

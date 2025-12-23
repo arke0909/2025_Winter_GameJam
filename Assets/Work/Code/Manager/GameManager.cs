@@ -22,7 +22,7 @@ namespace Work.Code.Manager
         
         [SerializeField] private TextMeshProUGUI turnText;
         [SerializeField] private int maxTurnCount;
-        [field: SerializeField] private int leftTurnCount { get; set; }
+        [field: SerializeField] public int LeftTurnCount { get; private set; }
         
         [Inject] private UserSupplies _supplies;
 
@@ -31,8 +31,8 @@ namespace Work.Code.Manager
             supplyChannel.AddListener<SetRequestGoldEvent>(HandleSetRequestGold);
             gameChannel.AddListener<TurnAmountEvent>(HandleTurnAmount);
             _supplies.OnSupplyChanged += HandleSupplyChange;
-            leftTurnCount = maxTurnCount;
-            turnText.SetText($"{leftTurnCount}/{maxTurnCount}");
+            LeftTurnCount = maxTurnCount;
+            turnText.SetText($"{LeftTurnCount}/{maxTurnCount}");
         }
 
         private void OnDestroy()
@@ -44,14 +44,14 @@ namespace Work.Code.Manager
 
         private void HandleTurnAmount(TurnAmountEvent evt)
         {
-            leftTurnCount += evt.Value;
-            turnText.SetText($"{leftTurnCount}/{maxTurnCount}");
+            LeftTurnCount += evt.Value;
+            turnText.SetText($"{LeftTurnCount}/{maxTurnCount}");
             CheckGameOver();
         }
 
         public void CheckGameOver()
         {
-            if (leftTurnCount <= 0)
+            if (LeftTurnCount <= 0)
             {
                 if (_supplies.CanMakeAnyFood() || foodPanel.IsHaveAnyFood()) return;
                 
