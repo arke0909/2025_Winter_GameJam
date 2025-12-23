@@ -450,25 +450,31 @@ namespace Work.Code.MatchSystem
 
             for (int x = 0; x < MapWidth; x++)
             {
-                int spawnIndex = 0;
+                int emptyCountInColumn = 0;
+                for (int y = 0; y < MapHeight; y++)
+                {
+                    if (DataMap[y, x].NodeType == NodeType.Empty) emptyCountInColumn++;
+                }
+
+                int currentSpawnOrder = 0; 
                 for (int y = 0; y < MapHeight; y++)
                 {
                     if (DataMap[y, x].NodeType != NodeType.Empty) continue;
 
                     int nodeIndex = GetSafeNonMatchingIndex(x, y);
-
                     Node node = Instantiate(nodePrefabs[nodeIndex], nodeBoard);
+            
                     bool isIced = Random.value <= icedNodeRate;
                     NodeMap[y, x] = node;
                     node.Init(x, y, this, isIced);
-
                     DataMap[y, x].SetNodeType(node.NodeType);
 
-                    float spawnY = CalcNodePosY(-1 - spawnIndex);
+                    float spawnY = CalcNodePosY(-(emptyCountInColumn - currentSpawnOrder));
+
                     node.SetPos(CalcNodePosX(x), spawnY, false);
                     moves.Add(node.SetPos(CalcNodePosX(x), CalcNodePosY(y)));
 
-                    spawnIndex++;
+                    currentSpawnOrder++;
                 }
             }
 
