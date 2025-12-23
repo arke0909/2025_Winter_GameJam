@@ -71,6 +71,7 @@ namespace Work.Code.Manager
         
         private void HandleGameEnd(GameEndEvent evt)
         {
+            if(!evt.IsSuccess) return;
             for (int i = 0; i < _stageData.mapClearData.Count; i++)
             {
                 if (_stageData.mapClearData[i].StageName == evt.StageName)
