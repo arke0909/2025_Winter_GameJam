@@ -7,6 +7,7 @@ using Lib.Utiles;
 using UnityEngine;
 using Work.Code.Events;
 using Work.Code.Items;
+using Work.Code.Manager;
 using Work.Code.Supply;
 using Random = UnityEngine.Random;
 
@@ -29,6 +30,7 @@ namespace Work.Code.MatchSystem
         [SerializeField] private PoolItemSO lockedEffectItem;
         [SerializeField] private PoolItemSO lineEffectItem;
         [SerializeField] private PoolItemSO threeXthreeEffectItem;
+        [SerializeField] private PoolItemSO nyanCatEffectItem;
         [SerializeField] private Node[] nodePrefabs;
         [SerializeField] private Node lockedNodePrefab;
         [SerializeField] private RectTransform nodeBoard;
@@ -665,13 +667,14 @@ namespace Work.Code.MatchSystem
 
         public void RemoveAllNode()
         {
-            
-            
             for (int y = 0; y < MapHeight; y++)
             for (int x = 0; x < MapWidth; x++)
             {
                 AddRemoveNode(x, y);
             }
+
+            Vector2 pos = new Vector2(15,0);
+            particleEventChannel.InvokeEvent(ParticleEvents.PlayUIParticleEvent.Initializer(nyanCatEffectItem, pos));
         }
 
         public void BreakIce()

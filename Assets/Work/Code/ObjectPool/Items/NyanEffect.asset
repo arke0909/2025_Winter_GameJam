@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: NyanEffect
   m_EditorClassIdentifier: 
   poolingName: NyanEffect
-  prefab: {fileID: 0}
+  prefab: {fileID: 2289306296704512968, guid: 0db265d7555504243807f3a9d5a12fb0, type: 3}
   initCount: 1
