@@ -510,6 +510,8 @@ namespace Work.Code.MatchSystem
         // 가로 한줄
         public void RemoveHorizontal(int y)
         {
+            if(y < 0 || y >= MapHeight) return;
+            
             for (int x = 0; x < MapWidth; ++x)
             {
                 AddRemoveNode(x, y);
@@ -519,6 +521,8 @@ namespace Work.Code.MatchSystem
         // 세로 한줄
         public void RemoveVertical(int x)
         {
+            if(x < 0 || x >= MapWidth) return;
+            
             for (int y = 0; y < MapHeight; ++y)
             {
                 AddRemoveNode(x, y);
