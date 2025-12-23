@@ -901,8 +901,7 @@ private bool CheckAnyMatchOnBoard()
             {
                 foreach (var data in set)
                 {
-                    Debug.Log(NodeMap[data.Pos.x, data.Pos.y].IsDestroyByItem);
-                    if(data.NodeType == NodeType.Locked || NodeMap[data.Pos.x, data.Pos.y].IsDestroyByItem) continue;
+                    if(data.NodeType == NodeType.Locked || NodeMap[data.Pos.y, data.Pos.x] == null || NodeMap[data.Pos.y, data.Pos.x].IsDestroyByItem) continue;
                     Vector2Int pos = data.Pos; // NodeData에 좌표 필요
                     TryBreakGimmick(pos.x + 1, pos.y, true);
                     TryBreakGimmick(pos.x - 1, pos.y, true);
