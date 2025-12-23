@@ -1379,8 +1379,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3161146155430743787}
   m_HandleRect: {fileID: 1248204027126439154}
   m_Direction: 2
-  m_Value: 0.073401496
-  m_Size: 0.13246982
+  m_Value: -0.00000023839937
+  m_Size: 0.1322413
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2301,6 +2301,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d4c01bc9947aac5448893fd91a8176a5, type: 2}
   foodChannel: {fileID: 11400000, guid: d4bd3427c23b02242841b959e26b94d1, type: 2}
   content: {fileID: 2298557025319006991}
+  movingImageTarget: {fileID: 2667745579992000326}
 --- !u!1 &4023132979874387972
 GameObject:
   m_ObjectHideFlags: 0
@@ -2337,8 +2338,8 @@ RectTransform:
   - {fileID: 6274295523956131630}
   - {fileID: 5942645661549995782}
   - {fileID: 702411206320204519}
-  - {fileID: 1143595976336933812}
   - {fileID: 6135750699228981319}
+  - {fileID: 1143595976336933812}
   m_Father: {fileID: 5559141398637108598}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2629,7 +2630,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 3795.6533}
+  m_AnchoredPosition: {x: 0, y: 4096.331}
   m_SizeDelta: {x: 17.35, y: 4721.83}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &6392516529081308553
