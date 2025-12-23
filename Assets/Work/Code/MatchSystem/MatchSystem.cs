@@ -28,6 +28,7 @@ namespace Work.Code.MatchSystem
         [SerializeField] private PoolItemSO particleItem;
         [SerializeField] private PoolItemSO icedEffectItem;
         [SerializeField] private PoolItemSO lockedEffectItem;
+        [SerializeField] private PoolItemSO lineEffectItem;
         [SerializeField] private Node[] nodePrefabs;
         [SerializeField] private Node lockedNodePrefab;
         [SerializeField] private RectTransform nodeBoard;
@@ -573,6 +574,10 @@ namespace Work.Code.MatchSystem
             {
                 AddRemoveNode(x, y);
             }
+
+            float posY = CalcNodePosY(y);
+            Vector2 pos = new Vector2(0, posY);
+            particleEventChannel.InvokeEvent(ParticleEvents.PlayUIParticleEvent.Initializer(lineEffectItem, pos));
         }
 
         // 세로 한줄
@@ -584,6 +589,10 @@ namespace Work.Code.MatchSystem
             {
                 AddRemoveNode(x, y);
             }
+            
+            float posX = CalcNodePosX(x);
+            Vector2 pos = new Vector2(posX, 0);
+            particleEventChannel.InvokeEvent(ParticleEvents.PlayUIParticleEvent.Initializer(lineEffectItem, pos));
         }
 
         // 맵의 모든 한 타입을 제거
