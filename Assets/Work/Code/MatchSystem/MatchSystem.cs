@@ -281,7 +281,7 @@ namespace Work.Code.MatchSystem
 
                 await SortingNodeMap();
             }
-            
+
             GameManager.Instance.CheckGameOver();
             await FillEmptyMap();
 
@@ -450,23 +450,25 @@ namespace Work.Code.MatchSystem
             for (int x = 0; x < MapWidth; x++)
             {
                 int spawnIndex = 0;
-
                 for (int y = MapHeight - 1; y >= 0; y--)
                 {
-                    if (DataMap[y, x].NodeType != NodeType.Empty)
-                        continue;
+                    if (DataMap[y, x].NodeType != NodeType.Empty) continue;
 
-                    Node node = CreateNode();
+                    int nodeIndex = GetPotentialMatchIndex(x, y);
+
+                    if (nodeIndex == -1)
+                    {
+                        nodeIndex = GetNonMatchingRandomIndex(x, y);
+                    }
+
+                    Node node = Instantiate(nodePrefabs[nodeIndex], nodeBoard);
                     bool isIced = Random.value <= icedNodeRate;
                     NodeMap[y, x] = node;
                     node.Init(x, y, this, isIced);
 
                     float spawnY = CalcNodePosY(-1 - spawnIndex);
                     node.SetPos(CalcNodePosX(x), spawnY, false);
-
-                    moves.Add(
-                        node.SetPos(CalcNodePosX(x), CalcNodePosY(y))
-                    );
+                    moves.Add(node.SetPos(CalcNodePosX(x), CalcNodePosY(y)));
 
                     DataMap[y, x].SetNodeType(node.NodeType);
                     spawnIndex++;
@@ -474,6 +476,50 @@ namespace Work.Code.MatchSystem
             }
 
             await UniTask.WhenAll(moves);
+        }
+
+        private int GetPotentialMatchIndex(int x, int y)
+        {
+            for (int i = 0; i < nodePrefabs.Length; i++)
+            {
+                NodeType type = nodePrefabs[i].NodeType;
+
+                if (CheckPotentialMatch(x, y, type)) return i;
+            }
+
+            return -1;
+        }
+
+        private bool CheckPotentialMatch(int x, int y, NodeType type)
+        {
+            int count = 0;
+            Vector2Int[] searchDirs = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
+
+            foreach (var dir in searchDirs)
+            {
+                if (IsSameType(x + dir.x * 2, y + dir.y * 2, type)) count++;
+                if (IsSameType(x + dir.x, y + dir.y + 1, type)) count++;
+                if (IsSameType(x + dir.x, y + dir.y - 1, type)) count++;
+            }
+
+            return count >= 1;
+        }
+
+        private int GetNonMatchingRandomIndex(int x, int y)
+        {
+            List<int> validIndices = new List<int>();
+            for (int i = 0; i < nodePrefabs.Length; i++)
+            {
+                NodeType type = nodePrefabs[i].NodeType;
+                bool isMatch = (IsSameType(x - 1, y, type) && IsSameType(x - 2, y, type)) ||
+                               (IsSameType(x, y - 1, type) && IsSameType(x, y - 2, type));
+
+                if (!isMatch) validIndices.Add(i);
+            }
+
+            return validIndices.Count > 0
+                ? validIndices[Random.Range(0, validIndices.Count)]
+                : Random.Range(0, nodePrefabs.Length);
         }
 
         private bool HasMatchAt(int x, int y)
@@ -524,6 +570,12 @@ namespace Work.Code.MatchSystem
             }
 
             return count >= 3;
+        }
+
+        private bool IsSameType(int x, int y, NodeType type)
+        {
+            if (IsOutBound(x, y)) return false;
+            return DataMap[y, x].NodeType == type;
         }
 
         #endregion
@@ -682,7 +734,7 @@ namespace Work.Code.MatchSystem
                 AddRemoveNode(x, y);
             }
 
-            Vector2 pos = new Vector2(15,0);
+            Vector2 pos = new Vector2(15, 0);
             particleEventChannel.InvokeEvent(ParticleEvents.PlayUIParticleEvent.Initializer(nyanCatEffectItem, pos));
         }
 
