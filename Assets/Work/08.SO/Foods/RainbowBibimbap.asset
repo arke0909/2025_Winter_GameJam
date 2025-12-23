@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e13ce9b5373a4e9db61a66eccf6abaca, type: 3}
   m_Name: RainbowBibimbap
   m_EditorClassIdentifier: 
+  itemTree: {fileID: 11400000, guid: 9b778774098d1f247be8f7c9a010f994, type: 2}
   Type: 10
   Icon: {fileID: 8989925582126008317, guid: b1b93880f7e869e45980f5b22914c460, type: 3}
   Name: "\uBB34\uC9C0\uAC1C \uBE44\uBE54\uBC25"

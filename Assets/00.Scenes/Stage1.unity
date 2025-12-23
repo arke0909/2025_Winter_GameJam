@@ -1725,6 +1725,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameEventChannel: {fileID: 11400000, guid: 36d7019071cc93a4ca58aa053b9da2bf, type: 2}
+  particleEventChannel: {fileID: 11400000, guid: fa37078802dbdd4489e0878985dd15bc, type: 2}
+  particleItem: {fileID: 11400000, guid: f406c9043e4ee1346ba496fd9e06f974, type: 2}
   nodePrefabs:
   - {fileID: 3987659002603952870, guid: bc0d77e211bb3824394b24bd13bab3d8, type: 3}
   - {fileID: 3987659002603952870, guid: 0564f18b2781e934bb11b576f2c3dc08, type: 3}

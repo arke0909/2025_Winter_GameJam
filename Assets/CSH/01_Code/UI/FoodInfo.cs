@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Work.Code.Events;
 using Work.Code.Food;
+using Work.Code.Items;
 using Work.Code.Supply;
 
 namespace CSH._01_Code.UI
@@ -20,6 +21,7 @@ namespace CSH._01_Code.UI
         [SerializeField] private TextMeshProUGUI priceText;
         [SerializeField] private Button Sell;
         [SerializeField] private Button Use;
+        private ItemTreeSO _itemTree;
         private FoodType _foodType;
         private int _count;
         private string _foodName;
@@ -27,12 +29,13 @@ namespace CSH._01_Code.UI
 
         public void Initialize(FoodDataSO data)
         {
+            _itemTree = data.itemTree;
             _foodType = data.Type;
             _count = 0;
             name = data.Type.ToString();
             _foodName = data.Name;
             _price = data.Price;
-            nameAndCountText.text = $"{_foodName} : {_count}°³";
+            nameAndCountText.text = $"{_foodName} : {_count}ï¿½ï¿½";
             descriptionText.text = data.Description;
             icon.sprite = data.Icon;
             priceText.text = $"{data.Price}G";
@@ -58,7 +61,7 @@ namespace CSH._01_Code.UI
 
         public void AddFoodCount()
         {
-            nameAndCountText.text = $"{_foodName} : {++_count}°³";
+            nameAndCountText.text = $"{_foodName} : {++_count}ï¿½ï¿½";
             if (_count > 0 && !isActiveAndEnabled)
             {
                 gameObject.SetActive(true);
@@ -68,7 +71,7 @@ namespace CSH._01_Code.UI
         public void MinusFoodCount()
         {
             if (_count <= 0) return;
-            nameAndCountText.text = $"{_foodName} : {--_count}°³";
+            nameAndCountText.text = $"{_foodName} : {--_count}ï¿½ï¿½";
             if (_count <= 0 && isActiveAndEnabled)
             {
                 gameObject.SetActive(false);
