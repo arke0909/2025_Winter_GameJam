@@ -7,7 +7,6 @@ using Lib.Utiles;
 using UnityEngine;
 using Work.Code.Events;
 using Work.Code.Items;
-using Work.Code.Manager;
 using Work.Code.Supply;
 using Random = UnityEngine.Random;
 
@@ -348,7 +347,8 @@ namespace Work.Code.MatchSystem
                     }
 
                     particleEventChannel.InvokeEvent(
-                        ParticleEvents.PlayUIParticleEvent.Initializer(particlePoolItem, NodeMap[y, x].CenterPos, Quaternion.identity));
+                        ParticleEvents.PlayUIParticleEvent.Initializer(particlePoolItem, NodeMap[y, x].CenterPos,
+                            Quaternion.identity));
                     Destroy(NodeMap[y, x].gameObject);
                     NodeMap[y, x] = null;
                 }
@@ -357,41 +357,78 @@ namespace Work.Code.MatchSystem
 
         private async UniTask SortingNodeMap()
         {
-            List<UniTask> moves = new();
-            for (int x = 0; x < MapWidth; x++)
+            bool changed = true;
+            List<UniTask> moves = new List<UniTask>();
+
+            while (changed)
             {
-                int writeY = MapHeight - 1;
-                for (int y = MapHeight - 1; y >= 0; y--)
+                changed = false;
+                for (int y = MapHeight - 1; y >= 1; y--)
                 {
-                    Node node = NodeMap[y, x];
-                    if (node == null) continue;
-
-                    if (node.TryGetComponent<LockedNode>(out _))
+                    for (int x = 0; x < MapWidth; x++)
                     {
-                        NodeMap[y, x] = node;
-                        writeY = y - 1;
-                        continue;
+                        if (NodeMap[y, x] == null && !IsLockedAt(x, y))
+                        {
+                            if (NodeMap[y - 1, x] != null && !IsLockedAt(x, y - 1))
+                            {
+                                MoveNodeInternal(x, y - 1, x, y, moves);
+                                changed = true;
+                            }
+                            else
+                            {
+                                if (IsPathBlockedByLock(x, y))
+                                {
+                                    int[] sideOffsets = { -1, 1 };
+                                    foreach (int dx in sideOffsets)
+                                    {
+                                        int nx = x + dx;
+                                        int ny = y - 1;
+
+                                        if (!IsOutBound(nx, ny) && NodeMap[ny, nx] != null && !IsLockedAt(nx, ny))
+                                        {
+                                            MoveNodeInternal(nx, ny, x, y, moves);
+                                            changed = true;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
-
-                    if (y != writeY)
-                    {
-                        NodeMap[writeY, x] = node;
-                        NodeMap[y, x] = null;
-
-                        DataMap[writeY, x].SetNodeType(DataMap[y, x].NodeType);
-                        DataMap[y, x].SetNodeType(NodeType.Empty);
-
-                        node.SetXY(x, writeY);
-                        moves.Add(
-                            node.SetPos(CalcNodePosX(x), CalcNodePosY(writeY))
-                        );
-                    }
-
-                    writeY--;
                 }
             }
 
-            await UniTask.WhenAll(moves);
+            if (moves.Count > 0)
+                await UniTask.WhenAll(moves);
+        }
+
+        private bool IsPathBlockedByLock(int x, int targetY)
+        {
+            for (int y = 0; y < targetY; y++)
+            {
+                if (IsLockedAt(x, y)) return true;
+            }
+
+            return false;
+        }
+
+        private void MoveNodeInternal(int fromX, int fromY, int toX, int toY, List<UniTask> moves)
+        {
+            Node node = NodeMap[fromY, fromX];
+            NodeMap[toY, toX] = node;
+            NodeMap[fromY, fromX] = null;
+
+            DataMap[toY, toX].SetNodeType(DataMap[fromY, fromX].NodeType);
+            DataMap[fromY, fromX].SetNodeType(NodeType.Empty);
+
+            node.SetXY(toX, toY);
+            moves.Add(node.SetPos(CalcNodePosX(toX), CalcNodePosY(toY)));
+        }
+
+        private bool IsLockedAt(int x, int y)
+        {
+            if (IsOutBound(x, y) || NodeMap[y, x] == null) return false;
+            return NodeMap[y, x].TryGetComponent<LockedNode>(out _);
         }
 
         private async UniTask FillEmptyMap()
@@ -528,7 +565,7 @@ namespace Work.Code.MatchSystem
                     {
                         movableNodes.Add(node);
                         targetPositions.Add(new Vector2Int(x, y));
-                
+
                         DataMap[y, x].SetNodeType(NodeType.Empty);
                         NodeMap[y, x] = null;
                     }
@@ -593,10 +630,11 @@ namespace Work.Code.MatchSystem
             {
                 AddRemoveNode(x, y);
             }
-            
-            float posX = NodeMap[0,x].CenterPos.x;
+
+            float posX = NodeMap[0, x].CenterPos.x;
             Vector2 pos = new Vector2(posX, 0);
-            particleEventChannel.InvokeEvent(ParticleEvents.PlayUIParticleEvent.Initializer(lineEffectItem, pos, Quaternion.Euler(new Vector3(0,0, 90f))));
+            particleEventChannel.InvokeEvent(ParticleEvents.PlayUIParticleEvent.Initializer(lineEffectItem, pos,
+                Quaternion.Euler(new Vector3(0, 0, 90f))));
         }
 
         // 맵의 모든 한 타입을 제거
@@ -626,6 +664,8 @@ namespace Work.Code.MatchSystem
 
         public void RemoveAllNode()
         {
+            
+            
             for (int y = 0; y < MapHeight; y++)
             for (int x = 0; x < MapWidth; x++)
             {
@@ -666,8 +706,9 @@ namespace Work.Code.MatchSystem
 
                 AddRemoveNode(nx, ny);
             }
-            
-            particleEventChannel.InvokeEvent(ParticleEvents.PlayUIParticleEvent.Initializer(threeXthreeEffectItem, NodeMap[y,x].CenterPos));
+
+            particleEventChannel.InvokeEvent(
+                ParticleEvents.PlayUIParticleEvent.Initializer(threeXthreeEffectItem, NodeMap[y, x].CenterPos));
         }
 
         #endregion
@@ -700,7 +741,8 @@ namespace Work.Code.MatchSystem
                 if (node != null && node.IsIced)
                 {
                     particleEventChannel.InvokeEvent(
-                        ParticleEvents.PlayUIParticleEvent.Initializer(icedEffectItem, node.CenterPos, Quaternion.identity));
+                        ParticleEvents.PlayUIParticleEvent.Initializer(icedEffectItem, node.CenterPos,
+                            Quaternion.identity));
                     node.Unfreeze();
                 }
                 else if (node != null && !node.IsIced && node.TryGetComponent(out LockedNode lockedNode))
@@ -719,7 +761,8 @@ namespace Work.Code.MatchSystem
                 if (node != null && node.IsIced)
                 {
                     particleEventChannel.InvokeEvent(
-                        ParticleEvents.PlayUIParticleEvent.Initializer(icedEffectItem, node.CenterPos, Quaternion.identity));
+                        ParticleEvents.PlayUIParticleEvent.Initializer(icedEffectItem, node.CenterPos,
+                            Quaternion.identity));
                     node.Unfreeze();
                 }
             }
