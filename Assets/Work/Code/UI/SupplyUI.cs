@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Lib.Dependencies;
 using TMPro;
 using UnityEngine;
+using Work.Code.Manager;
 using Work.Code.Supply;
 
 namespace Work.Code.UI
@@ -28,6 +29,7 @@ namespace Work.Code.UI
             {
                 _supplyTexts.Add(supplyText.type, supplyText.text);
             }
+            _supplyTexts[SupplyType.Gold].SetText($"0 / {GameManager.Instance.RequestGold}");
         }
         
         private void Start()
@@ -43,7 +45,11 @@ namespace Work.Code.UI
         private void HandleSupplyChange(SupplyType supplyType, int value)
         {
             if (_supplyTexts.ContainsKey(supplyType))
-                _supplyTexts[supplyType].SetText(value.ToString());
+            {
+                if (supplyType == SupplyType.Gold)
+                    _supplyTexts[supplyType].SetText($"{value} / {GameManager.Instance.RequestGold}");
+                else _supplyTexts[supplyType].SetText(value.ToString());
+            }
         }
 
     }

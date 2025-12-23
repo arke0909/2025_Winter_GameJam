@@ -1311,80 +1311,12 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3161146155430743787}
   m_HandleRect: {fileID: 1248204027126439154}
   m_Direction: 2
-  m_Value: 0.395014
+  m_Value: 0.19614784
   m_Size: 0.13246982
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!1 &2427321530135241256
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3130377986334021802}
-  - component: {fileID: 3311937622602753292}
-  - component: {fileID: 6924606015500620439}
-  m_Layer: 5
-  m_Name: GameBackground
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &3130377986334021802
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2427321530135241256}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8176366829601471048}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 800, y: 800}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &3311937622602753292
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2427321530135241256}
-  m_CullTransparentMesh: 1
---- !u!223 &6924606015500620439
-Canvas:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2427321530135241256}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_RenderMode: 2
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
-  m_PixelPerfect: 0
-  m_ReceivesEvents: 1
-  m_OverrideSorting: 1
-  m_OverridePixelPerfect: 0
-  m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 25
-  m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 101
-  m_TargetDisplay: 0
 --- !u!1 &2441006122439150436
 GameObject:
   m_ObjectHideFlags: 0
@@ -1558,7 +1490,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: -50}
-  m_SizeDelta: {x: 250, y: 100}
+  m_SizeDelta: {x: 400, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8759618742529562570
 CanvasRenderer:
@@ -1729,7 +1661,6 @@ MonoBehaviour:
   swapSound: {fileID: 11400000, guid: 468f267f771c54e4296254d90693a022, type: 2}
   removeSound: {fileID: 11400000, guid: dd9f6c02110a92240987a0abf0a03449, type: 2}
   iceBreakSound: {fileID: 11400000, guid: b0281ff00991df1498c10c624d1955ea, type: 2}
-  unlockSound: {fileID: 0}
   particleItem: {fileID: 11400000, guid: f406c9043e4ee1346ba496fd9e06f974, type: 2}
   icedEffectItem: {fileID: 11400000, guid: 2db09aefd3ee1ce459b9590d4b4a9f14, type: 2}
   lockedEffectItem: {fileID: 11400000, guid: 5df20eadae398004b99f7a7e6432baa7, type: 2}
@@ -1904,11 +1835,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 7902690090000527080}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -60, y: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 25, y: 0}
   m_SizeDelta: {x: 50, y: 50}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &8756883469764089886
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2057,8 +1988,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 110, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 50, y: 0}
+  m_SizeDelta: {x: 250, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8502365159423001926
 CanvasRenderer:
@@ -2284,8 +2215,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soundPlayer: {fileID: 11400000, guid: e7ed395fe5285c14687777045a90fa04, type: 2}
   sound: {fileID: 11400000, guid: b9be5c233bd5bf8409341fc39bc39f6a, type: 2}
-  movingImage: {fileID: 11400000, guid: 4bef319f950233d45be19dc440bab226, type: 2}
-  movingImagesParent: {fileID: 3130377986334021802}
   foodDatas:
   - {fileID: 11400000, guid: da4a3f0bdb8e7ca489d53485baf74d2e, type: 2}
   - {fileID: 11400000, guid: a39ab347239706b4d9e02d94df010f9d, type: 2}
@@ -2422,10 +2351,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soundPlayer: {fileID: 11400000, guid: e7ed395fe5285c14687777045a90fa04, type: 2}
   toggleUISound: {fileID: 11400000, guid: b9be5c233bd5bf8409341fc39bc39f6a, type: 2}
-  movingCrop: {fileID: 11400000, guid: 4bef319f950233d45be19dc440bab226, type: 2}
   supplyChannel: {fileID: 11400000, guid: 36d7019071cc93a4ca58aa053b9da2bf, type: 2}
-  cropImages: []
-  movingCropsParent: {fileID: 3130377986334021802}
 --- !u!1 &4187395122876865257
 GameObject:
   m_ObjectHideFlags: 0
@@ -2623,7 +2549,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 2478.2224}
+  m_AnchoredPosition: {x: 0, y: 3292.8435}
   m_SizeDelta: {x: 17.35, y: 4721.83}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &6392516529081308553
@@ -4027,7 +3953,6 @@ RectTransform:
   - {fileID: 5559141398637108598}
   - {fileID: 4821756588784642864}
   - {fileID: 7659567423978940578}
-  - {fileID: 3130377986334021802}
   - {fileID: 5704872950551358801}
   - {fileID: 3473810663669739781}
   - {fileID: 7902690090000527080}
@@ -7808,7 +7733,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 9009233775584865823, guid: f610395329e592b459ed6f66c2184e6b, type: 3}
+    - {fileID: 5052562610065205176, guid: f610395329e592b459ed6f66c2184e6b, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f610395329e592b459ed6f66c2184e6b, type: 3}

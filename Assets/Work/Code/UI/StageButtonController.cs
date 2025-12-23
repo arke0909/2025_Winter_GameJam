@@ -1,15 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using Lib.ObjectPool.RunTime;
 using UnityEngine;
 using Work.Code.Manager;
+using Work.Code.SoundSystem;
 
 namespace Work.Code.UI
 {
     public class StageButtonController : MonoBehaviour
     {
         [SerializeField] private List<StageButton> buttons;
+        [SerializeField] private PoolManagerMono poolManager;
+        [SerializeField] private PoolItemSO soundPlayer;
+        [SerializeField] private SoundSO bgm;
+        
         private void Start()
         {
+            poolManager.Pop<SoundPlayer>(soundPlayer).PlaySound(bgm);
+
             var data = StageManager.Instance.GetStageClearData();
             int idx = 0;
             for (; idx < data.Count; idx++)

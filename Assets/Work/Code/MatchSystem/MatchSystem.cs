@@ -453,25 +453,31 @@ namespace Work.Code.MatchSystem
 
             for (int x = 0; x < MapWidth; x++)
             {
-                int spawnIndex = 0;
+                int emptyCountInColumn = 0;
+                for (int y = 0; y < MapHeight; y++)
+                {
+                    if (DataMap[y, x].NodeType == NodeType.Empty) emptyCountInColumn++;
+                }
+
+                int currentSpawnOrder = 0; 
                 for (int y = 0; y < MapHeight; y++)
                 {
                     if (DataMap[y, x].NodeType != NodeType.Empty) continue;
 
                     int nodeIndex = GetSafeNonMatchingIndex(x, y);
-
                     Node node = Instantiate(nodePrefabs[nodeIndex], nodeBoard);
+            
                     bool isIced = Random.value <= icedNodeRate;
                     NodeMap[y, x] = node;
                     node.Init(x, y, this, isIced);
-
                     DataMap[y, x].SetNodeType(node.NodeType);
 
-                    float spawnY = CalcNodePosY(-1 - spawnIndex);
+                    float spawnY = CalcNodePosY(-(emptyCountInColumn - currentSpawnOrder));
+
                     node.SetPos(CalcNodePosX(x), spawnY, false);
                     moves.Add(node.SetPos(CalcNodePosX(x), CalcNodePosY(y)));
 
-                    spawnIndex++;
+                    currentSpawnOrder++;
                 }
             }
 
@@ -628,56 +634,101 @@ namespace Work.Code.MatchSystem
         }
 
         public async UniTask ShuffleBoard()
+{
+    if (_isSwapping) return;
+    _isSwapping = true;
+
+    List<Node> movableNodes = new List<Node>();
+    List<Vector2Int> targetPositions = new List<Vector2Int>();
+
+    for (int y = 0; y < MapHeight; y++)
+    {
+        for (int x = 0; x < MapWidth; x++)
         {
-            if (_isSwapping) return;
-            _isSwapping = true;
-
-            List<Node> movableNodes = new List<Node>();
-            List<Vector2Int> targetPositions = new List<Vector2Int>();
-
-            for (int y = 0; y < MapHeight; y++)
+            Node node = NodeMap[y, x];
+            if (node != null && !IsLockedAt(x, y))
             {
-                for (int x = 0; x < MapWidth; x++)
-                {
-                    Node node = NodeMap[y, x];
-                    if (node != null && !node.TryGetComponent<LockedNode>(out _))
-                    {
-                        movableNodes.Add(node);
-                        targetPositions.Add(new Vector2Int(x, y));
+                movableNodes.Add(node);
+                targetPositions.Add(new Vector2Int(x, y));
 
-                        DataMap[y, x].SetNodeType(NodeType.Empty);
-                        NodeMap[y, x] = null;
-                    }
-                }
+                DataMap[y, x].SetNodeType(NodeType.Empty);
+                NodeMap[y, x] = null;
             }
-
-            for (int i = 0; i < targetPositions.Count; i++)
-            {
-                int rnd = Random.Range(i, targetPositions.Count);
-                (targetPositions[i], targetPositions[rnd]) = (targetPositions[rnd], targetPositions[i]);
-            }
-
-            List<UniTask> moveTasks = new List<UniTask>();
-
-            for (int i = 0; i < movableNodes.Count; i++)
-            {
-                Node node = movableNodes[i];
-                Vector2Int newPos = targetPositions[i];
-
-                NodeMap[newPos.y, newPos.x] = node;
-                DataMap[newPos.y, newPos.x].SetNodeType(node.NodeType);
-                DataMap[newPos.y, newPos.x].SetPos(newPos);
-                node.SetXY(newPos.x, newPos.y);
-
-                moveTasks.Add(node.SetPos(CalcNodePosX(newPos.x), CalcNodePosY(newPos.y)));
-            }
-
-            await UniTask.WhenAll(moveTasks);
-
-            await ResolveBoard();
-
-            _isSwapping = false;
         }
+    }
+
+    int safetyNet = 0;
+    bool hasMatch;
+    
+    do
+    {
+        hasMatch = false;
+        
+        for (int i = 0; i < targetPositions.Count; i++)
+        {
+            int rnd = Random.Range(i, targetPositions.Count);
+            (targetPositions[i], targetPositions[rnd]) = (targetPositions[rnd], targetPositions[i]);
+        }
+
+        for (int i = 0; i < movableNodes.Count; i++)
+        {
+            Vector2Int pos = targetPositions[i];
+            DataMap[pos.y, pos.x].SetNodeType(movableNodes[i].NodeType);
+        }
+
+        if (CheckAnyMatchOnBoard()) 
+        {
+            hasMatch = true;
+        }
+
+        safetyNet++;
+    } while (hasMatch && safetyNet < 100);
+
+    List<UniTask> moveTasks = new List<UniTask>();
+
+    for (int i = 0; i < movableNodes.Count; i++)
+    {
+        Node node = movableNodes[i];
+        Vector2Int newPos = targetPositions[i];
+
+        NodeMap[newPos.y, newPos.x] = node;
+        DataMap[newPos.y, newPos.x].SetPos(newPos);
+        node.SetXY(newPos.x, newPos.y);
+
+        moveTasks.Add(node.SetPos(CalcNodePosX(newPos.x), CalcNodePosY(newPos.y)));
+    }
+
+    await UniTask.WhenAll(moveTasks);
+
+    await ResolveBoard();
+
+    _isSwapping = false;
+}
+
+private bool CheckAnyMatchOnBoard()
+{
+    for (int y = 0; y < MapHeight; y++)
+    {
+        for (int x = 0; x < MapWidth; x++)
+        {
+            NodeType type = DataMap[y, x].NodeType;
+            if (type == NodeType.Empty || type == NodeType.Locked) continue;
+
+            if (x < MapWidth - 2)
+            {
+                if (DataMap[y, x + 1].NodeType == type && DataMap[y, x + 2].NodeType == type)
+                    return true;
+            }
+
+            if (y < MapHeight - 2)
+            {
+                if (DataMap[y + 1, x].NodeType == type && DataMap[y + 2, x].NodeType == type)
+                    return true;
+            }
+        }
+    }
+    return false;
+}
 
         public void SetGetDouble(bool value)
         {
@@ -692,7 +743,20 @@ namespace Work.Code.MatchSystem
 
             for (int x = 0; x < MapWidth; ++x)
             {
-                AddRemoveNode(x, y);
+                if (DataMap[y, x].NodeType == NodeType.Locked)
+                {
+                    var locked = NodeMap[y, x].GetComponent<LockedNode>();
+                    if (locked.DiscountCnt())
+                    {
+                        AddRemoveNode(x, y);
+                    }
+                }
+                else if (NodeMap[y, x].IsIced)
+                {
+                    NodeMap[y,x].Unfreeze();
+                }
+                else
+                    AddRemoveNode(x, y);
             }
 
             float posY = NodeMap[y, 0].CenterPos.y;
@@ -707,7 +771,20 @@ namespace Work.Code.MatchSystem
 
             for (int y = 0; y < MapHeight; ++y)
             {
-                AddRemoveNode(x, y);
+                if (DataMap[y, x].NodeType == NodeType.Locked)
+                {
+                    var locked = NodeMap[y, x].GetComponent<LockedNode>();
+                    if (locked.DiscountCnt())
+                    {
+                        AddRemoveNode(x, y);
+                    }
+                }
+                else if (NodeMap[y, x].IsIced)
+                {
+                    NodeMap[y,x].Unfreeze();
+                }
+                else
+                    AddRemoveNode(x, y);
             }
 
             float posX = NodeMap[0, x].CenterPos.x;
@@ -724,7 +801,20 @@ namespace Work.Code.MatchSystem
             {
                 if (NodeMap[y, x] != null && DataMap[y, x].NodeType == type)
                 {
-                    AddRemoveNode(x, y);
+                    if (DataMap[y, x].NodeType == NodeType.Locked)
+                    {
+                        var locked = NodeMap[y, x].GetComponent<LockedNode>();
+                        if (locked.DiscountCnt())
+                        {
+                            AddRemoveNode(x, y);
+                        }
+                    }
+                    else if (NodeMap[y, x].IsIced)
+                    {
+                        NodeMap[y,x].Unfreeze();
+                    }
+                    else
+                        AddRemoveNode(x, y);
                 }
             }
         }

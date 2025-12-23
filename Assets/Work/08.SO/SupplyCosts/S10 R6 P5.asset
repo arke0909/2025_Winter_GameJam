@@ -10,10 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 69592e09dd884288b53f07c9410304fc, type: 3}
-  m_Name: T4 P4
+  m_Name: S10 R6 P5
   m_EditorClassIdentifier: 
   <CostSupplies>k__BackingField:
-  - type: 0
-    amount: 4
+  - type: 5
+    amount: 10
+  - type: 4
+    amount: 6
   - type: 3
-    amount: 4
+    amount: 5

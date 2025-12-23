@@ -25,7 +25,7 @@ namespace Work.Code.Manager
 
         [SerializeField] private FoodPanel foodPanel;
         
-        [field: SerializeField] private int requestGold { get; set; }
+        [field: SerializeField] public int RequestGold { get; private set; }
         
         [SerializeField] private TextMeshProUGUI turnText;
         [SerializeField] private int maxTurnCount;
@@ -60,7 +60,7 @@ namespace Work.Code.Manager
         {
             if (LeftTurnCount <= 0)
             {
-                if (foodPanel.IsHaveAnyFood() || _supplies.CanMakeAnyFood() || _supplies.IsEnoughGold(requestGold)) return;
+                if (foodPanel.IsHaveAnyFood() || _supplies.CanMakeAnyFood() || _supplies.IsEnoughGold(RequestGold)) return;
 
                 gameChannel.InvokeEvent(GameEvents.GameEndEvent.Initializer(SceneManager.GetActiveScene().name, false));
             }
@@ -68,7 +68,7 @@ namespace Work.Code.Manager
         
         private void HandleSetRequestGold(SetRequestGoldEvent evt)
         {
-            requestGold = evt.RequestGold;
+            RequestGold = evt.RequestGold;
         }
         
         private void HandleSupplyChange(SupplyType supplyType, int amount)
@@ -76,7 +76,7 @@ namespace Work.Code.Manager
             if(supplyType != SupplyType.Gold) return;
             poolManager.Pop<SoundPlayer>(soundPlayer).PlaySound(coinSound);
 
-            if (amount >= requestGold)
+            if (amount >= RequestGold)
             {
                 Debug.Log($"목표치 도달 {amount}");
                 gameChannel.InvokeEvent(GameEvents.GameEndEvent.Initializer(SceneManager.GetActiveScene().name, true));

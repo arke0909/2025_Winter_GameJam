@@ -19,5 +19,5 @@ MonoBehaviour:
   Description: "\uB2EC\uCF64\uD55C \uACE0\uAD6C\uB9C8\uAC00 \uC5B4\uC6B0\uB7EC\uC9C4
     \uBD80\uB4DC\uB7EC\uC6B4 \uD30C\uC2A4\uD0C0.\n\uC120\uD0DD\uD55C \uC7AC\uB8CC
     1\uC885\uC744 \uBC2D\uC5D0\uC11C \uBAA8\uB450 \uC218\uD655\uD569\uB2C8\uB2E4."
-  Price: 600
+  Price: 800
   cost: {fileID: 11400000, guid: 2dc2d3e4a79ad3e4384028d1b8d491b7, type: 2}
