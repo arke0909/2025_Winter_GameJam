@@ -9,13 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c85fd76d555d476f86135f08575bc1fd, type: 3}
-  m_Name: Unlock
+  m_Script: {fileID: 11500000, guid: 0186317e820cf7746910ded45306b8de, type: 3}
+  m_Name: MovingImage
   m_EditorClassIdentifier: 
-  audioType: 0
-  clip: {fileID: 8300000, guid: f8048bb0315199e4e89733bf9cb8554e, type: 3}
-  loop: 0
-  randomizePitch: 1
-  randomPitchModifier: 0.1
-  volume: 1.16
-  pitch: 1.26
+  poolingName: MovingImage
+  prefab: {fileID: 3686847719751348777, guid: 44e70d4ef33cc954588b6e4833806c88, type: 3}
+  initCount: 0

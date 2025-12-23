@@ -337,6 +337,8 @@ namespace Work.Code.MatchSystem
                     supplyEventChannel.InvokeEvent(
                         SupplyEvents.SupplyEvent.Initializer
                             ((SupplyType)kv.Key, count));
+                    supplyEventChannel.InvokeEvent(
+                        SupplyEvents.MatchSupplyEvent.Initializer(kv.Value));
                 }
 
                 foreach (var data in kv.Value)

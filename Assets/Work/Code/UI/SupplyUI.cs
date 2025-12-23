@@ -45,5 +45,6 @@ namespace Work.Code.UI
             if (_supplyTexts.ContainsKey(supplyType))
                 _supplyTexts[supplyType].SetText(value.ToString());
         }
+
     }
 }

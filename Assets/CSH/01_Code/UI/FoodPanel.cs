@@ -34,6 +34,8 @@ namespace CSH._01_Code.UI
         [SerializeField] private PoolItemSO soundPlayer;
         [SerializeField] private SoundSO sound;
         [Inject] private PoolManagerMono poolManager;
+        [SerializeField] private PoolItemSO movingImage;
+        [SerializeField] private Transform movingImagesParent;
         [SerializeField] private FoodDataSO[] foodDatas;
         [SerializeField] private EventChannelSO foodChannel;
         [SerializeField] private Transform content;
@@ -55,12 +57,16 @@ namespace CSH._01_Code.UI
             }
             foodChannel.AddListener<FoodIncreasEvent>(HandleFoodIncrease);
             foodChannel.AddListener<FoodDecreasEvent>(HandleFoodDecrease);
+            foodChannel.AddListener<FoodMovingEvent>(HandleMovingFood);
+
+            
         }
 
         private void OnDestroy()
         {
             foodChannel.RemoveListener<FoodIncreasEvent>(HandleFoodIncrease);
             foodChannel.RemoveListener<FoodDecreasEvent>(HandleFoodDecrease);
+            foodChannel.RemoveListener<FoodMovingEvent>(HandleMovingFood);
         }
 
         public void TogglePanel()
@@ -85,6 +91,15 @@ namespace CSH._01_Code.UI
         {
             foodInfos[(int)evt.FoodType].AddFoodCount();
         }
+
+        public void HandleMovingFood(FoodMovingEvent evt)
+        {
+            Transform target = foodInfos[(int)evt.FoodType].transform.GetChild(1);
+            var mc = poolManager.Pop<MovingImage>(movingImage);
+            mc.transform.SetParent(movingImagesParent);
+            mc.SetImageAndMoveToTarget(foodDatas[(int)evt.FoodType].Icon, evt.Start, target);
+        }
+
         public void HandleFoodDecrease(FoodDecreasEvent evt)
         {
             foodInfos[(int)evt.FoodType].MinusFoodCount();
