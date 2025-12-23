@@ -451,27 +451,23 @@ namespace Work.Code.MatchSystem
             for (int x = 0; x < MapWidth; x++)
             {
                 int spawnIndex = 0;
-                for (int y = MapHeight - 1; y >= 0; y--)
+                for (int y = 0; y < MapHeight; y++)
                 {
                     if (DataMap[y, x].NodeType != NodeType.Empty) continue;
 
-                    int nodeIndex = GetPotentialMatchIndex(x, y);
-
-                    if (nodeIndex == -1)
-                    {
-                        nodeIndex = GetNonMatchingRandomIndex(x, y);
-                    }
+                    int nodeIndex = GetSafeNonMatchingIndex(x, y);
 
                     Node node = Instantiate(nodePrefabs[nodeIndex], nodeBoard);
                     bool isIced = Random.value <= icedNodeRate;
                     NodeMap[y, x] = node;
                     node.Init(x, y, this, isIced);
 
+                    DataMap[y, x].SetNodeType(node.NodeType);
+
                     float spawnY = CalcNodePosY(-1 - spawnIndex);
                     node.SetPos(CalcNodePosX(x), spawnY, false);
                     moves.Add(node.SetPos(CalcNodePosX(x), CalcNodePosY(y)));
 
-                    DataMap[y, x].SetNodeType(node.NodeType);
                     spawnIndex++;
                 }
             }
@@ -479,48 +475,44 @@ namespace Work.Code.MatchSystem
             await UniTask.WhenAll(moves);
         }
 
-        private int GetPotentialMatchIndex(int x, int y)
+        private int GetSafeNonMatchingIndex(int x, int y)
         {
+            List<int> safeIndices = new List<int>();
+        
             for (int i = 0; i < nodePrefabs.Length; i++)
             {
-                NodeType type = nodePrefabs[i].NodeType;
-
-                if (CheckPotentialMatch(x, y, type)) return i;
+                NodeType typeToCheck = nodePrefabs[i].NodeType;
+                bool causesMatch = false;
+        
+                if (x >= 2)
+                {
+                    if (IsSameType(x - 1, y, typeToCheck) && IsSameType(x - 2, y, typeToCheck))
+                        causesMatch = true;
+                }
+        
+                if (!causesMatch && y >= 2)
+                {
+                    if (IsSameType(x, y - 1, typeToCheck) && IsSameType(x, y - 2, typeToCheck))
+                        causesMatch = true;
+                }
+        
+                if (!causesMatch)
+                {
+                    if (IsSameType(x - 1, y, typeToCheck) && IsSameType(x + 1, y, typeToCheck))
+                        causesMatch = true;
+                    if (IsSameType(x, y - 1, typeToCheck) && IsSameType(x, y + 1, typeToCheck))
+                        causesMatch = true;
+                }
+        
+                if (!causesMatch)
+                {
+                    safeIndices.Add(i);
+                }
             }
-
-            return -1;
-        }
-
-        private bool CheckPotentialMatch(int x, int y, NodeType type)
-        {
-            int count = 0;
-            Vector2Int[] searchDirs = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
-
-            foreach (var dir in searchDirs)
-            {
-                if (IsSameType(x + dir.x * 2, y + dir.y * 2, type)) count++;
-                if (IsSameType(x + dir.x, y + dir.y + 1, type)) count++;
-                if (IsSameType(x + dir.x, y + dir.y - 1, type)) count++;
-            }
-
-            return count >= 1;
-        }
-
-        private int GetNonMatchingRandomIndex(int x, int y)
-        {
-            List<int> validIndices = new List<int>();
-            for (int i = 0; i < nodePrefabs.Length; i++)
-            {
-                NodeType type = nodePrefabs[i].NodeType;
-                bool isMatch = (IsSameType(x - 1, y, type) && IsSameType(x - 2, y, type)) ||
-                               (IsSameType(x, y - 1, type) && IsSameType(x, y - 2, type));
-
-                if (!isMatch) validIndices.Add(i);
-            }
-
-            return validIndices.Count > 0
-                ? validIndices[Random.Range(0, validIndices.Count)]
-                : Random.Range(0, nodePrefabs.Length);
+        
+            if (safeIndices.Count == 0) return Random.Range(0, nodePrefabs.Length);
+        
+            return safeIndices[Random.Range(0, safeIndices.Count)];
         }
 
         private bool HasMatchAt(int x, int y)
@@ -576,6 +568,8 @@ namespace Work.Code.MatchSystem
         private bool IsSameType(int x, int y, NodeType type)
         {
             if (IsOutBound(x, y)) return false;
+            if (DataMap[y, x].NodeType == NodeType.Empty) return false;
+    
             return DataMap[y, x].NodeType == type;
         }
 
