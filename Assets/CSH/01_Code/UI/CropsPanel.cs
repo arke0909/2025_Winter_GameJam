@@ -39,6 +39,11 @@ namespace CSH._01_Code.UI
             supplyChannel.AddListener<MatchSupplyEvent>(HandleMatchSupplyEvent);
         }
 
+        private void OnDestroy()
+        {
+            supplyChannel.RemoveListener<MatchSupplyEvent>(HandleMatchSupplyEvent);
+        }
+
         private void HandleMatchSupplyEvent(MatchSupplyEvent evt)
         {
             foreach (var a in evt.MatchedNodes)
