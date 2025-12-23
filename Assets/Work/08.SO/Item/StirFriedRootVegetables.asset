@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af5d570b912a4b44b6f2fc8a94decfbf, type: 3}
   m_Name: StirFriedRootVegetables
   m_EditorClassIdentifier: 
+  isImmediately: 1
   effectNodes:
   - {fileID: 11400000, guid: 519cadf6e7bc11d4db2cdd332f95aafe, type: 2}

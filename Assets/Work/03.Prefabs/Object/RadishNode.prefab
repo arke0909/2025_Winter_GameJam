@@ -164,7 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b194dfe880124bfb869f8c4325508e94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nodeType: 5
+  nodeType: 4
   icedImage: {fileID: 1438796411287961852}
   deltaThreshold: 50
   nodeMoveSpeed: 350

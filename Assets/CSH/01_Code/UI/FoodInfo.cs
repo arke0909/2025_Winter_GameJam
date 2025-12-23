@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using Work.Code.Events;
 using Work.Code.Food;
 using Work.Code.Items;
+using Work.Code.Manager;
 using Work.Code.Supply;
 
 namespace CSH._01_Code.UI
@@ -50,7 +51,7 @@ namespace CSH._01_Code.UI
         private void OnClickUse()
         {
             foodChannel.InvokeEvent(FoodEvents.FoodDecreaseEvent.Initializer(_foodType));
-
+            ItemManager.Instance.SetData(_foodType, _itemTree);
         }
 
         private void OnClickSell()

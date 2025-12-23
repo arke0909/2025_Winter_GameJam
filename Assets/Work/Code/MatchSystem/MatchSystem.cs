@@ -1,9 +1,12 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
+using Lib.Dependencies;
 using Lib.ObjectPool.RunTime;
 using Lib.Utiles;
 using UnityEngine;
 using Work.Code.Events;
+using Work.Code.Items;
 using Work.Code.Manager;
 using Work.Code.Supply;
 using Random = UnityEngine.Random;
@@ -16,7 +19,8 @@ namespace Work.Code.MatchSystem
         public int count;
     }
 
-    public class MatchSystem : MonoBehaviour
+    [Provide]
+    public class MatchSystem : MonoBehaviour, IDependencyProvider
     {
         [SerializeField] private EventChannelSO supplyEventChannel;
         [SerializeField] private EventChannelSO gameEventChannel;
@@ -43,6 +47,7 @@ namespace Work.Code.MatchSystem
         private bool _isSwapping;
         private bool _isGetDouble;
         private int _getDoubleCnt;
+        private ItemTreeSO _pendingItem;
 
         private readonly Dictionary<NodeType, HashSet<NodeData>> _removeNodesDict = new();
 
@@ -189,19 +194,35 @@ namespace Work.Code.MatchSystem
         {
             while (true)
             {
-                bool isMatch = CheckMatch();
-                if (!isMatch)
+                bool hasForcedRemoval = false;
+                foreach (var set in _removeNodesDict.Values)
+                {
+                    if (set.Count > 0)
+                    {
+                        hasForcedRemoval = true;
+                        break;
+                    }
+                }
+                
+                bool isMatch = CheckMatch(); 
+
+                if (!isMatch && !hasForcedRemoval)
                     break;
+                
 
                 BreakAdjacentIce();
                 GetIngredient();
                 RemoveNode();
 
+                foreach (var set in _removeNodesDict.Values)
+                    set.Clear();
+                
                 await SortingNodeMap();
             }
 
             await FillEmptyMap();
-
+            
+            
             if (CheckMatch())
             {
                 await ResolveBoard();
@@ -210,8 +231,7 @@ namespace Work.Code.MatchSystem
 
         private bool CheckMatch()
         {
-            foreach (var set in _removeNodesDict.Values)
-                set.Clear();
+            
 
             bool hasMatch = false;
 
@@ -402,11 +422,40 @@ namespace Work.Code.MatchSystem
 
         #region Item Function
 
+        public async Task EnterTargetingMode(ItemTreeSO item)
+        {
+            if (_isSwapping) return;
+            if (item.isImmediately)
+            {
+                item.Execute(this, null);
+                
+                await ResolveBoard();
+            }
+            else
+                _pendingItem = item;
+        }
+
+        public async void OnNodeClicked(Node node)
+        {
+            if (_pendingItem == null || _isSwapping) return;
+
+            ItemTreeSO item = _pendingItem;
+            _pendingItem = null;
+            _isSwapping = true;
+
+            item.Execute(this, DataMap[node.Y, node.X]);
+
+            await ResolveBoard();
+
+            _isSwapping = false;
+        }
         public async UniTask ShuffleBoard()
         {
             if (_isSwapping) return;
             _isSwapping = true;
 
+            Debug.Log("셔플");
+            
             List<Node> movableNodes = new List<Node>();
             List<Vector2Int> targetPositions = new List<Vector2Int>();
 
@@ -475,13 +524,6 @@ namespace Work.Code.MatchSystem
             }
         }
 
-        // 십자
-        public void RemoveCross(int x, int y)
-        {
-            RemoveVertical(x);
-            RemoveHorizontal(y);
-        }
-
         // 맵의 모든 한 타입을 제거
         public void RemoveNodeByType(NodeType type)
         {
@@ -536,15 +578,17 @@ namespace Work.Code.MatchSystem
 
         public void Remove8Direction(int x, int y)
         {
-            AddRemoveNode(x, y);
+            if (!IsOutBound(x, y))
+                AddRemoveNode(x, y);
 
             for (int i = 0; i < 8; i++)
             {
                 int nx = x + _eightDirection[i].x;
                 int ny = y + _eightDirection[i].y;
-                
-                if(IsOutBound(x, y)) continue;
-                
+        
+                if (IsOutBound(nx, ny)) 
+                    continue;
+        
                 AddRemoveNode(nx, ny);
             }
         }
