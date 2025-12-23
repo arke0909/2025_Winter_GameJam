@@ -798,6 +798,7 @@ namespace Work.Code.MatchSystem
             {
                 foreach (var data in set)
                 {
+                    if(data.NodeType == NodeType.Locked) continue;
                     Vector2Int pos = data.Pos; // NodeData에 좌표 필요
                     TryBreakGimmick(pos.x + 1, pos.y, true);
                     TryBreakGimmick(pos.x - 1, pos.y, true);
