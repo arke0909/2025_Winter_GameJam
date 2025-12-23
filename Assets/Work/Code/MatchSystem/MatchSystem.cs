@@ -227,7 +227,6 @@ namespace Work.Code.MatchSystem
             NodeType type = DataMap[y, x].NodeType;
             if (type == NodeType.Empty)
                 return;
-
             _removeNodesDict[type].Add(DataMap[y, x]);
         }
 
@@ -235,7 +234,7 @@ namespace Work.Code.MatchSystem
         {
             foreach (var kv in _removeNodesDict)
             {
-                if (kv.Value.Count == 0 || (int)kv.Key > 5) continue;
+                if (kv.Value.Count == 0) continue;
 
                 int count = kv.Value.Count;
 
@@ -245,10 +244,13 @@ namespace Work.Code.MatchSystem
                     _getDoubleCnt--;
                     _isGetDouble = _getDoubleCnt != 0;
                 }
-                
-                gameEventChannel.InvokeEvent(
-                    SupplyEvents.SupplyEvent.Initializer
-                        ((SupplyType)kv.Key, count));
+
+                if ((int)kv.Key <= 5)
+                {
+                    gameEventChannel.InvokeEvent(
+                        SupplyEvents.SupplyEvent.Initializer
+                            ((SupplyType)kv.Key, count));
+                }
 
                 foreach (var data in kv.Value)
                     data.SetNodeType(NodeType.Empty);
@@ -472,7 +474,7 @@ namespace Work.Code.MatchSystem
             for (int y = 0; y < MapHeight; y++)
             for (int x = 0; x < MapWidth; x++)
             {
-                TryBreakGimmick(x, y, false);
+                TryBreakGimmick(x, y, false, false);
             }
         }
 
@@ -500,19 +502,37 @@ namespace Work.Code.MatchSystem
                 foreach (var data in set)
                 {
                     Vector2Int pos = data.Pos; // NodeData에 좌표 필요
-                    TryBreakGimmick(pos.x + 1, pos.y);
-                    TryBreakGimmick(pos.x - 1, pos.y);
-                    TryBreakGimmick(pos.x, pos.y + 1);
-                    TryBreakGimmick(pos.x, pos.y - 1);
+                    TryBreakGimmick(pos.x + 1, pos.y, true);
+                    TryBreakGimmick(pos.x - 1, pos.y, true);
+                    TryBreakGimmick(pos.x, pos.y + 1, true);
+                    TryBreakGimmick(pos.x, pos.y - 1, true);
                 }
             }
         }
 
-        private void TryBreakGimmick(int x, int y, bool targetIsIced = true)
+        private void TryBreakGimmick(int x, int y, bool targetIsEvery = false,bool targetIsIced = true)
         {
             if (IsOutBound(x, y)) return;
 
             Node node = NodeMap[y, x];
+
+            if (targetIsEvery)
+            {
+                if (node != null && node.IsIced)
+                {
+                    node.Unfreeze();
+                }
+                else if (node != null && !node.IsIced && node.TryGetComponent(out LockedNode lockedNode))
+                {
+                    if (lockedNode.DiscountCnt())
+                    {
+                        AddRemoveNode(node.X, node.Y);
+                    }
+                }
+                
+                return;
+            }
+            
             if (targetIsIced)
             {
                 if (node != null && node.IsIced)
