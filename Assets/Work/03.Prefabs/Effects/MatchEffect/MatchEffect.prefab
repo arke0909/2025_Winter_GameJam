@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7301214503285179391}
   - component: {fileID: 1132895174698878609}
   m_Layer: 0
-  m_Name: Test
+  m_Name: MatchEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

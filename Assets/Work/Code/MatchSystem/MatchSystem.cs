@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using Lib.ObjectPool.RunTime;
 using Lib.Utiles;
 using UnityEngine;
 using Work.Code.Events;
@@ -17,6 +18,8 @@ namespace Work.Code.MatchSystem
     public class MatchSystem : MonoBehaviour
     {
         [SerializeField] private EventChannelSO gameEventChannel;
+        [SerializeField] private EventChannelSO particleEventChannel;
+        [SerializeField] private PoolItemSO particleItem;
         [SerializeField] private Node[] nodePrefabs;
         [SerializeField] private Node lockedNodePrefab;
         [SerializeField] private RectTransform nodeBoard;
@@ -264,6 +267,7 @@ namespace Work.Code.MatchSystem
             {
                 if (DataMap[y, x].NodeType == NodeType.Empty && NodeMap[y, x] != null)
                 {
+                    particleEventChannel.InvokeEvent(ParticleEvents.PlayUIParticleEvent.Initializer(particleItem, NodeMap[y, x].CenterPos));
                     Destroy(NodeMap[y, x].gameObject);
                     NodeMap[y, x] = null;
                 }

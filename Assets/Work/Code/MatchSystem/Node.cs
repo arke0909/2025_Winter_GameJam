@@ -24,9 +24,12 @@ namespace Work.Code.MatchSystem
         public float XPos { get; private set; } 
         public float YPos { get; private set; } 
         
+        public Vector2 CenterPos { get; private set; }
+        
         private MatchSystem _matchSystem;
         
         private Vector2 _onPressPos;
+
         private bool _dragged;
         private bool _isIced;
         
@@ -35,6 +38,9 @@ namespace Work.Code.MatchSystem
             _matchSystem = matchSystem;
             _isIced = isIced;
             icedImage.enabled = isIced;
+            
+            CenterPos = Rect.TransformPoint(Rect.rect.center);
+            
             SetXY(x, y);
         }
 
@@ -53,9 +59,12 @@ namespace Work.Code.MatchSystem
             XPos = x;
             YPos = y;
 
+
             if (!isTween)
             {
                 Rect.anchoredPosition = target;
+                CenterPos = Rect.TransformPoint(Rect.rect.center);
+
                 return;
             }
 
@@ -67,6 +76,7 @@ namespace Work.Code.MatchSystem
                 await Rect
                     .DOAnchorPos(target, duration)
                     .SetEase(Ease.OutQuad)
+                    .OnComplete(() => CenterPos = Rect.TransformPoint(Rect.rect.center))
                     .AsyncWaitForCompletion();
             }
             catch
