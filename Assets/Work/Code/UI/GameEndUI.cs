@@ -1,6 +1,7 @@
 ﻿using System;
 using DG.Tweening;
 using Lib.Utiles;
+using TMPro;
 using UnityEngine;
 using Work.Code.Events;
 
@@ -9,6 +10,7 @@ namespace Work.Code.UI
     public class GameEndUI : MonoBehaviour
     {
         [SerializeField] private EventChannelSO gameChannel;
+        [SerializeField] private TextMeshProUGUI titleText;
         
         private RectTransform _rectTrm;
         private Vector2 _originalPos;
@@ -30,6 +32,7 @@ namespace Work.Code.UI
 
         private void HandleGameEnd(GameEndEvent evt)
         {
+            titleText.SetText(evt.IsSuccess ? "성공" : "실패");
             foreach (var data in _supplyData)
             {
                 data.SetUp();

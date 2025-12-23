@@ -1,4 +1,5 @@
 ﻿using System;
+using CSH._01_Code.UI;
 using Lib.Dependencies;
 using Lib.Utiles;
 using TMPro;
@@ -15,6 +16,8 @@ namespace Work.Code.Manager
         [SerializeField] private EventChannelSO gameChannel;
         [SerializeField] private EventChannelSO supplyChannel;
 
+        [SerializeField] private FoodPanel foodPanel;
+        
         [field: SerializeField] private int requestGold { get; set; }
         
         [SerializeField] private TextMeshProUGUI turnText;
@@ -41,10 +44,19 @@ namespace Work.Code.Manager
         {
             leftTurnCount += evt.Value;
             turnText.SetText($"{leftTurnCount}/{maxTurnCount}");
-            if(leftTurnCount <= 0)
-                gameChannel.InvokeEvent(GameEvents.GameEndEvent.Initializer(SceneManager.GetActiveScene().name, false));
+            CheckGameOver();
         }
 
+        public void CheckGameOver()
+        {
+            if (leftTurnCount <= 0)
+            {
+                if (_supplies.CanMakeAnyFood() || foodPanel.IsHaveAnyFood()) return;
+                
+                gameChannel.InvokeEvent(GameEvents.GameEndEvent.Initializer(SceneManager.GetActiveScene().name, false));
+            }
+        }
+        
         private void HandleSetRequestGold(SetRequestGoldEvent evt)
         {
             requestGold = evt.RequestGold;

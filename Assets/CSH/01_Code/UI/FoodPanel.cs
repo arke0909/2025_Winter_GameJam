@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using Work.Code.Food;
+using Work.Code.Manager;
 
 public enum FoodType
 {
@@ -78,8 +79,17 @@ namespace CSH._01_Code.UI
         public void HandleFoodDecrease(FoodDecreasEvent evt)
         {
             foodInfos[(int)evt.FoodType].MinusFoodCount();
+            GameManager.Instance.CheckGameOver();
         }
 
-
+        public bool IsHaveAnyFood()
+        {
+            foreach (var food in foodInfos)
+            {
+                if (food.Count > 0) return true;
+            }
+            
+            return false;
+        }
     }
 }
