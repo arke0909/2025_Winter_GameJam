@@ -118,6 +118,7 @@ namespace Work.Code.UI
                     (SupplyEvents.SupplyEvent.Initializer(supply.type, - supply.amount)); // 재료들 지우기
             }
             foodChannel.InvokeEvent(FoodEvents.FoodIncreaseEvent.Initializer(foodData.Type));
+            foodChannel.InvokeEvent(FoodEvents.FoodMovingEvent.Initializer(foodData.Type, this.transform));
         }
     }
 }

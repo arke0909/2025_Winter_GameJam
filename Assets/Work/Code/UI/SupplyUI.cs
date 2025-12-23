@@ -51,5 +51,6 @@ namespace Work.Code.UI
                 else _supplyTexts[supplyType].SetText(value.ToString());
             }
         }
+
     }
 }
