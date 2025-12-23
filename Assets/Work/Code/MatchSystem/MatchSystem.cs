@@ -756,7 +756,10 @@ private bool CheckAnyMatchOnBoard()
                     NodeMap[y,x].Unfreeze();
                 }
                 else
+                {
+                    NodeMap[y, x].DestroyState();
                     AddRemoveNode(x, y);
+                }
             }
 
             float posY = NodeMap[y, 0].CenterPos.y;
@@ -784,7 +787,10 @@ private bool CheckAnyMatchOnBoard()
                     NodeMap[y,x].Unfreeze();
                 }
                 else
+                {
+                    NodeMap[y, x].DestroyState();
                     AddRemoveNode(x, y);
+                }
             }
 
             float posX = NodeMap[0, x].CenterPos.x;
@@ -814,7 +820,10 @@ private bool CheckAnyMatchOnBoard()
                         NodeMap[y,x].Unfreeze();
                     }
                     else
+                    {
+                        NodeMap[y, x].DestroyState();
                         AddRemoveNode(x, y);
+                    }
                 }
             }
         }
@@ -857,7 +866,8 @@ private bool CheckAnyMatchOnBoard()
             for (int y = 0; y < MapHeight; y++)
             for (int x = 0; x < MapWidth; x++)
             {
-                AddRemoveNode(x, y);
+                if(NodeMap[y,x].NodeType == NodeType.Locked)
+                    AddRemoveNode(x, y);
             }
         }
 
@@ -891,7 +901,8 @@ private bool CheckAnyMatchOnBoard()
             {
                 foreach (var data in set)
                 {
-                    if(data.NodeType == NodeType.Locked) continue;
+                    Debug.Log(NodeMap[data.Pos.x, data.Pos.y].IsDestroyByItem);
+                    if(data.NodeType == NodeType.Locked || NodeMap[data.Pos.x, data.Pos.y].IsDestroyByItem) continue;
                     Vector2Int pos = data.Pos; // NodeData에 좌표 필요
                     TryBreakGimmick(pos.x + 1, pos.y, true);
                     TryBreakGimmick(pos.x - 1, pos.y, true);
