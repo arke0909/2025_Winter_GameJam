@@ -191,6 +191,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66312af822d5cf14697b512a29b5c570, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundPlayer: {fileID: 11400000, guid: e7ed395fe5285c14687777045a90fa04, type: 2}
+  useFoodSound: {fileID: 11400000, guid: 2ad2a89b58321df4f956e201b05eaf4a, type: 2}
   foodChannel: {fileID: 11400000, guid: d4bd3427c23b02242841b959e26b94d1, type: 2}
   supplyChannel: {fileID: 11400000, guid: 36d7019071cc93a4ca58aa053b9da2bf, type: 2}
   icon: {fileID: 7951188575724460505}

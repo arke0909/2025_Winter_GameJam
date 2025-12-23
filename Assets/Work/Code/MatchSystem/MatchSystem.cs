@@ -8,6 +8,7 @@ using UnityEngine;
 using Work.Code.Events;
 using Work.Code.Items;
 using Work.Code.Manager;
+using Work.Code.SoundSystem;
 using Work.Code.Supply;
 using Random = UnityEngine.Random;
 
@@ -25,6 +26,10 @@ namespace Work.Code.MatchSystem
         [SerializeField] private EventChannelSO supplyEventChannel;
         [SerializeField] private EventChannelSO gameEventChannel;
         [SerializeField] private EventChannelSO particleEventChannel;
+        [SerializeField] private PoolItemSO soundPlayer;
+        [SerializeField] private SoundSO swapSound;
+        [SerializeField] private SoundSO removeSound;
+        [Inject] private PoolManagerMono poolManager;
         [SerializeField] private PoolItemSO particleItem;
         [SerializeField] private PoolItemSO icedEffectItem;
         [SerializeField] private PoolItemSO lockedEffectItem;
@@ -224,6 +229,8 @@ namespace Work.Code.MatchSystem
 
         private async UniTask SwapInternal(Node a, Node b)
         {
+            poolManager.Pop<SoundPlayer>(soundPlayer).PlaySound(swapSound);
+
             NodeMap[a.Y, a.X] = b;
             NodeMap[b.Y, b.X] = a;
 
@@ -337,6 +344,8 @@ namespace Work.Code.MatchSystem
 
         private void RemoveNode()
         {
+            poolManager.Pop<SoundPlayer>(soundPlayer).PlaySound(removeSound);
+
             for (int y = 0; y < MapHeight; y++)
             for (int x = 0; x < MapWidth; x++)
             {

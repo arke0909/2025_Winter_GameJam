@@ -1774,6 +1774,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca7724c72848c174e86614c781064041, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundPlayer: {fileID: 11400000, guid: e7ed395fe5285c14687777045a90fa04, type: 2}
+  toggleUISound: {fileID: 11400000, guid: 6a54cd5d516844b4e87245c094f791b7, type: 2}
   audioMixer: {fileID: 24100000, guid: 141c972f8ee17ff44974789ebab072a3, type: 2}
 --- !u!1 &7116576352702168960
 GameObject:

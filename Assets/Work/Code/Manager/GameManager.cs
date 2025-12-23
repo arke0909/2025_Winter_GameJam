@@ -1,18 +1,26 @@
 ﻿using System;
 using CSH._01_Code.UI;
 using Lib.Dependencies;
+using Lib.ObjectPool.RunTime;
 using Lib.Utiles;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using Work.Code.Core;
 using Work.Code.Events;
+using Work.Code.SoundSystem;
 using Work.Code.Supply;
 
 namespace Work.Code.Manager
 {
     public class GameManager : MonoSingleton<GameManager>
     {
+        [Inject] private PoolManagerMono poolManager;
+        [SerializeField] private PoolItemSO soundPlayer;
+        [SerializeField] private SoundSO gameTheme;
+        [SerializeField] private SoundSO coinSound;
+        [SerializeField] private SoundSO clickSound;
         [SerializeField] private EventChannelSO gameChannel;
         [SerializeField] private EventChannelSO supplyChannel;
 
@@ -28,6 +36,7 @@ namespace Work.Code.Manager
 
         private void Start()
         {
+            poolManager.Pop<SoundPlayer>(soundPlayer).PlaySound(gameTheme);
             supplyChannel.AddListener<SetRequestGoldEvent>(HandleSetRequestGold);
             gameChannel.AddListener<TurnAmountEvent>(HandleTurnAmount);
             _supplies.OnSupplyChanged += HandleSupplyChange;
@@ -35,6 +44,14 @@ namespace Work.Code.Manager
             turnText.SetText($"{LeftTurnCount}/{maxTurnCount}");
         }
 
+        private void Update()
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+            poolManager.Pop<SoundPlayer>(soundPlayer).PlaySound(clickSound);
+
+            }
+        }
         private void OnDestroy()
         {
             supplyChannel.RemoveListener<SetRequestGoldEvent>(HandleSetRequestGold);
@@ -66,11 +83,15 @@ namespace Work.Code.Manager
         private void HandleSupplyChange(SupplyType supplyType, int amount)
         {
             if(supplyType != SupplyType.Gold) return;
+            poolManager.Pop<SoundPlayer>(soundPlayer).PlaySound(coinSound);
+
             if (amount >= requestGold)
             {
                 Debug.Log($"목표치 도달 {amount}");
                 gameChannel.InvokeEvent(GameEvents.GameEndEvent.Initializer(SceneManager.GetActiveScene().name, true));
             }
         }
+
+        
     }
 }

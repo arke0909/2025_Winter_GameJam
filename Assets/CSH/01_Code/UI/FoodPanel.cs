@@ -1,5 +1,7 @@
 using CSH._01_Code.Events;
 using DG.Tweening;
+using Lib.Dependencies;
+using Lib.ObjectPool.RunTime;
 using Lib.Utiles;
 using System;
 using System.Collections.Generic;
@@ -7,6 +9,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using Work.Code.Food;
 using Work.Code.Manager;
+using Work.Code.SoundSystem;
 
 public enum FoodType
 {
@@ -28,6 +31,9 @@ namespace CSH._01_Code.UI
 {
     public class FoodPanel : MonoBehaviour
     {
+        [SerializeField] private PoolItemSO soundPlayer;
+        [SerializeField] private SoundSO sound;
+        [Inject] private PoolManagerMono poolManager;
         [SerializeField] private FoodDataSO[] foodDatas;
         [SerializeField] private EventChannelSO foodChannel;
         [SerializeField] private Transform content;
@@ -59,6 +65,9 @@ namespace CSH._01_Code.UI
 
         public void TogglePanel()
         {
+            var soundPlayerInstance = poolManager.Pop<SoundPlayer>(soundPlayer);
+
+            soundPlayerInstance.PlaySound(sound);
             if (isShow == false)
             {
                 DOTween.To(() => rectTrm.anchoredPosition, x => rectTrm.anchoredPosition = x,
