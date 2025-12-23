@@ -42,7 +42,6 @@ namespace Work.Code.MatchSystem
             _isIced = isIced;
             icedImage.enabled = isIced;
             OnTargeting(false);
-            
             CenterPos = Rect.TransformPoint(Rect.rect.center);
             
             SetXY(x, y);
@@ -92,15 +91,25 @@ namespace Work.Code.MatchSystem
 
         public void OnTargeting(bool value)
         {
+            targetingImage.rectTransform.DOKill(); 
             targetingImage.enabled = value;
 
             if (value)
             {
-                Vector2 size = Vector2.one * sizeMultiply;
-                targetingImage.rectTransform.DOScale(size, 0.2f).SetLoops(-1, LoopType.Yoyo);
+                targetingImage.rectTransform.localScale = Vector3.one;
+
+                float targetScaleValue = (sizeMultiply <= 0) ? 0.8f : sizeMultiply;
+                Vector3 targetScale = new Vector3(targetScaleValue, targetScaleValue, 1f);
+
+                targetingImage.rectTransform.DOScale(targetScale, 1.25f)
+                    .SetEase(Ease.InOutQuad)
+                    .SetLoops(-1, LoopType.Yoyo)
+                    .SetLink(gameObject);
             }
             else
-                targetingImage.DOKill();
+            {
+                targetingImage.rectTransform.localScale = Vector3.one;
+            }
         }
         
         public void SetXY(int x, int y)
