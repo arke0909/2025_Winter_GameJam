@@ -30,6 +30,7 @@ namespace Work.Code.MatchSystem
         [SerializeField] private SoundSO swapSound;
         [SerializeField] private SoundSO removeSound;
         [SerializeField] private SoundSO iceBreakSound;
+        [SerializeField] private SoundSO unlockSound;
         [Inject] private PoolManagerMono poolManager;
         [SerializeField] private PoolItemSO particleItem;
         [SerializeField] private PoolItemSO icedEffectItem;
