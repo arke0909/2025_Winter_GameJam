@@ -1,8 +1,7 @@
 using CSH._01_Code.Events;
-using Lib.Dependencies;
-using Lib.ObjectPool.RunTime;
 using Lib.Utiles;
 using System;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,17 +9,12 @@ using Work.Code.Events;
 using Work.Code.Food;
 using Work.Code.Items;
 using Work.Code.Manager;
-using Work.Code.SoundSystem;
 using Work.Code.Supply;
 
 namespace CSH._01_Code.UI
 {
     public class FoodInfo : MonoBehaviour
     {
-        [SerializeField] private PoolItemSO soundPlayer;
-        [SerializeField] private SoundSO sellSound;
-        [SerializeField] private SoundSO useSound;
-        [Inject] private PoolManagerMono poolManager;
         [SerializeField] private EventChannelSO foodChannel;
         [SerializeField] private EventChannelSO supplyChannel;
         [SerializeField] private Image icon;
@@ -52,21 +46,24 @@ namespace CSH._01_Code.UI
 
             Sell.onClick.AddListener(OnClickSell);
             Use.onClick.AddListener(OnClickUse);
+#if !DEBUG
+            gameObject.SetActive(false);
+#endif
         }
 
-        private void OnClickUse()
+        private async void OnClickUse()
         {
-            poolManager.Pop<SoundPlayer>(soundPlayer).PlaySound(useSound);
-
-            foodChannel.InvokeEvent(FoodEvents.FoodDecreaseEvent.Initializer(_foodType));
-            ItemManager.Instance.SetData(_foodType, _itemTree);
+            if (await ItemManager.Instance.SetData(_foodType, _itemTree))
+            {
+                foodChannel.InvokeEvent(FoodEvents.FoodDecreaseEvent.Initializer(_foodType));
+            }
         }
 
         private void OnClickSell()
         {
-            poolManager.Pop<SoundPlayer>(soundPlayer).PlaySound(sellSound);
             foodChannel.InvokeEvent(FoodEvents.FoodDecreaseEvent.Initializer(_foodType));
             supplyChannel.InvokeEvent(SupplyEvents.SupplyEvent.Initializer(SupplyType.Gold, _price));
+            GameManager.Instance.CheckGameOver();
         }
 
         public void AddFoodCount()

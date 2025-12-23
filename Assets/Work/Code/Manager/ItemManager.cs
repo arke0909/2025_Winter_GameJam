@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Lib.Dependencies;
 using UnityEngine;
 using Work.Code.Core;
@@ -12,12 +13,12 @@ namespace Work.Code.Manager
 
         [Inject] private MatchSystem.MatchSystem _ms;
         
-        public void SetData(FoodType foodType, ItemTreeSO itemTree)
+        public async Task<bool> SetData(FoodType foodType, ItemTreeSO itemTree)
         {
             _foodType = foodType;
             _itemTree = itemTree;
             
-            _ms.EnterTargetingMode(_itemTree);
+            return await _ms.EnterTargetingMode(_itemTree);
         }
     }
 }

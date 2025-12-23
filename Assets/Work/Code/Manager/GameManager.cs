@@ -53,15 +53,14 @@ namespace Work.Code.Manager
         {
             LeftTurnCount += evt.Value;
             turnText.SetText($"{LeftTurnCount}/{maxTurnCount}");
-            CheckGameOver();
         }
 
         public void CheckGameOver()
         {
             if (LeftTurnCount <= 0)
             {
-                if (_supplies.CanMakeAnyFood() || foodPanel.IsHaveAnyFood()) return;
-                
+                if (foodPanel.IsHaveAnyFood() || _supplies.CanMakeAnyFood() || _supplies.IsEnoughGold(requestGold)) return;
+
                 gameChannel.InvokeEvent(GameEvents.GameEndEvent.Initializer(SceneManager.GetActiveScene().name, false));
             }
         }

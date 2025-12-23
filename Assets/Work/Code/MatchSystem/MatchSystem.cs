@@ -33,6 +33,9 @@ namespace Work.Code.MatchSystem
         [SerializeField] private PoolItemSO particleItem;
         [SerializeField] private PoolItemSO icedEffectItem;
         [SerializeField] private PoolItemSO lockedEffectItem;
+        [SerializeField] private PoolItemSO lineEffectItem;
+        [SerializeField] private PoolItemSO threeXthreeEffectItem;
+        [SerializeField] private PoolItemSO nyanCatEffectItem;
         [SerializeField] private Node[] nodePrefabs;
         [SerializeField] private Node lockedNodePrefab;
         [SerializeField] private RectTransform nodeBoard;
@@ -278,7 +281,8 @@ namespace Work.Code.MatchSystem
 
                 await SortingNodeMap();
             }
-
+            
+            GameManager.Instance.CheckGameOver();
             await FillEmptyMap();
 
 
@@ -355,7 +359,8 @@ namespace Work.Code.MatchSystem
                     }
 
                     particleEventChannel.InvokeEvent(
-                        ParticleEvents.PlayUIParticleEvent.Initializer(particlePoolItem, NodeMap[y, x].CenterPos));
+                        ParticleEvents.PlayUIParticleEvent.Initializer(particlePoolItem, NodeMap[y, x].CenterPos,
+                            Quaternion.identity));
                     Destroy(NodeMap[y, x].gameObject);
                     NodeMap[y, x] = null;
                 }
@@ -364,41 +369,78 @@ namespace Work.Code.MatchSystem
 
         private async UniTask SortingNodeMap()
         {
-            List<UniTask> moves = new();
-            for (int x = 0; x < MapWidth; x++)
+            bool changed = true;
+            List<UniTask> moves = new List<UniTask>();
+
+            while (changed)
             {
-                int writeY = MapHeight - 1;
-                for (int y = MapHeight - 1; y >= 0; y--)
+                changed = false;
+                for (int y = MapHeight - 1; y >= 1; y--)
                 {
-                    Node node = NodeMap[y, x];
-                    if (node == null) continue;
-
-                    if (node.TryGetComponent<LockedNode>(out _))
+                    for (int x = 0; x < MapWidth; x++)
                     {
-                        NodeMap[y, x] = node;
-                        writeY = y - 1;
-                        continue;
+                        if (NodeMap[y, x] == null && !IsLockedAt(x, y))
+                        {
+                            if (NodeMap[y - 1, x] != null && !IsLockedAt(x, y - 1))
+                            {
+                                MoveNodeInternal(x, y - 1, x, y, moves);
+                                changed = true;
+                            }
+                            else
+                            {
+                                if (IsPathBlockedByLock(x, y))
+                                {
+                                    int[] sideOffsets = { -1, 1 };
+                                    foreach (int dx in sideOffsets)
+                                    {
+                                        int nx = x + dx;
+                                        int ny = y - 1;
+
+                                        if (!IsOutBound(nx, ny) && NodeMap[ny, nx] != null && !IsLockedAt(nx, ny))
+                                        {
+                                            MoveNodeInternal(nx, ny, x, y, moves);
+                                            changed = true;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
-
-                    if (y != writeY)
-                    {
-                        NodeMap[writeY, x] = node;
-                        NodeMap[y, x] = null;
-
-                        DataMap[writeY, x].SetNodeType(DataMap[y, x].NodeType);
-                        DataMap[y, x].SetNodeType(NodeType.Empty);
-
-                        node.SetXY(x, writeY);
-                        moves.Add(
-                            node.SetPos(CalcNodePosX(x), CalcNodePosY(writeY))
-                        );
-                    }
-
-                    writeY--;
                 }
             }
 
-            await UniTask.WhenAll(moves);
+            if (moves.Count > 0)
+                await UniTask.WhenAll(moves);
+        }
+
+        private bool IsPathBlockedByLock(int x, int targetY)
+        {
+            for (int y = 0; y < targetY; y++)
+            {
+                if (IsLockedAt(x, y)) return true;
+            }
+
+            return false;
+        }
+
+        private void MoveNodeInternal(int fromX, int fromY, int toX, int toY, List<UniTask> moves)
+        {
+            Node node = NodeMap[fromY, fromX];
+            NodeMap[toY, toX] = node;
+            NodeMap[fromY, fromX] = null;
+
+            DataMap[toY, toX].SetNodeType(DataMap[fromY, fromX].NodeType);
+            DataMap[fromY, fromX].SetNodeType(NodeType.Empty);
+
+            node.SetXY(toX, toY);
+            moves.Add(node.SetPos(CalcNodePosX(toX), CalcNodePosY(toY)));
+        }
+
+        private bool IsLockedAt(int x, int y)
+        {
+            if (IsOutBound(x, y) || NodeMap[y, x] == null) return false;
+            return NodeMap[y, x].TryGetComponent<LockedNode>(out _);
         }
 
         private async UniTask FillEmptyMap()
@@ -488,9 +530,9 @@ namespace Work.Code.MatchSystem
 
         #region Item Function
 
-        public async Task EnterTargetingMode(ItemTreeSO item)
+        public async Task<bool> EnterTargetingMode(ItemTreeSO item)
         {
-            if (_isSwapping) return;
+            if (_isSwapping) return false;
             if (item.isImmediately)
             {
                 item.Execute(this, null);
@@ -499,6 +541,8 @@ namespace Work.Code.MatchSystem
             }
             else
                 _pendingItem = item;
+
+            return true;
         }
 
         public async void OnNodeClicked(Node node)
@@ -521,8 +565,6 @@ namespace Work.Code.MatchSystem
             if (_isSwapping) return;
             _isSwapping = true;
 
-            Debug.Log("셔플");
-
             List<Node> movableNodes = new List<Node>();
             List<Vector2Int> targetPositions = new List<Vector2Int>();
 
@@ -531,10 +573,13 @@ namespace Work.Code.MatchSystem
                 for (int x = 0; x < MapWidth; x++)
                 {
                     Node node = NodeMap[y, x];
-                    if (node != null && !node.IsIced && !node.TryGetComponent<LockedNode>(out _))
+                    if (node != null && !node.TryGetComponent<LockedNode>(out _))
                     {
                         movableNodes.Add(node);
                         targetPositions.Add(new Vector2Int(x, y));
+
+                        DataMap[y, x].SetNodeType(NodeType.Empty);
+                        NodeMap[y, x] = null;
                     }
                 }
             }
@@ -554,7 +599,7 @@ namespace Work.Code.MatchSystem
 
                 NodeMap[newPos.y, newPos.x] = node;
                 DataMap[newPos.y, newPos.x].SetNodeType(node.NodeType);
-
+                DataMap[newPos.y, newPos.x].SetPos(newPos);
                 node.SetXY(newPos.x, newPos.y);
 
                 moveTasks.Add(node.SetPos(CalcNodePosX(newPos.x), CalcNodePosY(newPos.y)));
@@ -582,6 +627,10 @@ namespace Work.Code.MatchSystem
             {
                 AddRemoveNode(x, y);
             }
+
+            float posY = NodeMap[y, 0].CenterPos.y;
+            Vector2 pos = new Vector2(0, posY);
+            particleEventChannel.InvokeEvent(ParticleEvents.PlayUIParticleEvent.Initializer(lineEffectItem, pos));
         }
 
         // 세로 한줄
@@ -593,6 +642,11 @@ namespace Work.Code.MatchSystem
             {
                 AddRemoveNode(x, y);
             }
+
+            float posX = NodeMap[0, x].CenterPos.x;
+            Vector2 pos = new Vector2(posX, 0);
+            particleEventChannel.InvokeEvent(ParticleEvents.PlayUIParticleEvent.Initializer(lineEffectItem, pos,
+                Quaternion.Euler(new Vector3(0, 0, 90f))));
         }
 
         // 맵의 모든 한 타입을 제거
@@ -627,6 +681,9 @@ namespace Work.Code.MatchSystem
             {
                 AddRemoveNode(x, y);
             }
+
+            Vector2 pos = new Vector2(15,0);
+            particleEventChannel.InvokeEvent(ParticleEvents.PlayUIParticleEvent.Initializer(nyanCatEffectItem, pos));
         }
 
         public void BreakIce()
@@ -662,6 +719,9 @@ namespace Work.Code.MatchSystem
 
                 AddRemoveNode(nx, ny);
             }
+
+            particleEventChannel.InvokeEvent(
+                ParticleEvents.PlayUIParticleEvent.Initializer(threeXthreeEffectItem, NodeMap[y, x].CenterPos));
         }
 
         #endregion
@@ -694,7 +754,8 @@ namespace Work.Code.MatchSystem
                 if (node != null && node.IsIced)
                 {
                     particleEventChannel.InvokeEvent(
-                        ParticleEvents.PlayUIParticleEvent.Initializer(icedEffectItem, node.CenterPos));
+                        ParticleEvents.PlayUIParticleEvent.Initializer(icedEffectItem, node.CenterPos,
+                            Quaternion.identity));
                     node.Unfreeze();
                 }
                 else if (node != null && !node.IsIced && node.TryGetComponent(out LockedNode lockedNode))
@@ -713,7 +774,8 @@ namespace Work.Code.MatchSystem
                 if (node != null && node.IsIced)
                 {
                     particleEventChannel.InvokeEvent(
-                        ParticleEvents.PlayUIParticleEvent.Initializer(icedEffectItem, node.CenterPos));
+                        ParticleEvents.PlayUIParticleEvent.Initializer(icedEffectItem, node.CenterPos,
+                            Quaternion.identity));
                     node.Unfreeze();
                 }
             }

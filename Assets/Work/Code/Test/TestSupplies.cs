@@ -19,19 +19,6 @@ namespace Work.Code.Test
         [SerializeField] private GameManager gameManager;
         [SerializeField] private PoolItemSO particle;
         [SerializeField] private Image someImage;
-        
-        
-        
-        private void Update()
-        {
-            if (Keyboard.current.qKey.wasPressedThisFrame)
-                supplyChannel.InvokeEvent(SupplyEvents.SupplyEvent.Initializer(SupplyType.Gold, 10));
-            if (Keyboard.current.wKey.wasPressedThisFrame)
-                supplyChannel.InvokeEvent(SupplyEvents.SupplyEvent.Initializer(SupplyType.Carrot, 1));
-            if (Keyboard.current.zKey.wasPressedThisFrame)
-                effectChannel.InvokeEvent(ParticleEvents.PlayUIParticleEvent.Initializer(particle, someImage.transform.position));
-        }
-
         [ContextMenu("SetGold")]
         private void SetRequestGold()
         {

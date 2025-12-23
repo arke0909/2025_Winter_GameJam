@@ -28,6 +28,7 @@ namespace Work.Code.Effects
         {
             var particle = _poolManager.Pop<PoolingEffect>(evt.ParticleItem);
             particle.transform.position = new Vector3(evt.Pos.x, evt.Pos.y, 0);
+            particle.transform.rotation = evt.Rot;
         }
     }
 }
