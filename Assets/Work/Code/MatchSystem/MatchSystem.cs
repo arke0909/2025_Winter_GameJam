@@ -153,7 +153,10 @@ namespace Work.Code.MatchSystem
 
             bool success = await TrySwap(node, target);
             if (success)
+            {
+                DiscountTurn();
                 await ResolveBoard();
+            }
 
             _isSwapping = false;
         }
@@ -267,8 +270,6 @@ namespace Work.Code.MatchSystem
                 if (_isGetDouble)
                 {
                     count *= 2;
-                    _getDoubleCnt--;
-                    _isGetDouble = _getDoubleCnt != 0;
                 }
 
                 if ((int)kv.Key <= 5)
@@ -503,7 +504,7 @@ namespace Work.Code.MatchSystem
         public void SetGetDouble(bool value)
         {
             _isGetDouble = value;
-            _getDoubleCnt = 5;
+            _getDoubleCnt = 7;
         }
 
         // 가로 한줄
@@ -663,6 +664,11 @@ namespace Work.Code.MatchSystem
 
         private void DiscountTurn()
         {
+            if (_isGetDouble)
+            {
+                _getDoubleCnt--;
+                _isGetDouble = _getDoubleCnt != 0;
+            }
             gameEventChannel.InvokeEvent(GameEvents.TurnAmountEvent.Initializer(-1));
         }
     }
