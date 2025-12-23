@@ -19,7 +19,7 @@ namespace Work.Code.UI
         {
             _rectTrm = GetComponent<RectTransform>();
             _originalPos = Vector2.zero;
-            _rectTrm.anchoredPosition = new Vector2(_originalPos.x, _originalPos.y - 1000);
+            _rectTrm.anchoredPosition = new Vector2(_originalPos.x, _originalPos.y - 2000);
             _supplyData = GetComponentsInChildren<SupplyDataUI>();
             
             gameChannel.AddListener<GameEndEvent>(HandleGameEnd);

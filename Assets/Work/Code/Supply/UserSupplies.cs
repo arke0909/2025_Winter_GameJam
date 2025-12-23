@@ -53,7 +53,6 @@ namespace Work.Code.Supply
         {
             _suppliesAmount[evt.SupplyType] += evt.Amount;
             OnSupplyChanged?.Invoke(evt.SupplyType, _suppliesAmount[evt.SupplyType]);
-            GameManager.Instance.CheckGameOver();
         }
         
         // SupplyCostSO이 요구하는 자원들이 충분한가
