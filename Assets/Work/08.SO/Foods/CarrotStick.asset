@@ -15,7 +15,8 @@ MonoBehaviour:
   Type: 2
   Icon: {fileID: 7516397188711347237, guid: 034cecc484e19e74b9b33c24a2bfc7ef, type: 3}
   Name: "\uB2F9\uADFC \uC2A4\uD2F1"
-  Description: "\uD604\uC7AC \uBC2D\uC758 \uBAA8\uB4E0 \uC791\uBB3C\uC744 \uC7AC\uBC30\uCE58
-    \uD569\uB2C8\uB2E4."
+  Description: "\uC544\uC0AD\uC544\uC0AD \uC539\uB294 \uC7AC\uBBF8\uAC00 \uC0B4\uC544\uC788\uB294
+    \uAC00\uBCBC\uC6B4 \uAC04\uC2DD.\n\uD604\uC7AC \uBC2D\uC758 \uBAA8\uB4E0 \uC791\uBB3C\uC744
+    \uC7AC\uBC30\uCE58 \uD569\uB2C8\uB2E4."
   Price: 150
   cost: {fileID: 11400000, guid: 6be52e34f1096144480b5feb37aa8a72, type: 2}

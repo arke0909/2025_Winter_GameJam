@@ -39,8 +39,9 @@ namespace CSH._01_Code.UI
 
             Sell.onClick.AddListener(OnClickSell);
             Use.onClick.AddListener(OnClickUse);
-
+#if !DEBUG
             gameObject.SetActive(false);
+#endif
         }
 
         private void OnClickUse()
