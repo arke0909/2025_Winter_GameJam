@@ -575,7 +575,7 @@ namespace Work.Code.MatchSystem
                 AddRemoveNode(x, y);
             }
 
-            float posY = CalcNodePosY(y);
+            float posY = NodeMap[y, 0].CenterPos.y;
             Vector2 pos = new Vector2(0, posY);
             particleEventChannel.InvokeEvent(ParticleEvents.PlayUIParticleEvent.Initializer(lineEffectItem, pos));
         }
@@ -590,9 +590,9 @@ namespace Work.Code.MatchSystem
                 AddRemoveNode(x, y);
             }
             
-            float posX = CalcNodePosX(x);
+            float posX = NodeMap[0,x].CenterPos.x;
             Vector2 pos = new Vector2(posX, 0);
-            particleEventChannel.InvokeEvent(ParticleEvents.PlayUIParticleEvent.Initializer(lineEffectItem, pos));
+            particleEventChannel.InvokeEvent(ParticleEvents.PlayUIParticleEvent.Initializer(lineEffectItem, pos, Quaternion.Euler(new Vector3(0,0, 90f))));
         }
 
         // 맵의 모든 한 타입을 제거

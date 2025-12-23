@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: LineEffect
   m_EditorClassIdentifier: 
   poolingName: LineEffect
-  prefab: {fileID: 3738405142562995458, guid: ffca363d9ed09164f982d15cafd7f333, type: 3}
+  prefab: {fileID: 2967172346973213215, guid: ffca363d9ed09164f982d15cafd7f333, type: 3}
   initCount: 3
