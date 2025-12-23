@@ -481,9 +481,9 @@ namespace Work.Code.MatchSystem
 
         #region Item Function
 
-        public async Task EnterTargetingMode(ItemTreeSO item)
+        public async Task<bool> EnterTargetingMode(ItemTreeSO item)
         {
-            if (_isSwapping) return;
+            if (_isSwapping) return false;
             if (item.isImmediately)
             {
                 item.Execute(this, null);
@@ -492,6 +492,8 @@ namespace Work.Code.MatchSystem
             }
             else
                 _pendingItem = item;
+
+            return true;
         }
 
         public async void OnNodeClicked(Node node)

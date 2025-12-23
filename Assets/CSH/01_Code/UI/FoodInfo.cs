@@ -1,6 +1,7 @@
 using CSH._01_Code.Events;
 using Lib.Utiles;
 using System;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -50,10 +51,12 @@ namespace CSH._01_Code.UI
 #endif
         }
 
-        private void OnClickUse()
+        private async void OnClickUse()
         {
-            foodChannel.InvokeEvent(FoodEvents.FoodDecreaseEvent.Initializer(_foodType));
-            ItemManager.Instance.SetData(_foodType, _itemTree);
+            if (await ItemManager.Instance.SetData(_foodType, _itemTree))
+            {
+                foodChannel.InvokeEvent(FoodEvents.FoodDecreaseEvent.Initializer(_foodType));
+            }
         }
 
         private void OnClickSell()
