@@ -28,6 +28,8 @@ namespace CSH._01_Code.UI
         private string _foodName;
         private int _price;
 
+        public int Count => _count;
+        
         public void Initialize(FoodDataSO data)
         {
             _itemTree = data.itemTree;
