@@ -340,6 +340,11 @@ namespace Work.Code.MatchSystem
 
                 int count = kv.Value.Count;
 
+                if (count > 3)
+                {
+                    count += count - 3;
+                }
+
                 if (_isGetDouble)
                 {
                     count *= 2;
