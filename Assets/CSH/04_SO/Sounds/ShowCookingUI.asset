@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c85fd76d555d476f86135f08575bc1fd, type: 3}
-  m_Name: SoundClip
+  m_Name: ShowCookingUI
   m_EditorClassIdentifier: 
-  audioType: 1
-  clip: {fileID: 0}
+  audioType: 0
+  clip: {fileID: 8300000, guid: cf47624cb96b7e14193e05052d6c6b83, type: 3}
   loop: 0
   randomizePitch: 0
   randomPitchModifier: 0.1

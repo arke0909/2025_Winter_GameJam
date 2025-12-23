@@ -1,4 +1,6 @@
 using CSH._01_Code.Events;
+using Lib.Dependencies;
+using Lib.ObjectPool.RunTime;
 using Lib.Utiles;
 using System;
 using System.Threading.Tasks;
@@ -9,12 +11,16 @@ using Work.Code.Events;
 using Work.Code.Food;
 using Work.Code.Items;
 using Work.Code.Manager;
+using Work.Code.SoundSystem;
 using Work.Code.Supply;
 
 namespace CSH._01_Code.UI
 {
     public class FoodInfo : MonoBehaviour
     {
+        [Inject] private PoolManagerMono _poolManager;
+        [SerializeField] private PoolItemSO soundPlayer;
+        [SerializeField] private SoundSO useFoodSound;
         [SerializeField] private EventChannelSO foodChannel;
         [SerializeField] private EventChannelSO supplyChannel;
         [SerializeField] private Image icon;
@@ -53,6 +59,7 @@ namespace CSH._01_Code.UI
 
         private async void OnClickUse()
         {
+            _poolManager.Pop<SoundPlayer>(soundPlayer).PlaySound(useFoodSound);
             if (await ItemManager.Instance.SetData(_foodType, _itemTree))
             {
                 foodChannel.InvokeEvent(FoodEvents.FoodDecreaseEvent.Initializer(_foodType));

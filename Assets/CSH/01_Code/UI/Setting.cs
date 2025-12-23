@@ -9,6 +9,7 @@ namespace CSH._01_Code.UI
 {
     public class Setting : MonoBehaviour
     {
+        
         [SerializeField] private AudioMixer audioMixer;
         private bool isShow = false;
         private float minVolume = -80f;

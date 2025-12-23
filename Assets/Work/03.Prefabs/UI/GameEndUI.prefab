@@ -310,8 +310,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 5863056930374398931, guid: a505d627ad837fb4abf5017e55abc213, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -863,7 +863,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameChannel: {fileID: 11400000, guid: d4eff243fa2426a4685becfd75be8db2, type: 2}
   titleText: {fileID: 8578717439735746181}
-  backgroundImage: {fileID: 0}
+  soundPlayerPoolItem: {fileID: 11400000, guid: e7ed395fe5285c14687777045a90fa04, type: 2}
+  sound: {fileID: 11400000, guid: 6f3121e64f81ad94ab928a7b04d120e3, type: 2}
 --- !u!1 &4310126107827014101
 GameObject:
   m_ObjectHideFlags: 0
@@ -1325,8 +1326,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -5271648063785740505, guid: b1a34cd54a66dae4ea3cdd88f3bb33dc, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
