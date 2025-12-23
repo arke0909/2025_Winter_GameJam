@@ -93,7 +93,8 @@ MonoBehaviour:
   icedImage: {fileID: 7477106778106302687}
   targetingImage: {fileID: 7477106778106302687}
   deltaThreshold: 50
-  nodeMoveSpeed: 800
+  nodeMoveSpeed: 350
+  sizeMultiply: 0.8
   lockedSprites:
   - {fileID: 21300000, guid: 10b6e0dda8f3cd04bbbacbfd9b402edf, type: 3}
   - {fileID: 21300000, guid: fab3f43b82b5b844a89c0bb4bb171428, type: 3}
