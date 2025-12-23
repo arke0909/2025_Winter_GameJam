@@ -13,8 +13,10 @@ namespace Work.Code.MatchSystem
     {
         [SerializeField] private NodeType nodeType;
         [SerializeField] private Image icedImage;
+        [SerializeField] private Image targetingImage;
         [SerializeField] private float deltaThreshold = 50f;
         [SerializeField] private float nodeMoveSpeed = 800;
+        [SerializeField] private float sizeMultiply = 0.8f;
 
         public NodeType NodeType => nodeType;
         public RectTransform Rect => transform as RectTransform;
@@ -39,6 +41,7 @@ namespace Work.Code.MatchSystem
             _matchSystem = matchSystem;
             _isIced = isIced;
             icedImage.enabled = isIced;
+            OnTargeting(false);
             
             CenterPos = Rect.TransformPoint(Rect.rect.center);
             
@@ -48,6 +51,7 @@ namespace Work.Code.MatchSystem
         private void OnDestroy()
         {
             Rect.DOKill();
+            targetingImage.DOKill();
         }
 
         public async UniTask SetPos(float x, float y, bool isTween = true)
@@ -86,6 +90,19 @@ namespace Work.Code.MatchSystem
             }
         }
 
+        public void OnTargeting(bool value)
+        {
+            targetingImage.enabled = value;
+
+            if (value)
+            {
+                Vector2 size = Vector2.one * sizeMultiply;
+                targetingImage.rectTransform.DOScale(size, 0.2f).SetLoops(-1, LoopType.Yoyo);
+            }
+            else
+                targetingImage.DOKill();
+        }
+        
         public void SetXY(int x, int y)
         {
             X = x;

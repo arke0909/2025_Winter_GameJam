@@ -91,6 +91,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeType: 8
   icedImage: {fileID: 7477106778106302687}
+  targetingImage: {fileID: 7477106778106302687}
   deltaThreshold: 50
   nodeMoveSpeed: 800
   lockedSprites:
