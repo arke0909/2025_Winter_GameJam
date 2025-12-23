@@ -1,0 +1,326 @@
+fileFormatVersion: 2
+guid: 69cd16ffd7068b64fada08ecacca6bc3
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3028196769903387791
+    second: ice-Sheet_0
+  - first:
+      213: 5398144247398576508
+    second: ice-Sheet_1
+  - first:
+      213: -6234266778951675228
+    second: ice-Sheet_2
+  - first:
+      213: -6773560971143402187
+    second: ice-Sheet_3
+  - first:
+      213: -5435097221573669758
+    second: ice-Sheet_4
+  - first:
+      213: 7997466459630682483
+    second: ice-Sheet_5
+  - first:
+      213: -522347161870186614
+    second: ice-Sheet_6
+  - first:
+      213: -1039752068988271312
+    second: ice-Sheet_7
+  - first:
+      213: 8107309420535937368
+    second: ice-Sheet_8
+  - first:
+      213: -1907735621530731848
+    second: ice-Sheet_9
+  - first:
+      213: -8213387136390610315
+    second: ice-Sheet_10
+  - first:
+      213: 7154427365187674505
+    second: ice-Sheet_11
+  - first:
+      213: -9071592879238208774
+    second: ice-Sheet_12
+  - first:
+      213: -3554736590827210004
+    second: ice-Sheet_13
+  - first:
+      213: 327403473340579067
+    second: ice-Sheet_14
+  - first:
+      213: 6753887001163648469
+    second: ice-Sheet_15
+  - first:
+      213: -2244481615084230279
+    second: ice-Sheet_16
+  - first:
+      213: 6040539669301841931
+    second: ice-Sheet_17
+  - first:
+      213: -8363421647839645269
+    second: ice-Sheet_18
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: ice-Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 17b5ce3f41fa9f5d0800000000000000
+      internalID: -3028196769903387791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ice-Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c71b288a79f0aea40800000000000000
+      internalID: 5398144247398576508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ice-Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a21195256f6b79a0800000000000000
+      internalID: -6234266778951675228
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ice-Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53d2c824f2a7ff1a0800000000000000
+      internalID: -6773560971143402187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ice-Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28c83649fd7a294b0800000000000000
+      internalID: -5435097221573669758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ice-Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 37143656f55bcfe60800000000000000
+      internalID: 7997466459630682483
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 329e103c4d79b664d98fd6d1a937b57d
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      ice-Sheet_0: -3028196769903387791
+      ice-Sheet_1: 5398144247398576508
+      ice-Sheet_10: -8213387136390610315
+      ice-Sheet_11: 7154427365187674505
+      ice-Sheet_12: -9071592879238208774
+      ice-Sheet_13: -3554736590827210004
+      ice-Sheet_14: 327403473340579067
+      ice-Sheet_15: 6753887001163648469
+      ice-Sheet_16: -2244481615084230279
+      ice-Sheet_17: 6040539669301841931
+      ice-Sheet_18: -8363421647839645269
+      ice-Sheet_19: -653097632
+      ice-Sheet_2: -6234266778951675228
+      ice-Sheet_3: -6773560971143402187
+      ice-Sheet_4: -5435097221573669758
+      ice-Sheet_5: 7997466459630682483
+      ice-Sheet_6: -522347161870186614
+      ice-Sheet_7: -1039752068988271312
+      ice-Sheet_8: 8107309420535937368
+      ice-Sheet_9: -1907735621530731848
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
