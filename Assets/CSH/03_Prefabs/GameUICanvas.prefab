@@ -2232,9 +2232,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supplyEventChannel: {fileID: 11400000, guid: 36d7019071cc93a4ca58aa053b9da2bf, type: 2}
-  gameEventChannel: {fileID: 11400000, guid: 36d7019071cc93a4ca58aa053b9da2bf, type: 2}
+  gameEventChannel: {fileID: 11400000, guid: d4eff243fa2426a4685becfd75be8db2, type: 2}
   particleEventChannel: {fileID: 11400000, guid: fa37078802dbdd4489e0878985dd15bc, type: 2}
   particleItem: {fileID: 11400000, guid: f406c9043e4ee1346ba496fd9e06f974, type: 2}
+  icedEffectItem: {fileID: 11400000, guid: 2db09aefd3ee1ce459b9590d4b4a9f14, type: 2}
+  lockedEffectItem: {fileID: 11400000, guid: 5df20eadae398004b99f7a7e6432baa7, type: 2}
   nodePrefabs:
   - {fileID: 3987659002603952870, guid: bc0d77e211bb3824394b24bd13bab3d8, type: 3}
   - {fileID: 3987659002603952870, guid: 0564f18b2781e934bb11b576f2c3dc08, type: 3}
@@ -8111,9 +8113,6 @@ PrefabInstance:
       addedObject: {fileID: 4380436260352550103}
     - targetCorrespondingSourceObject: {fileID: 3768112676291732188, guid: f610395329e592b459ed6f66c2184e6b, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 7690593234724775266}
-    - targetCorrespondingSourceObject: {fileID: 3768112676291732188, guid: f610395329e592b459ed6f66c2184e6b, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 2792873908584922951}
   m_SourcePrefab: {fileID: 100100000, guid: f610395329e592b459ed6f66c2184e6b, type: 3}
 --- !u!1 &1627218719238105972 stripped
@@ -8144,19 +8143,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 5
   m_TargetDisplay: 0
---- !u!114 &7690593234724775266
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1627218719238105972}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4855b3eabfb46a1a49ca957075adbb7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameChannel: {fileID: 11400000, guid: d4eff243fa2426a4685becfd75be8db2, type: 2}
 --- !u!114 &2792873908584922951
 MonoBehaviour:
   m_ObjectHideFlags: 0
