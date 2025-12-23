@@ -45,3 +45,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   supplyChannelSO: {fileID: 11400000, guid: 36d7019071cc93a4ca58aa053b9da2bf, type: 2}
+  allCosts:
+  - {fileID: 11400000, guid: a259fd9749e36c64ab43fecfa721f98f, type: 2}
+  - {fileID: 11400000, guid: 9bdd1bce4fac54e4e8da3a2eac9eadff, type: 2}
+  - {fileID: 11400000, guid: 3bbb758d1dee80c4a976d105e8c062b4, type: 2}
+  - {fileID: 11400000, guid: 6be52e34f1096144480b5feb37aa8a72, type: 2}
+  - {fileID: 11400000, guid: 6729ece594965234d9ea3774721fb88c, type: 2}
+  - {fileID: 11400000, guid: 9b8d320706e09f84eac14db6cc435abd, type: 2}
+  - {fileID: 11400000, guid: 26a62ddad5d9f4d4ea391b80107ea198, type: 2}
+  - {fileID: 11400000, guid: 2dc2d3e4a79ad3e4384028d1b8d491b7, type: 2}
+  - {fileID: 11400000, guid: ee1a301b3846321489d82ebca121b7f3, type: 2}
+  - {fileID: 11400000, guid: e0b212e725b40cb48aa994a9a725fe45, type: 2}
+  - {fileID: 11400000, guid: 4a163889e7f1fb64e91d13e225761052, type: 2}
+  - {fileID: 11400000, guid: 1238e5c25dd9194499e5ea858818a7d5, type: 2}
