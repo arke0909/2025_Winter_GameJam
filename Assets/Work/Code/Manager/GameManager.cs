@@ -20,7 +20,6 @@ namespace Work.Code.Manager
         [SerializeField] private PoolItemSO soundPlayer;
         [SerializeField] private SoundSO gameTheme;
         [SerializeField] private SoundSO coinSound;
-        [SerializeField] private SoundSO clickSound;
         [SerializeField] private EventChannelSO gameChannel;
         [SerializeField] private EventChannelSO supplyChannel;
 
@@ -44,14 +43,6 @@ namespace Work.Code.Manager
             turnText.SetText($"{LeftTurnCount}/{maxTurnCount}");
         }
 
-        private void Update()
-        {
-            if (Input.GetMouseButtonDown(0))
-            {
-            poolManager.Pop<SoundPlayer>(soundPlayer).PlaySound(clickSound);
-
-            }
-        }
         private void OnDestroy()
         {
             supplyChannel.RemoveListener<SetRequestGoldEvent>(HandleSetRequestGold);

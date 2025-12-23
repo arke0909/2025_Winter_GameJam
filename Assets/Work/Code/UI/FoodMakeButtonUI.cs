@@ -2,12 +2,14 @@
 using System.Text;
 using CSH._01_Code.Events;
 using Lib.Dependencies;
+using Lib.ObjectPool.RunTime;
 using Lib.Utiles;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Work.Code.Events;
 using Work.Code.Food;
+using Work.Code.SoundSystem;
 using Work.Code.Supply;
 
 namespace Work.Code.UI
@@ -16,6 +18,9 @@ namespace Work.Code.UI
     {
         [SerializeField] private EventChannelSO supplyChannel;
         [SerializeField] private EventChannelSO foodChannel;
+        [SerializeField] private PoolItemSO soundPlayer;
+        [SerializeField] private SoundSO cookingSound;
+        [Inject] private PoolManagerMono poolManager;
         [SerializeField] private Image icon;
         [SerializeField] private Button button;
         [SerializeField] private Tooltip tooltip;
@@ -102,6 +107,8 @@ namespace Work.Code.UI
         {
             if(!_userSupplies.HasEnoughSupplies(foodData.cost))
                 return; // 혹시 모르니깐
+            var sound = poolManager.Pop<SoundPlayer>(soundPlayer);
+            sound.PlaySound(cookingSound);
             foreach (var supply in foodData.cost.CostSupplies)
             {
                 supplyChannel.InvokeEvent

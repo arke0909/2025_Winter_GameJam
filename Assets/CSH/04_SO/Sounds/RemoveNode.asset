@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: RemoveNode
   m_EditorClassIdentifier: 
   audioType: 0
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: 86248a3ea8f598d4fb9b4aa7bb2abe41, type: 3}
   loop: 0
   randomizePitch: 1
-  randomPitchModifier: 0.1
+  randomPitchModifier: 0.469
   volume: 1
   pitch: 1
