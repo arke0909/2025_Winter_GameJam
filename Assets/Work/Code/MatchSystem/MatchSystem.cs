@@ -29,6 +29,7 @@ namespace Work.Code.MatchSystem
         [SerializeField] private PoolItemSO soundPlayer;
         [SerializeField] private SoundSO swapSound;
         [SerializeField] private SoundSO removeSound;
+        [SerializeField] private SoundSO iceBreakSound;
         [Inject] private PoolManagerMono poolManager;
         [SerializeField] private PoolItemSO particleItem;
         [SerializeField] private PoolItemSO icedEffectItem;
@@ -344,13 +345,13 @@ namespace Work.Code.MatchSystem
 
         private void RemoveNode()
         {
-            poolManager.Pop<SoundPlayer>(soundPlayer).PlaySound(removeSound);
 
             for (int y = 0; y < MapHeight; y++)
             for (int x = 0; x < MapWidth; x++)
             {
                 if (DataMap[y, x].NodeType == NodeType.Empty && NodeMap[y, x] != null)
                 {
+                    poolManager.Pop<SoundPlayer>(soundPlayer).PlaySound(removeSound);
                     PoolItemSO particlePoolItem = particleItem;
 
                     if (NodeMap[y, x].TryGetComponent<LockedNode>(out _))
@@ -822,6 +823,7 @@ namespace Work.Code.MatchSystem
             {
                 if (node != null && node.IsIced)
                 {
+                    poolManager.Pop<SoundPlayer>(soundPlayer).PlaySound(iceBreakSound);
                     particleEventChannel.InvokeEvent(
                         ParticleEvents.PlayUIParticleEvent.Initializer(icedEffectItem, node.CenterPos,
                             Quaternion.identity));
@@ -842,6 +844,8 @@ namespace Work.Code.MatchSystem
             {
                 if (node != null && node.IsIced)
                 {
+                    poolManager.Pop<SoundPlayer>(soundPlayer).PlaySound(iceBreakSound);
+
                     particleEventChannel.InvokeEvent(
                         ParticleEvents.PlayUIParticleEvent.Initializer(icedEffectItem, node.CenterPos,
                             Quaternion.identity));

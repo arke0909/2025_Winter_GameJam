@@ -1660,6 +1660,7 @@ MonoBehaviour:
   soundPlayer: {fileID: 11400000, guid: e7ed395fe5285c14687777045a90fa04, type: 2}
   swapSound: {fileID: 11400000, guid: 468f267f771c54e4296254d90693a022, type: 2}
   removeSound: {fileID: 11400000, guid: dd9f6c02110a92240987a0abf0a03449, type: 2}
+  iceBreakSound: {fileID: 11400000, guid: b0281ff00991df1498c10c624d1955ea, type: 2}
   particleItem: {fileID: 11400000, guid: f406c9043e4ee1346ba496fd9e06f974, type: 2}
   icedEffectItem: {fileID: 11400000, guid: 2db09aefd3ee1ce459b9590d4b4a9f14, type: 2}
   lockedEffectItem: {fileID: 11400000, guid: 5df20eadae398004b99f7a7e6432baa7, type: 2}
@@ -2212,8 +2213,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 696358cf0bf13cf4a9d92dd2956c289d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundPlayer: {fileID: 0}
-  sound: {fileID: 0}
+  soundPlayer: {fileID: 11400000, guid: e7ed395fe5285c14687777045a90fa04, type: 2}
+  sound: {fileID: 11400000, guid: b9be5c233bd5bf8409341fc39bc39f6a, type: 2}
   foodDatas:
   - {fileID: 11400000, guid: da4a3f0bdb8e7ca489d53485baf74d2e, type: 2}
   - {fileID: 11400000, guid: a39ab347239706b4d9e02d94df010f9d, type: 2}
@@ -2348,9 +2349,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33b7c4ffe700ace4a830671a03bc70b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundPlayer: {fileID: 0}
-  toggleUISound: {fileID: 0}
-  supplyChannel: {fileID: 0}
+  soundPlayer: {fileID: 11400000, guid: e7ed395fe5285c14687777045a90fa04, type: 2}
+  toggleUISound: {fileID: 11400000, guid: b9be5c233bd5bf8409341fc39bc39f6a, type: 2}
+  supplyChannel: {fileID: 11400000, guid: 36d7019071cc93a4ca58aa053b9da2bf, type: 2}
 --- !u!1 &4187395122876865257
 GameObject:
   m_ObjectHideFlags: 0
