@@ -15,6 +15,6 @@ MonoBehaviour:
   Type: 1
   Icon: {fileID: -1751647785250322388, guid: 05968de60cf7ecf4986ba931440cdd71, type: 3}
   Name: "\uD31D\uCF58"
-  Description: "\uC138\uB85C \uD55C \uC904\uC744 \uC218\uD655\uD569\uB2C8\uB2E4."
+  Description: "\uC120\uD0DD\uD55C \uC138\uB85C 1\uC904\uC744 \uC989\uC2DC \uC218\uD655\uD569\uB2C8\uB2E4."
   Price: 150
   cost: {fileID: 11400000, guid: 9b8d320706e09f84eac14db6cc435abd, type: 2}
