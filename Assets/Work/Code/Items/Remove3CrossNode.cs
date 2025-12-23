@@ -19,7 +19,7 @@ namespace Work.Code.Items
             }
             for (int yn = -1; yn < 2; yn++)
             {
-                int ny = x + yn;
+                int ny = y + yn;
 
                 ms.RemoveHorizontal(ny);
             }
