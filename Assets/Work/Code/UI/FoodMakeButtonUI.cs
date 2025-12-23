@@ -31,6 +31,7 @@ namespace Work.Code.UI
         
         private static readonly string FOOD_FORMAT = "<color=#00FFAC>{0}</color> {1}.";
         private static readonly string FOOD_FORMAT_COMMA = "<color=#00FFAC>{0}</color> {1}, ";
+        private static readonly string FOOD_YELLOW = "<color=#FFFF00>{0}G</color>";
         
         private void Awake()
         {
@@ -99,6 +100,8 @@ namespace Work.Code.UI
             
             tooltipBuilder.AppendLine();
             tooltipBuilder.Append(foodData.Description);
+            tooltipBuilder.AppendLine();
+            tooltipBuilder.Append(string.Format(FOOD_YELLOW, foodData.Price));
             
             return tooltipBuilder.ToString();
         }
