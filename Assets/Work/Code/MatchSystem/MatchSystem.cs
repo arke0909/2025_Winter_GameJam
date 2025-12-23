@@ -26,6 +26,8 @@ namespace Work.Code.MatchSystem
         [SerializeField] private EventChannelSO gameEventChannel;
         [SerializeField] private EventChannelSO particleEventChannel;
         [SerializeField] private PoolItemSO particleItem;
+        [SerializeField] private PoolItemSO icedEffectItem;
+        [SerializeField] private PoolItemSO lockedEffectItem;
         [SerializeField] private Node[] nodePrefabs;
         [SerializeField] private Node lockedNodePrefab;
         [SerializeField] private RectTransform nodeBoard;
@@ -291,6 +293,8 @@ namespace Work.Code.MatchSystem
             {
                 if (DataMap[y, x].NodeType == NodeType.Empty && NodeMap[y, x] != null)
                 {
+                    PoolItemSO particlePoolItem = DataMap[y, x].NodeType == NodeType.Locked ? lockedEffectItem : particleItem;
+                    
                     particleEventChannel.InvokeEvent(ParticleEvents.PlayUIParticleEvent.Initializer(particleItem, NodeMap[y, x].CenterPos));
                     Destroy(NodeMap[y, x].gameObject);
                     NodeMap[y, x] = null;
@@ -300,11 +304,9 @@ namespace Work.Code.MatchSystem
         private async UniTask SortingNodeMap()
         {
             List<UniTask> moves = new();
-
             for (int x = 0; x < MapWidth; x++)
             {
                 int writeY = MapHeight - 1;
-
                 for (int y = MapHeight - 1; y >= 0; y--)
                 {
                     Node node = NodeMap[y, x];
@@ -625,6 +627,7 @@ namespace Work.Code.MatchSystem
             {
                 if (node != null && node.IsIced)
                 {
+                    particleEventChannel.InvokeEvent(ParticleEvents.PlayUIParticleEvent.Initializer(icedEffectItem, node.CenterPos));
                     node.Unfreeze();
                 }
                 else if (node != null && !node.IsIced && node.TryGetComponent(out LockedNode lockedNode))
