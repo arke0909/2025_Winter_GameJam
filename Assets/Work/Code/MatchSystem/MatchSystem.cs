@@ -293,9 +293,14 @@ namespace Work.Code.MatchSystem
             {
                 if (DataMap[y, x].NodeType == NodeType.Empty && NodeMap[y, x] != null)
                 {
-                    PoolItemSO particlePoolItem = DataMap[y, x].NodeType == NodeType.Locked ? lockedEffectItem : particleItem;
+                    PoolItemSO particlePoolItem = particleItem;
+            
+                    if (NodeMap[y, x].TryGetComponent<LockedNode>(out _))
+                    {
+                        particlePoolItem = lockedEffectItem;
+                    }
                     
-                    particleEventChannel.InvokeEvent(ParticleEvents.PlayUIParticleEvent.Initializer(particleItem, NodeMap[y, x].CenterPos));
+                    particleEventChannel.InvokeEvent(ParticleEvents.PlayUIParticleEvent.Initializer(particlePoolItem, NodeMap[y, x].CenterPos));
                     Destroy(NodeMap[y, x].gameObject);
                     NodeMap[y, x] = null;
                 }
@@ -645,6 +650,7 @@ namespace Work.Code.MatchSystem
             {
                 if (node != null && node.IsIced)
                 {
+                    particleEventChannel.InvokeEvent(ParticleEvents.PlayUIParticleEvent.Initializer(icedEffectItem, node.CenterPos));
                     node.Unfreeze();
                 }
             }

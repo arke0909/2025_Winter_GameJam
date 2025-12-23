@@ -100,7 +100,7 @@ Animator:
   m_GameObject: {fileID: 7609425881200619435}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 45ef7bdf08d237841986023ff977b213, type: 2}
+  m_Controller: {fileID: 9100000, guid: 7543da784b3f6914e97707d46d276384, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -124,7 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d26f8fd38c94125af1f6e0f6b31ac31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <PoolItem>k__BackingField: {fileID: 11400000, guid: f406c9043e4ee1346ba496fd9e06f974, type: 2}
+  <PoolItem>k__BackingField: {fileID: 11400000, guid: 5df20eadae398004b99f7a7e6432baa7, type: 2}
   effectObject: {fileID: 7609425881200619435}
 --- !u!114 &1132895174698878609
 MonoBehaviour:
@@ -138,6 +138,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66efb2dd868b48febe8757757c8304d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <VFXName>k__BackingField: Test
+  <VFXName>k__BackingField: Locked
   isOnPosition: 0
   particle: {fileID: 3955112359803255507}
