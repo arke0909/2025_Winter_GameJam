@@ -1666,7 +1666,7 @@ MonoBehaviour:
   lockedEffectItem: {fileID: 11400000, guid: 5df20eadae398004b99f7a7e6432baa7, type: 2}
   lineEffectItem: {fileID: 11400000, guid: b7c03fa6de3ce8a4e8b74af7e35ca8f9, type: 2}
   threeXthreeEffectItem: {fileID: 11400000, guid: 84fe3c6e44549354c933ae704e0e648a, type: 2}
-  nyanCatEffectItem: {fileID: 0}
+  nyanCatEffectItem: {fileID: 11400000, guid: c5a7a9b74f6fda0448cf87aec7811298, type: 2}
   nodePrefabs:
   - {fileID: 3987659002603952870, guid: bc0d77e211bb3824394b24bd13bab3d8, type: 3}
   - {fileID: 3987659002603952870, guid: 0564f18b2781e934bb11b576f2c3dc08, type: 3}
@@ -5695,7 +5695,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 477573125894545879, guid: 6106a88ebbe85234bb9384f7fc0918c9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8817648022135530420}
   m_SourcePrefab: {fileID: 100100000, guid: 6106a88ebbe85234bb9384f7fc0918c9, type: 3}
 --- !u!114 &1793594065222217919 stripped
 MonoBehaviour:
@@ -5708,6 +5711,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bfa9178a16b4b7a93c042f76344370a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &5987977080823810769 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 477573125894545879, guid: 6106a88ebbe85234bb9384f7fc0918c9, type: 3}
+  m_PrefabInstance: {fileID: 6177038009537964806}
+  m_PrefabAsset: {fileID: 0}
+--- !u!223 &8817648022135530420
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5987977080823810769}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 2
+  m_TargetDisplay: 0
 --- !u!224 &8153493421231529409 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2638608308883551943, guid: 6106a88ebbe85234bb9384f7fc0918c9, type: 3}
