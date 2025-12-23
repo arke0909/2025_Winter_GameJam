@@ -79,7 +79,7 @@ namespace Work.Code.MatchSystem
             {
                 await Rect
                     .DOAnchorPos(target, duration)
-                    .SetEase(Ease.OutExpo)
+                    .SetEase(Ease.OutQuart)
                     .OnComplete(() => CenterPos = Rect.TransformPoint(Rect.rect.center))
                     .AsyncWaitForCompletion();
             }

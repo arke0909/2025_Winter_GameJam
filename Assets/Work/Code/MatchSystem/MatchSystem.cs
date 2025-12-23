@@ -857,7 +857,7 @@ private bool CheckAnyMatchOnBoard()
             for (int y = 0; y < MapHeight; y++)
             for (int x = 0; x < MapWidth; x++)
             {
-                TryBreakGimmick(x, y, false, false);
+                AddRemoveNode(x, y);
             }
         }
 
