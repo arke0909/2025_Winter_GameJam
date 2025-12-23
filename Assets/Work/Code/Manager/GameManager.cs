@@ -3,12 +3,13 @@ using Lib.Dependencies;
 using Lib.Utiles;
 using TMPro;
 using UnityEngine;
+using Work.Code.Core;
 using Work.Code.Events;
 using Work.Code.Supply;
 
 namespace Work.Code.Manager
 {
-    public class GameManager : MonoBehaviour
+    public class GameManager : MonoSingleton<GameManager>
     {
         [SerializeField] private EventChannelSO gameChannel;
         [SerializeField] private EventChannelSO supplyChannel;
