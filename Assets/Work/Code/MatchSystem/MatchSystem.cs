@@ -112,39 +112,52 @@ namespace Work.Code.MatchSystem
             return Instantiate(nodePrefabs[Random.Range(0, nodePrefabs.Length)], nodeBoard);
         }
 
-        private void SetNodes()
-        {
-            for (int y = 0; y < MapHeight; y++)
-            {
-                for (int x = 0; x < MapWidth; x++)
-                {
-                    Vector2Int pos = new Vector2Int(x, y);
-                    Node node;
-
-                    if (lockedNode.Contains(pos))
-                    {
-                        node = Instantiate(lockedNodePrefab, nodeBoard);
-                        NodeMap[y, x] = node;
-                        node.Init(x, y, this, false);
-                    }
-                    else
-                    {
-                        int validIndex = GetValidNodeIndex(x, y);
-                        node = Instantiate(nodePrefabs[validIndex], nodeBoard);
-
-                        bool isIced = Random.value <= icedNodeRate;
-                        NodeMap[y, x] = node;
-                        node.Init(x, y, this, isIced);
-                    }
-
-                    node.SetPos(CalcNodePosX(x), CalcSpawnPosY(x), false);
-                    node.SetPos(CalcNodePosX(x), CalcNodePosY(y));
-
-                    DataMap[y, x] = new NodeData(node.NodeType);
-                    DataMap[y, x].SetPos(new Vector2Int(x, y));
-                }
-            }
-        }
+       private async void SetNodes()
+       {
+           for (int y = 0; y < MapHeight; y++)
+           {
+               for (int x = 0; x < MapWidth; x++)
+               {
+                   Vector2Int pos = new Vector2Int(x, y);
+                   Node node;
+       
+                   if (lockedNode.Contains(pos))
+                   {
+                       node = Instantiate(lockedNodePrefab, nodeBoard);
+                       NodeMap[y, x] = node;
+                       node.Init(x, y, this, false);
+                   }
+                   else
+                   {
+                       int validIndex = GetValidNodeIndex(x, y);
+                       node = Instantiate(nodePrefabs[validIndex], nodeBoard);
+       
+                       bool isIced = Random.value <= icedNodeRate;
+                       NodeMap[y, x] = node;
+                       node.Init(x, y, this, isIced);
+                   }
+       
+                   node.SetPos(CalcNodePosX(x), CalcSpawnPosY(x), false);
+       
+                   DataMap[y, x] = new NodeData(node.NodeType);
+                   DataMap[y, x].SetPos(new Vector2Int(x, y));
+               }
+           }
+       
+           for (int y = MapHeight - 1; y >= 0; y--)
+           {
+               List<UniTask> rowTasks = new List<UniTask>();
+               for (int x = 0; x < MapWidth; x++)
+               {
+                   if (NodeMap[y, x] != null)
+                   {
+                       rowTasks.Add(NodeMap[y, x].SetPos(CalcNodePosX(x), CalcNodePosY(y)));
+                   }
+               }
+               
+               await UniTask.Delay(100); 
+           }
+       }
 
         private int GetValidNodeIndex(int x, int y)
         {
@@ -326,6 +339,11 @@ namespace Work.Code.MatchSystem
                 if (kv.Value.Count == 0) continue;
 
                 int count = kv.Value.Count;
+
+                if (count > 3)
+                {
+                    count += count - 3;
+                }
 
                 if (_isGetDouble)
                 {
