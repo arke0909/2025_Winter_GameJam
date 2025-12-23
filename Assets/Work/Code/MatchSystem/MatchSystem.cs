@@ -740,7 +740,20 @@ private bool CheckAnyMatchOnBoard()
 
             for (int x = 0; x < MapWidth; ++x)
             {
-                AddRemoveNode(x, y);
+                if (DataMap[y, x].NodeType == NodeType.Locked)
+                {
+                    var locked = NodeMap[y, x].GetComponent<LockedNode>();
+                    if (locked.DiscountCnt())
+                    {
+                        AddRemoveNode(x, y);
+                    }
+                }
+                else if (NodeMap[y, x].IsIced)
+                {
+                    NodeMap[y,x].Unfreeze();
+                }
+                else
+                    AddRemoveNode(x, y);
             }
 
             float posY = NodeMap[y, 0].CenterPos.y;
@@ -755,7 +768,20 @@ private bool CheckAnyMatchOnBoard()
 
             for (int y = 0; y < MapHeight; ++y)
             {
-                AddRemoveNode(x, y);
+                if (DataMap[y, x].NodeType == NodeType.Locked)
+                {
+                    var locked = NodeMap[y, x].GetComponent<LockedNode>();
+                    if (locked.DiscountCnt())
+                    {
+                        AddRemoveNode(x, y);
+                    }
+                }
+                else if (NodeMap[y, x].IsIced)
+                {
+                    NodeMap[y,x].Unfreeze();
+                }
+                else
+                    AddRemoveNode(x, y);
             }
 
             float posX = NodeMap[0, x].CenterPos.x;
@@ -772,7 +798,20 @@ private bool CheckAnyMatchOnBoard()
             {
                 if (NodeMap[y, x] != null && DataMap[y, x].NodeType == type)
                 {
-                    AddRemoveNode(x, y);
+                    if (DataMap[y, x].NodeType == NodeType.Locked)
+                    {
+                        var locked = NodeMap[y, x].GetComponent<LockedNode>();
+                        if (locked.DiscountCnt())
+                        {
+                            AddRemoveNode(x, y);
+                        }
+                    }
+                    else if (NodeMap[y, x].IsIced)
+                    {
+                        NodeMap[y,x].Unfreeze();
+                    }
+                    else
+                        AddRemoveNode(x, y);
                 }
             }
         }
