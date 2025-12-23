@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: UseFood
   m_EditorClassIdentifier: 
   audioType: 0
-  clip: {fileID: 0}
+  clip: {fileID: 8300000, guid: c4988804487ee744189313647183a942, type: 3}
   loop: 0
   randomizePitch: 0
   randomPitchModifier: 0.1
-  volume: 1
-  pitch: 1
+  volume: 0.65
+  pitch: 1.4
