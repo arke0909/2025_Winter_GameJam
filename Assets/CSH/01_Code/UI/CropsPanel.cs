@@ -1,13 +1,19 @@
 using DG.Tweening;
+using Lib.Dependencies;
+using Lib.ObjectPool.RunTime;
 using Lib.Utiles;
 using UnityEngine;
 using UnityEngine.Rendering;
+using Work.Code.SoundSystem;
 using Work.Code.Supply;
 
 namespace CSH._01_Code.UI
 {
     public class CropsPanel : MonoBehaviour
     {
+        [SerializeField] private PoolItemSO soundPlayer;
+        [SerializeField] private SoundSO toggleUISound;
+        [Inject] private PoolManagerMono poolManager;
         [SerializeField] private EventChannelSO supplyChannel;
         private RectTransform rectTrm;
         private Vector2 originalPos;
@@ -22,6 +28,7 @@ namespace CSH._01_Code.UI
 
         public void TogglePanel()
         {
+            poolManager.Pop<SoundPlayer>(soundPlayer).PlaySound(toggleUISound);
             if (isShow == false)
             {
                 DOTween.To(() => rectTrm.anchoredPosition, x => rectTrm.anchoredPosition = x,

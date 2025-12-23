@@ -2,14 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
+using Lib.Dependencies;
+using Lib.ObjectPool.RunTime;
 using Lib.Utiles;
 using UnityEngine;
 using Work.Code.Events;
+using Work.Code.SoundSystem;
 
 namespace Work.Code.UI
 {
     public class FoodMakeUI : MonoBehaviour
     {
+        [Inject] private PoolManagerMono poolManager;
+        [SerializeField] private PoolItemSO soundPlayer;
+        [SerializeField] private SoundSO toggleUISound;
         private RectTransform _rectTrm;
         private Vector2 _originalPos;
         private bool _isShow;
@@ -27,6 +33,8 @@ namespace Work.Code.UI
         
         public void TogglePanel()
         {
+            var sound = poolManager.Pop<SoundPlayer>(soundPlayer);
+            sound.PlaySound(toggleUISound);
             if (!_isShow)
             {
                 foreach (FoodMakeButtonUI btn in _foodMakeButtons)

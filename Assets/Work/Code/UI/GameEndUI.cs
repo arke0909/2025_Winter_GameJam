@@ -1,9 +1,12 @@
 ﻿using System;
 using DG.Tweening;
+using Lib.Dependencies;
+using Lib.ObjectPool.RunTime;
 using Lib.Utiles;
 using TMPro;
 using UnityEngine;
 using Work.Code.Events;
+using Work.Code.SoundSystem;
 
 namespace Work.Code.UI
 {
@@ -11,7 +14,10 @@ namespace Work.Code.UI
     {
         [SerializeField] private EventChannelSO gameChannel;
         [SerializeField] private TextMeshProUGUI titleText;
-        
+        [SerializeField] private PoolItemSO soundPlayerPoolItem;
+        [SerializeField] private SoundSO winSound;
+        [Inject] private PoolManagerMono poolManager;
+
         private RectTransform _rectTrm;
         private Vector2 _originalPos;
         private SupplyDataUI[] _supplyData;
@@ -32,6 +38,8 @@ namespace Work.Code.UI
 
         private void HandleGameEnd(GameEndEvent evt)
         {
+            
+            if (evt.IsSuccess) poolManager.Pop<SoundPlayer>(soundPlayerPoolItem).PlaySound(winSound);
             titleText.SetText(evt.IsSuccess ? "성공" : "실패");
             foreach (var data in _supplyData)
             {

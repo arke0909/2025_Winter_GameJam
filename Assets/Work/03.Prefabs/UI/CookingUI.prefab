@@ -638,6 +638,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bfa9178a16b4b7a93c042f76344370a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundPlayer: {fileID: 11400000, guid: e7ed395fe5285c14687777045a90fa04, type: 2}
+  toggleUISound: {fileID: 11400000, guid: 1ad71c6d9b05fc54688fa9e319eadfda, type: 2}
 --- !u!1 &7813595626274171712
 GameObject:
   m_ObjectHideFlags: 0
