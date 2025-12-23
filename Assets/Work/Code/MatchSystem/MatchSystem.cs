@@ -273,7 +273,8 @@ namespace Work.Code.MatchSystem
 
                 await SortingNodeMap();
             }
-
+            
+            GameManager.Instance.CheckGameOver();
             await FillEmptyMap();
 
 
