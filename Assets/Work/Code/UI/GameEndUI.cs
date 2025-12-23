@@ -12,12 +12,13 @@ namespace Work.Code.UI
         
         private RectTransform _rectTrm;
         private Vector2 _originalPos;
-        
+        private SupplyDataUI[] _supplyData;
         private void Awake()
         {
             _rectTrm = GetComponent<RectTransform>();
             _originalPos = Vector2.zero;
-            _rectTrm.anchoredPosition = new Vector2(_originalPos.x, _originalPos.y - 800);
+            _rectTrm.anchoredPosition = new Vector2(_originalPos.x, _originalPos.y - 1000);
+            _supplyData = GetComponentsInChildren<SupplyDataUI>();
             
             gameChannel.AddListener<GameEndEvent>(HandleGameEnd);
         }
@@ -29,9 +30,12 @@ namespace Work.Code.UI
 
         private void HandleGameEnd(GameEndEvent evt)
         {
+            foreach (var data in _supplyData)
+            {
+                data.SetUp();
+            }
             DOTween.To(() => _rectTrm.anchoredPosition, x => _rectTrm.anchoredPosition = x,
                 new Vector2(_originalPos.x, _originalPos.y), 0.5f).SetEase(Ease.OutCirc);
-            
         }
     }
 }

@@ -61,7 +61,7 @@ namespace CSH._01_Code.UI
 
         public void AddFoodCount()
         {
-            nameAndCountText.text = $"{_foodName} : {++_count}��";
+            nameAndCountText.text = $"{_foodName} : {++_count}개";
             if (_count > 0 && !isActiveAndEnabled)
             {
                 gameObject.SetActive(true);
@@ -71,7 +71,7 @@ namespace CSH._01_Code.UI
         public void MinusFoodCount()
         {
             if (_count <= 0) return;
-            nameAndCountText.text = $"{_foodName} : {--_count}��";
+            nameAndCountText.text = $"{_foodName} : {--_count}개";
             if (_count <= 0 && isActiveAndEnabled)
             {
                 gameObject.SetActive(false);
