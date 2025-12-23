@@ -60,14 +60,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5698112, g: 0.5698112, b: 0.5698112, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 8ec7155e086e6644db1a831fe77e3bca, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -93,6 +93,9 @@ MonoBehaviour:
   icedImage: {fileID: 7477106778106302687}
   deltaThreshold: 50
   nodeMoveSpeed: 800
+  lockedSprites:
+  - {fileID: 21300000, guid: 10b6e0dda8f3cd04bbbacbfd9b402edf, type: 3}
+  - {fileID: 21300000, guid: fab3f43b82b5b844a89c0bb4bb171428, type: 3}
   cnt: 3
 --- !u!1 &8627068249859531534
 GameObject:

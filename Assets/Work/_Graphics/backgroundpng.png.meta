@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: f69a9264e6c1e014a8b6e705e4409406
+guid: 4b0ae4639d2615e47b803617dcf2a028
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8989925582126008317
-    second: RainbowBibimbap_0
+      213: -1534217574468700926
+    second: backgroundpng_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: RainbowBibimbap_0
+      name: backgroundpng_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 32
-        height: 32
+        x: 38
+        y: 52
+        width: 887
+        height: 499
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: df741dfafa1a2cc70800000000000000
-      internalID: 8989925582126008317
+      spriteID: 205b1a1ae3d55bae0800000000000000
+      internalID: -1534217574468700926
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      RainbowBibimbap_0: 8989925582126008317
+      backgroundpng_0: -1534217574468700926
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

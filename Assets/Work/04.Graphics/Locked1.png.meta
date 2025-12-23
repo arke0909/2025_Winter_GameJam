@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: f69a9264e6c1e014a8b6e705e4409406
+guid: 8ec7155e086e6644db1a831fe77e3bca
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8989925582126008317
-    second: RainbowBibimbap_0
+      213: -1942164555542500974
+    second: Locked1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,9 +46,9 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -100,7 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: RainbowBibimbap_0
+      name: Locked1_0
       rect:
         serializedVersion: 2
         x: 0
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: df741dfafa1a2cc70800000000000000
-      internalID: 8989925582126008317
+      spriteID: 299e88370ab0c05e0800000000000000
+      internalID: -1942164555542500974
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      RainbowBibimbap_0: 8989925582126008317
+      Locked1_0: -1942164555542500974
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
