@@ -592,9 +592,25 @@ namespace Work.Code.MatchSystem
                 await ResolveBoard();
             }
             else
+            {
                 _pendingItem = item;
+                SetNodeSelectImageState(true);
+            }
 
             return true;
+        }
+
+        private void SetNodeSelectImageState(bool value)
+        {
+            for (int y = 0; y < MapHeight; y++)
+            {
+                for (int x = 0; x < MapWidth; x++)
+                {
+                    if(DataMap[y,x].NodeType == NodeType.Empty || DataMap[y,x].NodeType == NodeType.Locked || NodeMap[y,x].IsIced) continue;
+                    
+                    NodeMap[y,x].OnTargeting(value);
+                }
+            }
         }
 
         public async void OnNodeClicked(Node node)
@@ -606,7 +622,8 @@ namespace Work.Code.MatchSystem
             _isSwapping = true;
 
             item.Execute(this, DataMap[node.Y, node.X]);
-
+            SetNodeSelectImageState(false);
+            
             await ResolveBoard();
 
             _isSwapping = false;
