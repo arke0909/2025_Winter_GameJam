@@ -35,8 +35,13 @@ namespace CSH._01_Code.UI
             rectTrm = GetComponent<RectTransform>();
             originalPos = rectTrm.anchoredPosition;
             isShow = false;
-
+            cropImages = GetComponentsInChildren<Image>().Where(img => img.gameObject != this.gameObject).ToArray();
             supplyChannel.AddListener<MatchSupplyEvent>(HandleMatchSupplyEvent);
+        }
+
+        private void OnDestroy()
+        {
+            supplyChannel.RemoveListener<MatchSupplyEvent>(HandleMatchSupplyEvent);
         }
 
         private void HandleMatchSupplyEvent(MatchSupplyEvent evt)

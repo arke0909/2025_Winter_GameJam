@@ -39,6 +39,7 @@ namespace CSH._01_Code.UI
         [SerializeField] private FoodDataSO[] foodDatas;
         [SerializeField] private EventChannelSO foodChannel;
         [SerializeField] private Transform content;
+        [SerializeField] Transform movingImageTarget;
         private RectTransform rectTrm;
         private Vector2 originalPos;
         private bool isShow;
@@ -94,10 +95,10 @@ namespace CSH._01_Code.UI
 
         public void HandleMovingFood(FoodMovingEvent evt)
         {
-            Transform target = foodInfos[(int)evt.FoodType].transform.GetChild(1);
+            
             var mc = poolManager.Pop<MovingImage>(movingImage);
             mc.transform.SetParent(movingImagesParent);
-            mc.SetImageAndMoveToTarget(foodDatas[(int)evt.FoodType].Icon, evt.Start, target);
+            mc.SetImageAndMoveToTarget(foodDatas[(int)evt.FoodType].Icon, evt.Start, movingImageTarget);
         }
 
         public void HandleFoodDecrease(FoodDecreasEvent evt)
