@@ -31,6 +31,8 @@ namespace Work.Code.Manager
             supplyChannel.AddListener<SetRequestGoldEvent>(HandleSetRequestGold);
             gameChannel.AddListener<TurnAmountEvent>(HandleTurnAmount);
             _supplies.OnSupplyChanged += HandleSupplyChange;
+            leftTurnCount = maxTurnCount;
+            turnText.SetText($"{leftTurnCount}/{maxTurnCount}");
         }
 
         private void OnDestroy()
