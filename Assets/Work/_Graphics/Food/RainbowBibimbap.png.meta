@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 0f994d4ef4e145d48999148e2af0c0b0
+guid: f69a9264e6c1e014a8b6e705e4409406
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4550793384861293398
-    second: StirFriedRootVegetables_0
+      213: 8989925582126008317
+    second: RainbowBibimbap_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: StirFriedRootVegetables_0
+      name: RainbowBibimbap_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 1
+        y: 0
         width: 32
-        height: 30
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: aa42521178558d0c0800000000000000
-      internalID: -4550793384861293398
+      spriteID: df741dfafa1a2cc70800000000000000
+      internalID: 8989925582126008317
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      StirFriedRootVegetables_0: -4550793384861293398
+      RainbowBibimbap_0: 8989925582126008317
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

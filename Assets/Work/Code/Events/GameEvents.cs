@@ -37,12 +37,15 @@ namespace Work.Code.Events
 
     public class GameEndEvent : GameEvent
     {
+        public string StageName;
         public bool IsSuccess;
 
-        public GameEndEvent Initializer(bool isSuccess)
+        public GameEndEvent Initializer(string stageName, bool isSuccess)
         {
+            StageName = stageName;
             IsSuccess = isSuccess;
             return this;
         }
     }
+    
 }

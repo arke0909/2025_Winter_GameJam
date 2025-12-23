@@ -889,6 +889,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7077786242741003786}
     m_Modifications:
+    - target: {fileID: 705036438490148249, guid: a962e2d217c8c0741b11e89be4f3c371, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 8989925582126008317, guid: f69a9264e6c1e014a8b6e705e4409406, type: 3}
     - target: {fileID: 932262276132631160, guid: a962e2d217c8c0741b11e89be4f3c371, type: 3}
       propertyPath: foodData
       value: 

@@ -1825,7 +1825,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameChannel: {fileID: 11400000, guid: d4eff243fa2426a4685becfd75be8db2, type: 2}
   supplyChannel: {fileID: 11400000, guid: 36d7019071cc93a4ca58aa053b9da2bf, type: 2}
-  <requestGold>k__BackingField: 2000
+  <requestGold>k__BackingField: 0
   turnText: {fileID: 728123883}
   maxTurnCount: 0
   <leftTurnCount>k__BackingField: 0
