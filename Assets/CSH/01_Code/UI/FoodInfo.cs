@@ -35,7 +35,7 @@ namespace CSH._01_Code.UI
             name = data.Type.ToString();
             _foodName = data.Name;
             _price = data.Price;
-            nameAndCountText.text = $"{_foodName} : {_count}��";
+            nameAndCountText.text = $"{_foodName} : {_count}개";
             descriptionText.text = data.Description;
             icon.sprite = data.Icon;
             priceText.text = $"{data.Price}G";
