@@ -29,6 +29,7 @@ namespace Work.Code.MatchSystem
         [SerializeField] private PoolItemSO icedEffectItem;
         [SerializeField] private PoolItemSO lockedEffectItem;
         [SerializeField] private PoolItemSO lineEffectItem;
+        [SerializeField] private PoolItemSO threeXthreeEffectItem;
         [SerializeField] private Node[] nodePrefabs;
         [SerializeField] private Node lockedNodePrefab;
         [SerializeField] private RectTransform nodeBoard;
@@ -513,8 +514,6 @@ namespace Work.Code.MatchSystem
             if (_isSwapping) return;
             _isSwapping = true;
 
-            Debug.Log("셔플");
-
             List<Node> movableNodes = new List<Node>();
             List<Vector2Int> targetPositions = new List<Vector2Int>();
 
@@ -523,10 +522,13 @@ namespace Work.Code.MatchSystem
                 for (int x = 0; x < MapWidth; x++)
                 {
                     Node node = NodeMap[y, x];
-                    if (node != null && !node.IsIced && !node.TryGetComponent<LockedNode>(out _))
+                    if (node != null && !node.TryGetComponent<LockedNode>(out _))
                     {
                         movableNodes.Add(node);
                         targetPositions.Add(new Vector2Int(x, y));
+                
+                        DataMap[y, x].SetNodeType(NodeType.Empty);
+                        NodeMap[y, x] = null;
                     }
                 }
             }
@@ -546,7 +548,7 @@ namespace Work.Code.MatchSystem
 
                 NodeMap[newPos.y, newPos.x] = node;
                 DataMap[newPos.y, newPos.x].SetNodeType(node.NodeType);
-
+                DataMap[newPos.y, newPos.x].SetPos(newPos);
                 node.SetXY(newPos.x, newPos.y);
 
                 moveTasks.Add(node.SetPos(CalcNodePosX(newPos.x), CalcNodePosY(newPos.y)));
@@ -662,6 +664,8 @@ namespace Work.Code.MatchSystem
 
                 AddRemoveNode(nx, ny);
             }
+            
+            particleEventChannel.InvokeEvent(ParticleEvents.PlayUIParticleEvent.Initializer(threeXthreeEffectItem, NodeMap[y,x].CenterPos));
         }
 
         #endregion
