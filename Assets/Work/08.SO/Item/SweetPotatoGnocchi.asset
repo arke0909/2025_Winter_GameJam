@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af5d570b912a4b44b6f2fc8a94decfbf, type: 3}
   m_Name: SweetPotatoGnocchi
   m_EditorClassIdentifier: 
+  isImmediately: 1
   effectNodes:
   - {fileID: 11400000, guid: f1f4d3a2c55e0494b84de04ec5420673, type: 2}

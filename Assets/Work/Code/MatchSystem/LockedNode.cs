@@ -25,7 +25,8 @@ namespace Work.Code.MatchSystem
         public bool DiscountCnt()
         {
             cnt--;
-            bool isUnlock = cnt == 0;
+            bool isUnlock = cnt <= 0;
+            
             if(!isUnlock)
                 _nodeImage.sprite = lockedSprites[cnt - 1];
             

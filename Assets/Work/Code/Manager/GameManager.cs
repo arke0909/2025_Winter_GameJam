@@ -1,4 +1,5 @@
 ﻿using System;
+using CSH._01_Code.UI;
 using Lib.Dependencies;
 using Lib.Utiles;
 using TMPro;
@@ -15,11 +16,13 @@ namespace Work.Code.Manager
         [SerializeField] private EventChannelSO gameChannel;
         [SerializeField] private EventChannelSO supplyChannel;
 
+        [SerializeField] private FoodPanel foodPanel;
+        
         [field: SerializeField] private int requestGold { get; set; }
         
         [SerializeField] private TextMeshProUGUI turnText;
         [SerializeField] private int maxTurnCount;
-        [field: SerializeField] private int leftTurnCount { get; set; }
+        [field: SerializeField] public int LeftTurnCount { get; private set; }
         
         [Inject] private UserSupplies _supplies;
 
@@ -28,6 +31,8 @@ namespace Work.Code.Manager
             supplyChannel.AddListener<SetRequestGoldEvent>(HandleSetRequestGold);
             gameChannel.AddListener<TurnAmountEvent>(HandleTurnAmount);
             _supplies.OnSupplyChanged += HandleSupplyChange;
+            LeftTurnCount = maxTurnCount;
+            turnText.SetText($"{LeftTurnCount}/{maxTurnCount}");
         }
 
         private void OnDestroy()
@@ -39,12 +44,21 @@ namespace Work.Code.Manager
 
         private void HandleTurnAmount(TurnAmountEvent evt)
         {
-            leftTurnCount += evt.Value;
-            turnText.SetText($"{leftTurnCount}/{maxTurnCount}");
-            if(leftTurnCount <= 0)
-                gameChannel.InvokeEvent(GameEvents.GameEndEvent.Initializer(SceneManager.GetActiveScene().name, false));
+            LeftTurnCount += evt.Value;
+            turnText.SetText($"{LeftTurnCount}/{maxTurnCount}");
+            CheckGameOver();
         }
 
+        public void CheckGameOver()
+        {
+            if (LeftTurnCount <= 0)
+            {
+                if (_supplies.CanMakeAnyFood() || foodPanel.IsHaveAnyFood()) return;
+                
+                gameChannel.InvokeEvent(GameEvents.GameEndEvent.Initializer(SceneManager.GetActiveScene().name, false));
+            }
+        }
+        
         private void HandleSetRequestGold(SetRequestGoldEvent evt)
         {
             requestGold = evt.RequestGold;

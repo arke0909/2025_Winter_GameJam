@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using Work.Code.Events;
 using Work.Code.Food;
 using Work.Code.Items;
+using Work.Code.Manager;
 using Work.Code.Supply;
 
 namespace CSH._01_Code.UI
@@ -27,6 +28,8 @@ namespace CSH._01_Code.UI
         private string _foodName;
         private int _price;
 
+        public int Count => _count;
+        
         public void Initialize(FoodDataSO data)
         {
             _itemTree = data.itemTree;
@@ -50,7 +53,7 @@ namespace CSH._01_Code.UI
         private void OnClickUse()
         {
             foodChannel.InvokeEvent(FoodEvents.FoodDecreaseEvent.Initializer(_foodType));
-
+            ItemManager.Instance.SetData(_foodType, _itemTree);
         }
 
         private void OnClickSell()
@@ -61,7 +64,7 @@ namespace CSH._01_Code.UI
 
         public void AddFoodCount()
         {
-            nameAndCountText.text = $"{_foodName} : {++_count}��";
+            nameAndCountText.text = $"{_foodName} : {++_count}개";
             if (_count > 0 && !isActiveAndEnabled)
             {
                 gameObject.SetActive(true);
@@ -71,7 +74,7 @@ namespace CSH._01_Code.UI
         public void MinusFoodCount()
         {
             if (_count <= 0) return;
-            nameAndCountText.text = $"{_foodName} : {--_count}��";
+            nameAndCountText.text = $"{_foodName} : {--_count}개";
             if (_count <= 0 && isActiveAndEnabled)
             {
                 gameObject.SetActive(false);

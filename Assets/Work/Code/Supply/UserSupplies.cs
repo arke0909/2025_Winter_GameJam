@@ -4,6 +4,7 @@ using Lib.Dependencies;
 using Lib.Utiles;
 using UnityEngine;
 using Work.Code.Events;
+using Work.Code.Manager;
 
 namespace Work.Code.Supply
 {
@@ -22,6 +23,7 @@ namespace Work.Code.Supply
     public class UserSupplies : MonoBehaviour, IDependencyProvider
     {
         [SerializeField] private EventChannelSO supplyChannelSO;
+        [SerializeField] private List<SupplyCostSO> allCosts;
         
         public delegate void SupplyChanged(SupplyType supplyType, int amount);
         public event SupplyChanged OnSupplyChanged;
@@ -61,6 +63,16 @@ namespace Work.Code.Supply
                 if (_suppliesAmount[supply.type] < supply.amount) return false;
             }
             return true;
+        }
+
+        public bool CanMakeAnyFood()
+        {
+            foreach (var cost in allCosts)
+            {
+                if(HasEnoughSupplies(cost)) return true;
+            }
+            
+            return false;
         }
     }
 }

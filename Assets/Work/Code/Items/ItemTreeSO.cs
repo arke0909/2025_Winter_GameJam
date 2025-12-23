@@ -7,6 +7,7 @@ namespace Work.Code.Items
     [CreateAssetMenu(fileName = "ItemTree", menuName = "SO/Item/Tree", order = 0)]
     public class ItemTreeSO : ScriptableObject
     {
+        public bool isImmediately;
         public List<EffectNodeSO> effectNodes;
 
         public void Execute(MatchSystem.MatchSystem ms, NodeData nodeData)

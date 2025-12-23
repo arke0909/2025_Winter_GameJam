@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af5d570b912a4b44b6f2fc8a94decfbf, type: 3}
   m_Name: RainbowBibimbap
   m_EditorClassIdentifier: 
+  isImmediately: 0
   effectNodes:
-  - {fileID: 11400000, guid: 0be97bd764250de459b64189e6ffda8f, type: 2}
+  - {fileID: 11400000, guid: 5cd9ab8b91831b348b22e69b51cc2852, type: 2}

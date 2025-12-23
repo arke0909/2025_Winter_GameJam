@@ -1,6 +1,7 @@
 ﻿using System;
 using DG.Tweening;
 using Lib.Utiles;
+using TMPro;
 using UnityEngine;
 using Work.Code.Events;
 
@@ -9,15 +10,17 @@ namespace Work.Code.UI
     public class GameEndUI : MonoBehaviour
     {
         [SerializeField] private EventChannelSO gameChannel;
+        [SerializeField] private TextMeshProUGUI titleText;
         
         private RectTransform _rectTrm;
         private Vector2 _originalPos;
-        
+        private SupplyDataUI[] _supplyData;
         private void Awake()
         {
             _rectTrm = GetComponent<RectTransform>();
             _originalPos = Vector2.zero;
-            _rectTrm.anchoredPosition = new Vector2(_originalPos.x, _originalPos.y - 800);
+            _rectTrm.anchoredPosition = new Vector2(_originalPos.x, _originalPos.y - 2000);
+            _supplyData = GetComponentsInChildren<SupplyDataUI>();
             
             gameChannel.AddListener<GameEndEvent>(HandleGameEnd);
         }
@@ -29,9 +32,13 @@ namespace Work.Code.UI
 
         private void HandleGameEnd(GameEndEvent evt)
         {
+            titleText.SetText(evt.IsSuccess ? "성공" : "실패");
+            foreach (var data in _supplyData)
+            {
+                data.SetUp();
+            }
             DOTween.To(() => _rectTrm.anchoredPosition, x => _rectTrm.anchoredPosition = x,
                 new Vector2(_originalPos.x, _originalPos.y), 0.5f).SetEase(Ease.OutCirc);
-            
         }
     }
 }

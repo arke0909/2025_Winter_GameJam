@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af5d570b912a4b44b6f2fc8a94decfbf, type: 3}
   m_Name: BraisedRadish
   m_EditorClassIdentifier: 
+  isImmediately: 1
   effectNodes:
   - {fileID: 11400000, guid: f89ed2d05f2fb76409e3bb8ce877df85, type: 2}
