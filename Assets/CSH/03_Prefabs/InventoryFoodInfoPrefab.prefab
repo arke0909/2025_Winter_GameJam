@@ -192,8 +192,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundPlayer: {fileID: 11400000, guid: e7ed395fe5285c14687777045a90fa04, type: 2}
-  sellSound: {fileID: 11400000, guid: 0c208945b62a2904e8dcdb8ca17a4c74, type: 2}
-  useSound: {fileID: 11400000, guid: 2ad2a89b58321df4f956e201b05eaf4a, type: 2}
+  useFoodSound: {fileID: 11400000, guid: 2ad2a89b58321df4f956e201b05eaf4a, type: 2}
   foodChannel: {fileID: 11400000, guid: d4bd3427c23b02242841b959e26b94d1, type: 2}
   supplyChannel: {fileID: 11400000, guid: 36d7019071cc93a4ca58aa053b9da2bf, type: 2}
   icon: {fileID: 7951188575724460505}
