@@ -155,7 +155,7 @@ namespace Work.Code.MatchSystem
                    }
                }
                
-               await UniTask.Delay(50); 
+               await UniTask.Delay(100); 
            }
        }
 
