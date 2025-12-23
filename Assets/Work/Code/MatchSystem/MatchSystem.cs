@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using Lib.ObjectPool.RunTime;
 using Lib.Utiles;
 using UnityEngine;
 using Work.Code.Events;
@@ -17,22 +18,32 @@ namespace Work.Code.MatchSystem
     public class MatchSystem : MonoBehaviour
     {
         [SerializeField] private EventChannelSO gameEventChannel;
+        [SerializeField] private EventChannelSO particleEventChannel;
+        [SerializeField] private PoolItemSO particleItem;
         [SerializeField] private Node[] nodePrefabs;
         [SerializeField] private Node lockedNodePrefab;
         [SerializeField] private RectTransform nodeBoard;
         [SerializeField] private List<Vector2Int> lockedNode;
-        [Range(0, 1f),SerializeField] private float icedNodeRate;
+        [Range(0, 1f), SerializeField] private float icedNodeRate;
 
-        public NodeData[,] DataMap { get; private set; }
-        public Node[,] NodeMap { get; private set; }
+        private Vector2Int[] _eightDirection = {new (0,1), new (1,1),new (1,0),new (1,-1),new (0,-1),new (-1,-1),new (-1,0),new (-1,1)};
+        
+        #region Board Region
 
         [field: SerializeField] public int MapWidth { get; private set; } = 8;
         [field: SerializeField] public int MapHeight { get; private set; } = 8;
+        
+        public Node[,] NodeMap { get; private set; }
+        public NodeData[,] DataMap { get; private set; }
 
         private float _nodeWidth, _nodeHeight, _widthTerm, _heightTerm;
         private bool _isSwapping;
+        private bool _isGetDouble;
+        private int _getDoubleCnt;
 
         private readonly Dictionary<NodeType, HashSet<NodeData>> _removeNodesDict = new();
+
+        
 
         private void Awake()
         {
@@ -88,7 +99,7 @@ namespace Work.Code.MatchSystem
             {
                 Vector2Int pos = new Vector2Int(x, y);
                 Node node;
-                
+
                 if (lockedNode.Contains(pos))
                 {
                     node = Instantiate(lockedNodePrefab, nodeBoard);
@@ -102,7 +113,7 @@ namespace Work.Code.MatchSystem
                     NodeMap[y, x] = node;
                     node.Init(x, y, this, isIced);
                 }
-                
+
                 node.SetPos(CalcNodePosX(x), CalcSpawnPosY(x), false);
                 node.SetPos(CalcNodePosX(x), CalcNodePosY(y));
                 DataMap[y, x] = new NodeData(node.NodeType);
@@ -110,6 +121,15 @@ namespace Work.Code.MatchSystem
             }
         }
 
+        #endregion
+
+        #region SwapLogic
+        private void SwapNodeType(NodeData a, NodeData b)
+        {
+            NodeType t = a.NodeType;
+            a.SetNodeType(b.NodeType);
+            b.SetNodeType(t);
+        }
         public async void TrySwapByDir(Node node, Vector2Int dir)
         {
             if (_isSwapping) return;
@@ -159,7 +179,9 @@ namespace Work.Code.MatchSystem
                 b.SetPos(apos.x, apos.y)
             );
         }
+        #endregion
 
+        #region MainLogic
         private async UniTask ResolveBoard()
         {
             while (true)
@@ -208,7 +230,6 @@ namespace Work.Code.MatchSystem
             NodeType type = DataMap[y, x].NodeType;
             if (type == NodeType.Empty)
                 return;
-
             _removeNodesDict[type].Add(DataMap[y, x]);
         }
 
@@ -216,11 +237,23 @@ namespace Work.Code.MatchSystem
         {
             foreach (var kv in _removeNodesDict)
             {
-                if (kv.Value.Count == 0 || (int)kv.Key > 5) continue;
+                if (kv.Value.Count == 0) continue;
 
-                gameEventChannel.InvokeEvent(
-                    SupplyEvents.SupplyEvent.Initializer
-                        ((SupplyType)kv.Key, kv.Value.Count));
+                int count = kv.Value.Count;
+
+                if (_isGetDouble)
+                {
+                    count *= 2;
+                    _getDoubleCnt--;
+                    _isGetDouble = _getDoubleCnt != 0;
+                }
+
+                if ((int)kv.Key <= 5)
+                {
+                    gameEventChannel.InvokeEvent(
+                        SupplyEvents.SupplyEvent.Initializer
+                            ((SupplyType)kv.Key, count));
+                }
 
                 foreach (var data in kv.Value)
                     data.SetNodeType(NodeType.Empty);
@@ -234,67 +267,12 @@ namespace Work.Code.MatchSystem
             {
                 if (DataMap[y, x].NodeType == NodeType.Empty && NodeMap[y, x] != null)
                 {
+                    particleEventChannel.InvokeEvent(ParticleEvents.PlayUIParticleEvent.Initializer(particleItem, NodeMap[y, x].CenterPos));
                     Destroy(NodeMap[y, x].gameObject);
                     NodeMap[y, x] = null;
                 }
             }
         }
-
-        public void RemoveHorizontal(int y)
-        {
-            for (int x = 0; x < MapWidth; ++x)
-            {
-                AddRemoveNode(x, y);
-            }
-        }
-
-        public void RemoveVertical(int x)
-        {
-            for (int y = 0; y < MapHeight; ++y)
-            {
-                AddRemoveNode(x, y);
-            }
-        }
-
-        public void RemoveCross(int x, int y)
-        {
-            RemoveVertical(x);
-            RemoveHorizontal(y);
-        }
-
-        private void BreakAdjacentIce()
-        {
-            foreach (var set in _removeNodesDict.Values)
-            {
-                foreach (var data in set)
-                {
-                    Vector2Int pos = data.Pos; // NodeData에 좌표 필요
-                    TryBreakIce(pos.x + 1, pos.y);
-                    TryBreakIce(pos.x - 1, pos.y);
-                    TryBreakIce(pos.x, pos.y + 1);
-                    TryBreakIce(pos.x, pos.y - 1);
-                }
-            }
-        }
-
-        private void TryBreakIce(int x, int y)
-        {
-            if (IsOutBound(x, y)) return;
-
-            Node node = NodeMap[y, x];
-            if (node != null && node.IsIced)
-            {
-                node.Unfreeze();
-            }
-            else if (node != null && node.TryGetComponent(out LockedNode lockedNode))
-            {
-                if (lockedNode.DiscountCnt())
-                {
-                    AddRemoveNode(node.X, node.Y);
-                }
-            }
-        }
-        
         private async UniTask SortingNodeMap()
         {
             List<UniTask> moves = new();
@@ -307,7 +285,7 @@ namespace Work.Code.MatchSystem
                 {
                     Node node = NodeMap[y, x];
                     if (node == null) continue;
-                    
+
                     if (node.TryGetComponent<LockedNode>(out _))
                     {
                         NodeMap[y, x] = node;
@@ -368,24 +346,16 @@ namespace Work.Code.MatchSystem
 
             await UniTask.WhenAll(moves);
         }
-
-        private void SwapNodeType(NodeData a, NodeData b)
-        {
-            NodeType t = a.NodeType;
-            a.SetNodeType(b.NodeType);
-            b.SetNodeType(t);
-        }
-
         private bool HasMatchAt(int x, int y)
         {
             Node node = NodeMap[y, x];
             if (node == null) return false;
             if (node.IsIced) return false;
-        
+
             NodeType type = DataMap[y, x].NodeType;
-        
+
             int count = 1;
-        
+
             for (int i = x - 1; i >= 0; i--)
             {
                 Node n = NodeMap[y, i];
@@ -393,7 +363,7 @@ namespace Work.Code.MatchSystem
                 if (DataMap[y, i].NodeType != type) break;
                 count++;
             }
-        
+
             for (int i = x + 1; i < MapWidth; i++)
             {
                 Node n = NodeMap[y, i];
@@ -401,12 +371,12 @@ namespace Work.Code.MatchSystem
                 if (DataMap[y, i].NodeType != type) break;
                 count++;
             }
-        
+
             if (count >= 3)
                 return true;
-        
+
             count = 1;
-        
+
             for (int i = y - 1; i >= 0; i--)
             {
                 Node n = NodeMap[i, x];
@@ -414,7 +384,7 @@ namespace Work.Code.MatchSystem
                 if (DataMap[i, x].NodeType != type) break;
                 count++;
             }
-        
+
             for (int i = y + 1; i < MapHeight; i++)
             {
                 Node n = NodeMap[i, x];
@@ -422,10 +392,170 @@ namespace Work.Code.MatchSystem
                 if (DataMap[i, x].NodeType != type) break;
                 count++;
             }
-        
+
             return count >= 3;
         }
+        #endregion
 
+        #region Item Function
+
+        public void SetGetDouble(bool value)
+        {
+            _isGetDouble = value;
+            _getDoubleCnt = 5;
+        }
+
+        // 가로 한줄
+        public void RemoveHorizontal(int y)
+        {
+            for (int x = 0; x < MapWidth; ++x)
+            {
+                AddRemoveNode(x, y);
+            }
+        }
+
+        // 세로 한줄
+        public void RemoveVertical(int x)
+        {
+            for (int y = 0; y < MapHeight; ++y)
+            {
+                AddRemoveNode(x, y);
+            }
+        }
+
+        // 십자
+        public void RemoveCross(int x, int y)
+        {
+            RemoveVertical(x);
+            RemoveHorizontal(y);
+        }
+
+        // 맵의 모든 한 타입을 제거
+        public void RemoveNodeByType(NodeType type)
+        {
+            for (int y = 0; y < MapHeight; y++)
+            for (int x = 0; x < MapWidth; x++)
+            {
+                if (NodeMap[y, x] != null && DataMap[y, x].NodeType == type)
+                {
+                    AddRemoveNode(x, y);
+                }
+            }
+        }
+
+        public void RemoveNotLockedNode()
+        {
+            for (int y = 0; y < MapHeight; y++)
+            for (int x = 0; x < MapWidth; x++)
+            {
+                if (NodeMap[y, x] != null && !NodeMap[y, x].IsIced && DataMap[y, x].NodeType != NodeType.Locked)
+                {
+                    AddRemoveNode(x, y);
+                }
+            }
+        }
+
+        public void RemoveEveryNode()
+        {
+            for (int y = 0; y < MapHeight; y++)
+            for (int x = 0; x < MapWidth; x++)
+            {
+                AddRemoveNode(x, y);
+            }
+        }
+
+        public void BreakIce()
+        {
+            for (int y = 0; y < MapHeight; y++)
+            for (int x = 0; x < MapWidth; x++)
+            {
+                TryBreakGimmick(x, y);
+            }
+        }
+
+        public void BreakLock()
+        {
+            for (int y = 0; y < MapHeight; y++)
+            for (int x = 0; x < MapWidth; x++)
+            {
+                TryBreakGimmick(x, y, false, false);
+            }
+        }
+
+        public void Remove8Direction(int x, int y)
+        {
+            AddRemoveNode(x, y);
+
+            for (int i = 0; i < 8; i++)
+            {
+                int nx = x + _eightDirection[i].x;
+                int ny = y + _eightDirection[i].y;
+                
+                if(IsOutBound(x, y)) continue;
+                
+                AddRemoveNode(nx, ny);
+            }
+        }
+        #endregion
+
+        #region Gimmick Logic
+        private void BreakAdjacentIce()
+        {
+            foreach (var set in _removeNodesDict.Values)
+            {
+                foreach (var data in set)
+                {
+                    Vector2Int pos = data.Pos; // NodeData에 좌표 필요
+                    TryBreakGimmick(pos.x + 1, pos.y, true);
+                    TryBreakGimmick(pos.x - 1, pos.y, true);
+                    TryBreakGimmick(pos.x, pos.y + 1, true);
+                    TryBreakGimmick(pos.x, pos.y - 1, true);
+                }
+            }
+        }
+
+        private void TryBreakGimmick(int x, int y, bool targetIsEvery = false,bool targetIsIced = true)
+        {
+            if (IsOutBound(x, y)) return;
+
+            Node node = NodeMap[y, x];
+
+            if (targetIsEvery)
+            {
+                if (node != null && node.IsIced)
+                {
+                    node.Unfreeze();
+                }
+                else if (node != null && !node.IsIced && node.TryGetComponent(out LockedNode lockedNode))
+                {
+                    if (lockedNode.DiscountCnt())
+                    {
+                        AddRemoveNode(node.X, node.Y);
+                    }
+                }
+                
+                return;
+            }
+            
+            if (targetIsIced)
+            {
+                if (node != null && node.IsIced)
+                {
+                    node.Unfreeze();
+                }
+            }
+            else
+            {
+                if (node != null && !node.IsIced && node.TryGetComponent(out LockedNode lockedNode))
+                {
+                    if (lockedNode.DiscountCnt())
+                    {
+                        AddRemoveNode(node.X, node.Y);
+                    }
+                }
+            }
+        }
+        #endregion
 
         private bool IsOutBound(int x, int y)
             => x < 0 || x >= MapWidth || y < 0 || y >= MapHeight;
