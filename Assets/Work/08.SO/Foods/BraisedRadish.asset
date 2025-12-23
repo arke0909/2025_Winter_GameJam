@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e13ce9b5373a4e9db61a66eccf6abaca, type: 3}
   m_Name: BraisedRadish
   m_EditorClassIdentifier: 
+  itemTree: {fileID: 11400000, guid: f8f2804b8cfddb743938f90576311323, type: 2}
   Type: 3
   Icon: {fileID: -1649545388204161942, guid: 1e1be83859a818641bf9b97d832bf44b, type: 3}
   Name: "\uBB34 \uC870\uB9BC"

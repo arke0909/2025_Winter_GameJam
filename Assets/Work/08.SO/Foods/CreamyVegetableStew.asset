@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e13ce9b5373a4e9db61a66eccf6abaca, type: 3}
   m_Name: CreamyVegetableStew
   m_EditorClassIdentifier: 
+  itemTree: {fileID: 11400000, guid: 9686983ee0dc49e47821497e75c3c141, type: 2}
   Type: 7
   Icon: {fileID: 3085646139939743711, guid: daf5f396615531a428d9a30135091e51, type: 3}
   Name: "\uCC44\uC18C \uD06C\uB9BC \uC2A4\uD29C"

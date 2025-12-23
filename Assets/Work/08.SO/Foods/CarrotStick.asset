@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e13ce9b5373a4e9db61a66eccf6abaca, type: 3}
   m_Name: CarrotStick
   m_EditorClassIdentifier: 
+  itemTree: {fileID: 11400000, guid: 3a3dcaba19d080e42962fba92aee26f3, type: 2}
   Type: 2
   Icon: {fileID: 7516397188711347237, guid: 034cecc484e19e74b9b33c24a2bfc7ef, type: 3}
   Name: "\uB2F9\uADFC \uC2A4\uD2F1"

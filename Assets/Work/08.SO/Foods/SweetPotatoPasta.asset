@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e13ce9b5373a4e9db61a66eccf6abaca, type: 3}
   m_Name: SweetPotatoPasta
   m_EditorClassIdentifier: 
+  itemTree: {fileID: 11400000, guid: 4905597ff01d10f48ad9ec945b689053, type: 2}
   Type: 6
   Icon: {fileID: 9120847904189737376, guid: dc042ff1e9272b646bbd75f46a6d71d0, type: 3}
   Name: "\uACE0\uAD6C\uB9C8 \uD30C\uC2A4\uD0C0"
