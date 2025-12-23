@@ -18,11 +18,11 @@ namespace Work.Code.Events
         public Vector3 Pos;
         public Quaternion Rot;
         
-        public PlayUIParticleEvent Initializer(PoolItemSO particleItem, Vector3 pos, Quaternion rot)
+        public PlayUIParticleEvent Initializer(PoolItemSO particleItem, Vector3 pos, Quaternion rot = default)
         {
             ParticleItem = particleItem;
             Pos = pos;
-            Rot = rot;
+            Rot = rot == default ? Quaternion.identity : rot;
             return this;
         }
     }
