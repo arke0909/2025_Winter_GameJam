@@ -28,6 +28,8 @@ namespace Work.Code.MatchSystem
         public float YPos { get; private set; } 
         
         public Vector2 CenterPos { get; private set; }
+
+        public bool IsDestroyByItem { get; private set; }
         
         private MatchSystem _matchSystem;
         
@@ -52,6 +54,8 @@ namespace Work.Code.MatchSystem
             Rect.DOKill();
             targetingImage.DOKill();
         }
+
+        public void DestroyState() => IsDestroyByItem = true;
 
         public async UniTask SetPos(float x, float y, bool isTween = true)
         {
