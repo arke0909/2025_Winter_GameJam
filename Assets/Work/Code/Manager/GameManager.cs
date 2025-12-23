@@ -3,6 +3,7 @@ using Lib.Dependencies;
 using Lib.Utiles;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Work.Code.Core;
 using Work.Code.Events;
 using Work.Code.Supply;
@@ -41,7 +42,7 @@ namespace Work.Code.Manager
             leftTurnCount += evt.Value;
             turnText.SetText($"{leftTurnCount}/{maxTurnCount}");
             if(leftTurnCount <= 0)
-                gameChannel.InvokeEvent(GameEvents.GameEndEvent.Initializer(false));
+                gameChannel.InvokeEvent(GameEvents.GameEndEvent.Initializer(SceneManager.GetActiveScene().name, false));
         }
 
         private void HandleSetRequestGold(SetRequestGoldEvent evt)
@@ -55,7 +56,7 @@ namespace Work.Code.Manager
             if (amount >= requestGold)
             {
                 Debug.Log($"목표치 도달 {amount}");
-                gameChannel.InvokeEvent(GameEvents.GameEndEvent.Initializer(true));
+                gameChannel.InvokeEvent(GameEvents.GameEndEvent.Initializer(SceneManager.GetActiveScene().name, true));
             }
         }
     }

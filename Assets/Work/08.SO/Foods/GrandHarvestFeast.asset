@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemTree: {fileID: 11400000, guid: 2ce99b59eb23acf46b9f64a432a2aac7, type: 2}
   Type: 11
-  Icon: {fileID: 0}
+  Icon: {fileID: -6011634626261377390, guid: 60b5ecc579663e74f9d9d93fc98d0572, type: 3}
   Name: "\uB300\uD48D\uB144 \uC794\uCE58"
   Description: "\uAD81\uADF9\uC758 \uD55C \uBC29."
   Price: 8000
