@@ -3680,7 +3680,7 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6748478185028693741, guid: 9fa2e32b70f31b24c9ae1d4d0a459dc5, type: 3}
-      propertyPath: nyanCatEffectItem
+      propertyPath: view.nyanCatEffectItem
       value: 
       objectReference: {fileID: 11400000, guid: c5a7a9b74f6fda0448cf87aec7811298, type: 2}
     - target: {fileID: 6786794258359477611, guid: 9fa2e32b70f31b24c9ae1d4d0a459dc5, type: 3}

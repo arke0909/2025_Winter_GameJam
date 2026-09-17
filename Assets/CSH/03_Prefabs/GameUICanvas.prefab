@@ -1725,27 +1725,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   supplyEventChannel: {fileID: 11400000, guid: 36d7019071cc93a4ca58aa053b9da2bf, type: 2}
   gameEventChannel: {fileID: 11400000, guid: d4eff243fa2426a4685becfd75be8db2, type: 2}
-  particleEventChannel: {fileID: 11400000, guid: fa37078802dbdd4489e0878985dd15bc, type: 2}
-  soundPlayer: {fileID: 11400000, guid: e7ed395fe5285c14687777045a90fa04, type: 2}
-  swapSound: {fileID: 11400000, guid: 468f267f771c54e4296254d90693a022, type: 2}
-  removeSound: {fileID: 11400000, guid: dd9f6c02110a92240987a0abf0a03449, type: 2}
-  iceBreakSound: {fileID: 11400000, guid: b0281ff00991df1498c10c624d1955ea, type: 2}
-  unlockSound: {fileID: 0}
-  particleItem: {fileID: 11400000, guid: f406c9043e4ee1346ba496fd9e06f974, type: 2}
-  icedEffectItem: {fileID: 11400000, guid: 2db09aefd3ee1ce459b9590d4b4a9f14, type: 2}
-  lockedEffectItem: {fileID: 11400000, guid: 5df20eadae398004b99f7a7e6432baa7, type: 2}
-  lineEffectItem: {fileID: 11400000, guid: b7c03fa6de3ce8a4e8b74af7e35ca8f9, type: 2}
-  threeXthreeEffectItem: {fileID: 11400000, guid: 84fe3c6e44549354c933ae704e0e648a, type: 2}
-  nyanCatEffectItem: {fileID: 11400000, guid: c5a7a9b74f6fda0448cf87aec7811298, type: 2}
-  nodePrefabs:
-  - {fileID: 3987659002603952870, guid: bc0d77e211bb3824394b24bd13bab3d8, type: 3}
-  - {fileID: 3987659002603952870, guid: 0564f18b2781e934bb11b576f2c3dc08, type: 3}
-  - {fileID: 3987659002603952870, guid: c3d2dd43110b0c447a21ff6743a1f46a, type: 3}
-  - {fileID: 3987659002603952870, guid: 60c4f157bee69da4f9610fbd177b4866, type: 3}
-  - {fileID: 3987659002603952870, guid: 86c0c334612a82b4f9bf3ddba9af46e0, type: 3}
-  - {fileID: 3987659002603952870, guid: 48959033a5e30a447b659dd83b74eb04, type: 3}
-  lockedNodePrefab: {fileID: 8520629933709389421, guid: f1cfc8a117a4ae24cbbcd3f7aece5aa1, type: 3}
-  nodeBoard: {fileID: 7659567423978940578}
+  view:
+    particleEventChannel: {fileID: 11400000, guid: fa37078802dbdd4489e0878985dd15bc, type: 2}
+    soundPlayer: {fileID: 11400000, guid: e7ed395fe5285c14687777045a90fa04, type: 2}
+    swapSound: {fileID: 11400000, guid: 468f267f771c54e4296254d90693a022, type: 2}
+    removeSound: {fileID: 11400000, guid: dd9f6c02110a92240987a0abf0a03449, type: 2}
+    iceBreakSound: {fileID: 11400000, guid: b0281ff00991df1498c10c624d1955ea, type: 2}
+    unlockSound: {fileID: 0}
+    particleItem: {fileID: 11400000, guid: f406c9043e4ee1346ba496fd9e06f974, type: 2}
+    icedEffectItem: {fileID: 11400000, guid: 2db09aefd3ee1ce459b9590d4b4a9f14, type: 2}
+    lockedEffectItem: {fileID: 11400000, guid: 5df20eadae398004b99f7a7e6432baa7, type: 2}
+    lineEffectItem: {fileID: 11400000, guid: b7c03fa6de3ce8a4e8b74af7e35ca8f9, type: 2}
+    threeXthreeEffectItem: {fileID: 11400000, guid: 84fe3c6e44549354c933ae704e0e648a, type: 2}
+    nyanCatEffectItem: {fileID: 11400000, guid: c5a7a9b74f6fda0448cf87aec7811298, type: 2}
+    nodePrefabs:
+    - {fileID: 3987659002603952870, guid: bc0d77e211bb3824394b24bd13bab3d8, type: 3}
+    - {fileID: 3987659002603952870, guid: 0564f18b2781e934bb11b576f2c3dc08, type: 3}
+    - {fileID: 3987659002603952870, guid: c3d2dd43110b0c447a21ff6743a1f46a, type: 3}
+    - {fileID: 3987659002603952870, guid: 60c4f157bee69da4f9610fbd177b4866, type: 3}
+    - {fileID: 3987659002603952870, guid: 86c0c334612a82b4f9bf3ddba9af46e0, type: 3}
+    - {fileID: 3987659002603952870, guid: 48959033a5e30a447b659dd83b74eb04, type: 3}
+    lockedNodePrefab: {fileID: 8520629933709389421, guid: f1cfc8a117a4ae24cbbcd3f7aece5aa1, type: 3}
+    nodeBoard: {fileID: 7659567423978940578}
   lockedNode:
   - {x: 1, y: 1}
   - {x: 7, y: 7}

@@ -8,7 +8,6 @@ using UnityEngine;
 using Work.Code.Events;
 using Work.Code.Items;
 using Work.Code.Manager;
-using Work.Code.SoundSystem;
 using Work.Code.Supply;
 using Random = UnityEngine.Random;
 
@@ -25,25 +24,10 @@ namespace Work.Code.MatchSystem
     {
         [SerializeField] private EventChannelSO supplyEventChannel;
         [SerializeField] private EventChannelSO gameEventChannel;
-        [SerializeField] private EventChannelSO particleEventChannel;
-        [SerializeField] private PoolItemSO soundPlayer;
-        [SerializeField] private SoundSO swapSound;
-        [SerializeField] private SoundSO removeSound;
-        [SerializeField] private SoundSO iceBreakSound;
-        [SerializeField] private SoundSO unlockSound;
+        [SerializeField] private MatchSystemView view = new();
         [Inject] private PoolManagerMono poolManager;
-        [SerializeField] private PoolItemSO particleItem;
-        [SerializeField] private PoolItemSO icedEffectItem;
-        [SerializeField] private PoolItemSO lockedEffectItem;
-        [SerializeField] private PoolItemSO lineEffectItem;
-        [SerializeField] private PoolItemSO threeXthreeEffectItem;
-        [SerializeField] private PoolItemSO nyanCatEffectItem;
-        [SerializeField] private Node[] nodePrefabs;
-        [SerializeField] private Node lockedNodePrefab;
-        [SerializeField] private RectTransform nodeBoard;
         [SerializeField] private List<Vector2Int> lockedNode;
         [Range(0, 1f), SerializeField] private float icedNodeRate;
-        [SerializeField] private int turnAddAmount = 2;
 
         private Vector2Int[] _eightDirection =
             { new(0, 1), new(1, 1), new(1, 0), new(1, -1), new(0, -1), new(-1, -1), new(-1, 0), new(-1, 1) };
@@ -56,7 +40,6 @@ namespace Work.Code.MatchSystem
         public Node[,] NodeMap { get; private set; }
         public NodeData[,] DataMap { get; private set; }
 
-        private float _nodeWidth, _nodeHeight, _widthTerm, _heightTerm;
         private bool _isSwapping;
         private bool _isGetDouble;
         private int _getDoubleCnt;
@@ -74,24 +57,11 @@ namespace Work.Code.MatchSystem
                 _removeNodesDict[(NodeType)i] = new HashSet<NodeData>();
             _removeNodesDict.Add(NodeType.Locked, new HashSet<NodeData>());
 
-            CalcBoardSize();
+            view.Initialize(MapWidth, MapHeight, poolManager);
             SetNodes();
         }
 
-        private void CalcBoardSize()
-        {
-            RectTransform rt = nodePrefabs[0].transform as RectTransform;
-            _nodeWidth = rt.rect.width;
-            _nodeHeight = rt.rect.height;
-
-            _widthTerm = (nodeBoard.rect.width - _nodeWidth * MapWidth) / MapWidth;
-            _heightTerm = (nodeBoard.rect.height - _nodeHeight * MapHeight) / MapHeight;
-        }
-
-        private float CalcNodePosX(int x) => x * _nodeWidth + (x + 0.5f) * _widthTerm;
-        private float CalcNodePosY(int y) => y * -_nodeHeight - (y + 0.5f) * _heightTerm;
-
-        private float CalcSpawnPosY(int x)
+        private int GetSpawnRow(int x)
         {
             int spawnY = -1;
 
@@ -104,68 +74,37 @@ namespace Work.Code.MatchSystem
                 }
             }
 
-            return CalcNodePosY(spawnY);
+            return spawnY;
         }
 
-        private Node CreateNode()
+        private void SetNodes()
         {
-            return Instantiate(nodePrefabs[Random.Range(0, nodePrefabs.Length)], nodeBoard);
-        }
+            for (int y = 0; y < MapHeight; y++)
+            {
+                for (int x = 0; x < MapWidth; x++)
+                {
+                    bool isLocked = lockedNode.Contains(new Vector2Int(x, y));
+                    Node prefab = isLocked ? view.LockedNodePrefab : view.NodePrefabs[GetValidNodeIndex(x, y)];
+                    bool isIced = !isLocked && Random.value <= icedNodeRate;
+                    Node node = view.CreateNode(prefab, x, y, this, isIced);
+                    NodeMap[y, x] = node;
+                    view.MoveNode(node, x, GetSpawnRow(x), false).Forget();
 
-       private async void SetNodes()
-       {
-           for (int y = 0; y < MapHeight; y++)
-           {
-               for (int x = 0; x < MapWidth; x++)
-               {
-                   Vector2Int pos = new Vector2Int(x, y);
-                   Node node;
-       
-                   if (lockedNode.Contains(pos))
-                   {
-                       node = Instantiate(lockedNodePrefab, nodeBoard);
-                       NodeMap[y, x] = node;
-                       node.Init(x, y, this, false);
-                   }
-                   else
-                   {
-                       int validIndex = GetValidNodeIndex(x, y);
-                       node = Instantiate(nodePrefabs[validIndex], nodeBoard);
-       
-                       bool isIced = Random.value <= icedNodeRate;
-                       NodeMap[y, x] = node;
-                       node.Init(x, y, this, isIced);
-                   }
-       
-                   node.SetPos(CalcNodePosX(x), CalcSpawnPosY(x), false);
-       
-                   DataMap[y, x] = new NodeData(node.NodeType);
-                   DataMap[y, x].SetPos(new Vector2Int(x, y));
-               }
-           }
-       
-           for (int y = MapHeight - 1; y >= 0; y--)
-           {
-               List<UniTask> rowTasks = new List<UniTask>();
-               for (int x = 0; x < MapWidth; x++)
-               {
-                   if (NodeMap[y, x] != null)
-                   {
-                       rowTasks.Add(NodeMap[y, x].SetPos(CalcNodePosX(x), CalcNodePosY(y)));
-                   }
-               }
-               
-               await UniTask.Delay(100); 
-           }
-       }
+                    DataMap[y, x] = new NodeData(node.NodeType);
+                    DataMap[y, x].SetPos(new Vector2Int(x, y));
+                }
+            }
+
+            view.ShowBoard(NodeMap).Forget();
+        }
 
         private int GetValidNodeIndex(int x, int y)
         {
             List<int> validIndices = new List<int>();
 
-            for (int i = 0; i < nodePrefabs.Length; i++)
+            for (int i = 0; i < view.NodePrefabs.Length; i++)
             {
-                NodeType typeToCheck = nodePrefabs[i].NodeType;
+                NodeType typeToCheck = view.NodePrefabs[i].NodeType;
                 bool isMatch = false;
 
                 if (x >= 2)
@@ -192,12 +131,13 @@ namespace Work.Code.MatchSystem
                 }
             }
 
-            if (validIndices.Count == 0) return Random.Range(0, nodePrefabs.Length);
+            if (validIndices.Count == 0) return Random.Range(0, view.NodePrefabs.Length);
 
             return validIndices[Random.Range(0, validIndices.Count)];
         }
 
         #endregion
+        [SerializeField] private int turnAddAmount = 2;
 
         #region SwapLogic
 
@@ -244,8 +184,6 @@ namespace Work.Code.MatchSystem
 
         private async UniTask SwapInternal(Node a, Node b)
         {
-            poolManager.Pop<SoundPlayer>(soundPlayer).PlaySound(swapSound);
-
             NodeMap[a.Y, a.X] = b;
             NodeMap[b.Y, b.X] = a;
 
@@ -255,12 +193,7 @@ namespace Work.Code.MatchSystem
             a.SetXY(b.X, b.Y);
             b.SetXY(ax, ay);
 
-            Vector2 apos = a.Rect.anchoredPosition;
-
-            await UniTask.WhenAll(
-                a.SetPos(b.Rect.anchoredPosition.x, b.Rect.anchoredPosition.y),
-                b.SetPos(apos.x, apos.y)
-            );
+            await view.SwapNodes(a, b);
         }
 
         #endregion
@@ -372,18 +305,7 @@ namespace Work.Code.MatchSystem
             {
                 if (DataMap[y, x].NodeType == NodeType.Empty && NodeMap[y, x] != null)
                 {
-                    poolManager.Pop<SoundPlayer>(soundPlayer).PlaySound(removeSound);
-                    PoolItemSO particlePoolItem = particleItem;
-
-                    if (NodeMap[y, x].TryGetComponent<LockedNode>(out _))
-                    {
-                        particlePoolItem = lockedEffectItem;
-                    }
-
-                    particleEventChannel.InvokeEvent(
-                        ParticleEvents.PlayUIParticleEvent.Initializer(particlePoolItem, NodeMap[y, x].CenterPos,
-                            Quaternion.identity));
-                    Destroy(NodeMap[y, x].gameObject);
+                    view.RemoveNode(NodeMap[y, x]);
                     NodeMap[y, x] = null;
                 }
             }
@@ -456,7 +378,7 @@ namespace Work.Code.MatchSystem
             DataMap[fromY, fromX].SetNodeType(NodeType.Empty);
 
             node.SetXY(toX, toY);
-            moves.Add(node.SetPos(CalcNodePosX(toX), CalcNodePosY(toY)));
+            moves.Add(view.MoveNode(node, toX, toY));
         }
 
         private bool IsLockedAt(int x, int y)
@@ -483,17 +405,14 @@ namespace Work.Code.MatchSystem
                     if (DataMap[y, x].NodeType != NodeType.Empty) continue;
 
                     int nodeIndex = GetSafeNonMatchingIndex(x, y);
-                    Node node = Instantiate(nodePrefabs[nodeIndex], nodeBoard);
-            
                     bool isIced = Random.value <= icedNodeRate;
+                    Node node = view.CreateNode(view.NodePrefabs[nodeIndex], x, y, this, isIced);
                     NodeMap[y, x] = node;
-                    node.Init(x, y, this, isIced);
                     DataMap[y, x].SetNodeType(node.NodeType);
 
-                    float spawnY = CalcNodePosY(-(emptyCountInColumn - currentSpawnOrder));
-
-                    node.SetPos(CalcNodePosX(x), spawnY, false);
-                    moves.Add(node.SetPos(CalcNodePosX(x), CalcNodePosY(y)));
+                    int spawnRow = -(emptyCountInColumn - currentSpawnOrder);
+                    view.MoveNode(node, x, spawnRow, false).Forget();
+                    moves.Add(view.MoveNode(node, x, y));
 
                     currentSpawnOrder++;
                 }
@@ -506,9 +425,9 @@ namespace Work.Code.MatchSystem
         {
             List<int> safeIndices = new List<int>();
         
-            for (int i = 0; i < nodePrefabs.Length; i++)
+            for (int i = 0; i < view.NodePrefabs.Length; i++)
             {
-                NodeType typeToCheck = nodePrefabs[i].NodeType;
+                NodeType typeToCheck = view.NodePrefabs[i].NodeType;
                 bool causesMatch = false;
         
                 if (x >= 2)
@@ -537,7 +456,7 @@ namespace Work.Code.MatchSystem
                 }
             }
         
-            if (safeIndices.Count == 0) return Random.Range(0, nodePrefabs.Length);
+            if (safeIndices.Count == 0) return Random.Range(0, view.NodePrefabs.Length);
         
             return safeIndices[Random.Range(0, safeIndices.Count)];
         }
@@ -624,15 +543,18 @@ namespace Work.Code.MatchSystem
 
         private void SetNodeSelectImageState(bool value)
         {
+            List<Node> selectableNodes = new();
             for (int y = 0; y < MapHeight; y++)
             {
                 for (int x = 0; x < MapWidth; x++)
                 {
                     if(DataMap[y,x].NodeType == NodeType.Empty || DataMap[y,x].NodeType == NodeType.Locked || NodeMap[y,x].IsIced) continue;
                     
-                    NodeMap[y,x].OnTargeting(value);
+                    selectableNodes.Add(NodeMap[y, x]);
                 }
             }
+
+            view.SetTargeting(selectableNodes, value);
         }
 
         public async void OnNodeClicked(Node node)
@@ -713,7 +635,7 @@ namespace Work.Code.MatchSystem
         DataMap[newPos.y, newPos.x].SetPos(newPos);
         node.SetXY(newPos.x, newPos.y);
 
-        moveTasks.Add(node.SetPos(CalcNodePosX(newPos.x), CalcNodePosY(newPos.y)));
+        moveTasks.Add(view.MoveNode(node, newPos.x, newPos.y));
     }
 
     await UniTask.WhenAll(moveTasks);
@@ -780,9 +702,7 @@ private bool CheckAnyMatchOnBoard()
                 }
             }
 
-            float posY = NodeMap[y, 0].CenterPos.y;
-            Vector2 pos = new Vector2(0, posY);
-            particleEventChannel.InvokeEvent(ParticleEvents.PlayUIParticleEvent.Initializer(lineEffectItem, pos));
+            view.PlayLineEffect(NodeMap[y, 0], false);
         }
 
         // 세로 한줄
@@ -811,10 +731,7 @@ private bool CheckAnyMatchOnBoard()
                 }
             }
 
-            float posX = NodeMap[0, x].CenterPos.x;
-            Vector2 pos = new Vector2(posX, 0);
-            particleEventChannel.InvokeEvent(ParticleEvents.PlayUIParticleEvent.Initializer(lineEffectItem, pos,
-                Quaternion.Euler(new Vector3(0, 0, 90f))));
+            view.PlayLineEffect(NodeMap[0, x], true);
         }
 
         // 맵의 모든 한 타입을 제거
@@ -866,8 +783,7 @@ private bool CheckAnyMatchOnBoard()
                 AddRemoveNode(x, y);
             }
 
-            Vector2 pos = new Vector2(15, 0);
-            particleEventChannel.InvokeEvent(ParticleEvents.PlayUIParticleEvent.Initializer(nyanCatEffectItem, pos));
+            view.PlayClearBoardEffect();
         }
 
         public void BreakIce()
@@ -905,8 +821,7 @@ private bool CheckAnyMatchOnBoard()
                 AddRemoveNode(nx, ny);
             }
 
-            particleEventChannel.InvokeEvent(
-                ParticleEvents.PlayUIParticleEvent.Initializer(threeXthreeEffectItem, NodeMap[y, x].CenterPos));
+            view.PlayAreaEffect(NodeMap[y, x]);
         }
 
         #endregion
@@ -939,10 +854,7 @@ private bool CheckAnyMatchOnBoard()
             {
                 if (node != null && node.IsIced)
                 {
-                    poolManager.Pop<SoundPlayer>(soundPlayer).PlaySound(iceBreakSound);
-                    particleEventChannel.InvokeEvent(
-                        ParticleEvents.PlayUIParticleEvent.Initializer(icedEffectItem, node.CenterPos,
-                            Quaternion.identity));
+                    view.PlayIceBreakEffect(node);
                     node.Unfreeze();
                 }
                 else if (node != null && !node.IsIced && node.TryGetComponent(out LockedNode lockedNode))
@@ -960,11 +872,7 @@ private bool CheckAnyMatchOnBoard()
             {
                 if (node != null && node.IsIced)
                 {
-                    poolManager.Pop<SoundPlayer>(soundPlayer).PlaySound(iceBreakSound);
-
-                    particleEventChannel.InvokeEvent(
-                        ParticleEvents.PlayUIParticleEvent.Initializer(icedEffectItem, node.CenterPos,
-                            Quaternion.identity));
+                    view.PlayIceBreakEffect(node);
                     node.Unfreeze();
                 }
             }
